@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:zen03/providers/general_providers.dart';
 
-class Paint extends StatelessWidget {
-  const Paint({Key? key}) : super(key: key);
+import 'PaintComponent/paint_button.dart';
+import 'draw_screen.dart';
+
+class PaintScreen extends HookConsumerWidget {
+  const PaintScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final _paintController = ref.watch(drawControllerProvider.notifier);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -32,17 +39,7 @@ class Paint extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(13.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(width: 2),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-            ),
-          ),
+          const DrawScreen(),
           SizedBox(
             width: double.infinity,
             height: 150,
@@ -51,36 +48,24 @@ class Paint extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Icon(
-                        Icons.delete,
-                        size: 35,
-                      ),
+                    PaintButton(
+                      icon: const Icon(Icons.delete),
+                      function: _paintController.clear,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Icon(
-                            Icons.undo,
-                            size: 35,
-                          ),
+                      children: [
+                        PaintButton(
+                          icon: const Icon(Icons.delete),
+                          function: _paintController.clear,
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Icon(
-                            Icons.crop_square_sharp,
-                            size: 35,
-                          ),
+                        PaintButton(
+                          icon: const Icon(Icons.delete),
+                          function: _paintController.clear,
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Icon(
-                            Icons.brush,
-                            size: 35,
-                          ),
+                        PaintButton(
+                          icon: const Icon(Icons.delete),
+                          function: _paintController.clear,
                         ),
                       ],
                     ),

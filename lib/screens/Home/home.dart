@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zen03/providers/general_providers.dart';
-import '../../screens/Home/paint.dart';
+
+import '../paint/paint_screen.dart';
 
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -39,8 +40,8 @@ class HomeScreen extends HookConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const Paint()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const PaintScreen()));
         },
         child: const Icon(Icons.photo_size_select_actual_rounded),
       ),
