@@ -58,21 +58,25 @@ class DrawController extends StateNotifier<DrawState> {
   }
 
   void chageColor(Color pick) {
-    state = state.copyWith(pickColor: pick);
+    state = state.copyWith(pickColor: pick, isEraser: false);
   }
 
   void chageEraser(Color pick) {
     //　消しゴム機能　オン！！！！
     if (state.isEraser) {
       state = state.copyWith(
-        pickColor: pick,
-        isEraser: true,
-      );
-    } else {
-      state = state.copyWith(
         pickColor: Colors.black,
         isEraser: false,
       );
+    } else {
+      state = state.copyWith(
+        pickColor: pick,
+        isEraser: true,
+      );
     }
+  }
+
+  void penMode() {
+    state = state.copyWith(isEraser: false, pickColor: Colors.black);
   }
 }

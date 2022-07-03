@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zen03/screens/Paint/painter.dart';
 
-import '../../providers/general_providers.dart';
+import '../../../providers/general_providers.dart';
 
 class DrawScreen extends HookConsumerWidget {
   DrawScreen({Key? key}) : super(key: key);
@@ -10,8 +10,8 @@ class DrawScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _paintController = ref.watch(drawControllerProvider.notifier);
-    final _state = ref.read(drawControllerProvider);
+    final paintController = ref.watch(drawControllerProvider.notifier);
+    final state = ref.watch(drawControllerProvider);
 
     return Expanded(
       child: Padding(
@@ -27,18 +27,18 @@ class DrawScreen extends HookConsumerWidget {
           ),
           child: GestureDetector(
             onPanStart: (details) {
-              _paintController.addPaint(details.localPosition);
+              paintController.addPaint(details.localPosition);
             },
             onPanUpdate: (details) {
-              _paintController.updatePaint(_getPosition(
+              paintController.updatePaint(_getPosition(
                   _key.currentContext!.size, details.localPosition));
             },
             onPanEnd: (details) {
-              _paintController.endPaint();
+              paintController.endPaint();
             },
             child: CustomPaint(
               painter: Painter(
-                state: _state,
+                state: state,
                 context: context,
               ),
             ),
@@ -49,22 +49,22 @@ class DrawScreen extends HookConsumerWidget {
   }
 
   Offset _getPosition(Size? length, Offset localPosition) {
-    double _dx;
-    double _dy;
+    double dx;
+    double dy;
     if (localPosition.dx < 0) {
-      _dx = 0;
+      dx = 0;
     } else if (localPosition.dx > length!.width) {
-      _dx = length.width;
+      dx = length.width;
     } else {
-      _dx = localPosition.dx;
+      dx = localPosition.dx;
     }
     if (localPosition.dy < 0) {
-      _dy = 0;
+      dy = 0;
     } else if (localPosition.dy > length!.height) {
-      _dy = length.height;
+      dy = length.height;
     } else {
-      _dy = localPosition.dy;
+      dy = localPosition.dy;
     }
-    return Offset(_dx, _dy);
+    return Offset(dx, dy);
   }
 }
