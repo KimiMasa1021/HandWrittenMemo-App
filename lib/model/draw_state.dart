@@ -4,10 +4,14 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'draw_state.freezed.dart';
 
 @freezed
-abstract class DrawState with _$DrawState {
+class DrawState with _$DrawState {
   const factory DrawState({
     @Default(<List<Offset>>[]) List<List<Offset>> paintList,
-    @Default(<List<Offset>>[]) List<List<Offset>> undoList,
+    @Default([]) List<double> thicknessList,
+    @Default([]) List<Color> colorList,
     @Default(false) bool isDrag,
+    @Default(false) bool isEraser,
+    @Default(5.5) double thickness,
+    @Default(Colors.black) Color pickColor,
   }) = _DrawState;
 }

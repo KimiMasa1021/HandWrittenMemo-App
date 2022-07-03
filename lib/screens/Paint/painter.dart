@@ -8,28 +8,25 @@ class Painter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    double strokeWidth = 1;
-
-    final painter = Paint()
-      ..strokeCap = StrokeCap.round
-      ..isAntiAlias = true
-      ..color = Colors.black
-      ..strokeWidth = strokeWidth
-      ..style = PaintingStyle.stroke;
-
-    for (final points in state.paintList) {
+    state.paintList.asMap().forEach((index, points) {
+      final painter = Paint()
+        ..strokeCap = StrokeCap.round
+        ..isAntiAlias = true
+        ..color = state.colorList[index] //新しい配列を追加して太さとか色をカエル
+        ..strokeWidth = state.thicknessList[index]
+        ..style = PaintingStyle.stroke;
       canvas.drawRRect(
         RRect.fromRectAndRadius(
-          Rect.fromCenter(center: points[0], width: 10, height: 10),
-          Radius.circular(strokeWidth),
+          Rect.fromCenter(center: points[0], width: 5, height: 5),
+          const Radius.circular(5),
         ),
         painter,
       );
-      // ひとかたまりの線の描画
+
       for (var i = 0; i < points.length - 1; i++) {
         canvas.drawLine(points[i], points[i + 1], painter);
       }
-    }
+    });
   }
 
   @override

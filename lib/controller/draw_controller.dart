@@ -9,7 +9,8 @@ class DrawController extends StateNotifier<DrawState> {
       state = state.copyWith(
         isDrag: true,
         paintList: List.of(state.paintList)..add([startPoint]),
-        undoList: const [],
+        thicknessList: List.of(state.thicknessList)..add(state.thickness),
+        colorList: List.of(state.colorList)..add(state.pickColor),
       );
     }
   }
@@ -29,16 +30,49 @@ class DrawController extends StateNotifier<DrawState> {
   }
 
   void undo() {
-    // ひとつ戻る
-  }
-
-  void redo() {
-    // ひとつ進む
+    if (state.paintList.isEmpty) {
+      return;
+    }
+    state = state.copyWith(
+      paintList: List.of(state.paintList)..removeLast(),
+      thicknessList: List.of(state.thicknessList)..removeLast(),
+      colorList: List.of(state.colorList)..removeLast(),
+    );
   }
 
   void clear() {
     if (!state.isDrag) {
-      state = state.copyWith(paintList: [], undoList: []);
+      state = state.copyWith(
+        paintList: [],
+        thicknessList: [],
+        colorList: [],
+      );
+    }
+  }
+
+  void ticknessSlider(double val) {
+    if (!state.isDrag) {
+      state = state.copyWith(thickness: val);
+      print(state.thickness);
+    }
+  }
+
+  void chageColor(Color pick) {
+    state = state.copyWith(pickColor: pick);
+  }
+
+  void chageEraser(Color pick) {
+    //　消しゴム機能　オン！！！！
+    if (state.isEraser) {
+      state = state.copyWith(
+        pickColor: pick,
+        isEraser: true,
+      );
+    } else {
+      state = state.copyWith(
+        pickColor: Colors.black,
+        isEraser: false,
+      );
     }
   }
 }
