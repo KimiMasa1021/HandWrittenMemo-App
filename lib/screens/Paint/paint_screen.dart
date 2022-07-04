@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zen03/providers/general_providers.dart';
 import 'PaintComponent/draw_screen.dart';
-import 'PaintComponent/paint_operation.dart';
+import 'PaintComponent/paint_operate.dart';
 
-class PaintScreen extends HookConsumerWidget {
+class PaintScreen extends StatelessWidget {
   const PaintScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final paintController = ref.watch(drawControllerProvider.notifier);
-
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "手書きメモ",
+          "あああ",
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white,

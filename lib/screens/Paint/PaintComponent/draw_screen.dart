@@ -4,15 +4,12 @@ import 'package:zen03/screens/Paint/painter.dart';
 
 import '../../../providers/general_providers.dart';
 
-class DrawScreen extends HookConsumerWidget {
+class DrawScreen extends StatelessWidget {
   DrawScreen({Key? key}) : super(key: key);
   final _key = GlobalKey();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final paintController = ref.watch(drawControllerProvider.notifier);
-    final state = ref.watch(drawControllerProvider);
-
+  Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(13.0),
@@ -25,23 +22,30 @@ class DrawScreen extends HookConsumerWidget {
             border: Border.all(width: 2),
             borderRadius: BorderRadius.circular(20),
           ),
-          child: GestureDetector(
-            onPanStart: (details) {
-              paintController.addPaint(details.localPosition);
+          child: Consumer(
+            builder: (context, ref, child) {
+              final paintController =
+                  ref.watch(drawControllerProvider.notifier);
+              final state = ref.watch(drawControllerProvider);
+              return GestureDetector(
+                onPanStart: (details) {
+                  paintController.addPaint(details.localPosition);
+                },
+                onPanUpdate: (details) {
+                  paintController.updatePaint(_getPosition(
+                      _key.currentContext!.size, details.localPosition));
+                },
+                onPanEnd: (details) {
+                  paintController.endPaint();
+                },
+                child: CustomPaint(
+                  painter: Painter(
+                    state: state,
+                    context: context,
+                  ),
+                ),
+              );
             },
-            onPanUpdate: (details) {
-              paintController.updatePaint(_getPosition(
-                  _key.currentContext!.size, details.localPosition));
-            },
-            onPanEnd: (details) {
-              paintController.endPaint();
-            },
-            child: CustomPaint(
-              painter: Painter(
-                state: state,
-                context: context,
-              ),
-            ),
           ),
         ),
       ),

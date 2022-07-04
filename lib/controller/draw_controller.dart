@@ -17,11 +17,11 @@ class DrawController extends StateNotifier<DrawState> {
 
   void updatePaint(Offset nextPoint) {
     if (state.isDrag) {
-      final _paintList = List<List<Offset>>.of(state.paintList);
-      final _offsetList = List<Offset>.of(state.paintList.last)..add(nextPoint);
-      _paintList.last = _offsetList;
+      final paintList = List<List<Offset>>.of(state.paintList);
+      final offsetList = List<Offset>.of(state.paintList.last)..add(nextPoint);
+      paintList.last = offsetList;
 
-      state = state.copyWith(paintList: _paintList);
+      state = state.copyWith(paintList: paintList);
     }
   }
 
@@ -53,7 +53,6 @@ class DrawController extends StateNotifier<DrawState> {
   void ticknessSlider(double val) {
     if (!state.isDrag) {
       state = state.copyWith(thickness: val);
-      print(state.thickness);
     }
   }
 

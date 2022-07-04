@@ -10,19 +10,32 @@ class ColorPicker extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _paintController = ref.watch(drawControllerProvider.notifier);
+    final paintController = ref.watch(drawControllerProvider.notifier);
+    final state = ref.watch(drawControllerProvider);
 
     return InkWell(
       onTap: () {
-        _paintController.chageColor(pickColor!);
+        paintController.chageColor(pickColor!);
       },
-      child: Container(
-        width: 60,
-        height: 60,
-        decoration: BoxDecoration(
-          color: pickColor!,
-          shape: BoxShape.circle,
-        ),
+      child: Stack(
+        alignment: AlignmentDirectional.center,
+        children: [
+          Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              color: pickColor!,
+              shape: BoxShape.circle,
+            ),
+          ),
+          state.pickColor == pickColor
+              ? const Icon(
+                  Icons.brush,
+                  size: 40,
+                  color: Colors.white,
+                )
+              : const SizedBox(),
+        ],
       ),
     );
   }

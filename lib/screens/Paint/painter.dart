@@ -12,7 +12,7 @@ class Painter extends CustomPainter {
       final painter = Paint()
         ..strokeCap = StrokeCap.round
         ..isAntiAlias = true
-        ..color = state.colorList[index] //新しい配列を追加して太さとか色をカエル
+        ..color = state.colorList[index]
         ..strokeWidth = state.thicknessList[index]
         ..style = PaintingStyle.stroke;
       canvas.drawRRect(
@@ -30,5 +30,6 @@ class Painter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(Painter old) => old.state.paintList != state.paintList;
+  bool shouldRepaint(Painter oldDelegate) =>
+      oldDelegate.state.paintList != state.paintList;
 }

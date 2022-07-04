@@ -88,7 +88,7 @@ class HomeScreen extends HookConsumerWidget {
                         child: Padding(
                           padding: EdgeInsets.only(left: 10),
                           child: Text(
-                            "うんこしっこおなら",
+                            "タイトルかね",
                             style: TextStyle(fontSize: 20),
                           ),
                         ),
