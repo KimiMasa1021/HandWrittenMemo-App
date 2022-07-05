@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:zen03/model/color_path.dart';
 
 part 'draw_state.freezed.dart';
 
 @freezed
 class DrawState with _$DrawState {
   const factory DrawState({
-    @Default(<List<Offset>>[]) List<List<Offset>> paintList,
-    @Default([]) List<double> thicknessList,
-    @Default([]) List<Color> colorList,
+    @Default([]) List<ColorPath> pathLists,
     @Default(false) bool isDrag,
     @Default(false) bool isEraser,
-    @Default(5.5) double thickness,
+    @Default(6) double thickness,
     @Default(Colors.black) Color pickColor,
   }) = _DrawState;
 }

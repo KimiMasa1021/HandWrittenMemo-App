@@ -16,9 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$DrawState {
-  List<List<Offset>> get paintList => throw _privateConstructorUsedError;
-  List<double> get thicknessList => throw _privateConstructorUsedError;
-  List<Color> get colorList => throw _privateConstructorUsedError;
+  List<ColorPath> get pathLists => throw _privateConstructorUsedError;
   bool get isDrag => throw _privateConstructorUsedError;
   bool get isEraser => throw _privateConstructorUsedError;
   double get thickness => throw _privateConstructorUsedError;
@@ -34,9 +32,7 @@ abstract class $DrawStateCopyWith<$Res> {
   factory $DrawStateCopyWith(DrawState value, $Res Function(DrawState) then) =
       _$DrawStateCopyWithImpl<$Res>;
   $Res call(
-      {List<List<Offset>> paintList,
-      List<double> thicknessList,
-      List<Color> colorList,
+      {List<ColorPath> pathLists,
       bool isDrag,
       bool isEraser,
       double thickness,
@@ -53,27 +49,17 @@ class _$DrawStateCopyWithImpl<$Res> implements $DrawStateCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? paintList = freezed,
-    Object? thicknessList = freezed,
-    Object? colorList = freezed,
+    Object? pathLists = freezed,
     Object? isDrag = freezed,
     Object? isEraser = freezed,
     Object? thickness = freezed,
     Object? pickColor = freezed,
   }) {
     return _then(_value.copyWith(
-      paintList: paintList == freezed
-          ? _value.paintList
-          : paintList // ignore: cast_nullable_to_non_nullable
-              as List<List<Offset>>,
-      thicknessList: thicknessList == freezed
-          ? _value.thicknessList
-          : thicknessList // ignore: cast_nullable_to_non_nullable
-              as List<double>,
-      colorList: colorList == freezed
-          ? _value.colorList
-          : colorList // ignore: cast_nullable_to_non_nullable
-              as List<Color>,
+      pathLists: pathLists == freezed
+          ? _value.pathLists
+          : pathLists // ignore: cast_nullable_to_non_nullable
+              as List<ColorPath>,
       isDrag: isDrag == freezed
           ? _value.isDrag
           : isDrag // ignore: cast_nullable_to_non_nullable
@@ -101,9 +87,7 @@ abstract class _$$_DrawStateCopyWith<$Res> implements $DrawStateCopyWith<$Res> {
       __$$_DrawStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {List<List<Offset>> paintList,
-      List<double> thicknessList,
-      List<Color> colorList,
+      {List<ColorPath> pathLists,
       bool isDrag,
       bool isEraser,
       double thickness,
@@ -122,27 +106,17 @@ class __$$_DrawStateCopyWithImpl<$Res> extends _$DrawStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? paintList = freezed,
-    Object? thicknessList = freezed,
-    Object? colorList = freezed,
+    Object? pathLists = freezed,
     Object? isDrag = freezed,
     Object? isEraser = freezed,
     Object? thickness = freezed,
     Object? pickColor = freezed,
   }) {
     return _then(_$_DrawState(
-      paintList: paintList == freezed
-          ? _value._paintList
-          : paintList // ignore: cast_nullable_to_non_nullable
-              as List<List<Offset>>,
-      thicknessList: thicknessList == freezed
-          ? _value._thicknessList
-          : thicknessList // ignore: cast_nullable_to_non_nullable
-              as List<double>,
-      colorList: colorList == freezed
-          ? _value._colorList
-          : colorList // ignore: cast_nullable_to_non_nullable
-              as List<Color>,
+      pathLists: pathLists == freezed
+          ? _value._pathLists
+          : pathLists // ignore: cast_nullable_to_non_nullable
+              as List<ColorPath>,
       isDrag: isDrag == freezed
           ? _value.isDrag
           : isDrag // ignore: cast_nullable_to_non_nullable
@@ -167,39 +141,19 @@ class __$$_DrawStateCopyWithImpl<$Res> extends _$DrawStateCopyWithImpl<$Res>
 
 class _$_DrawState implements _DrawState {
   const _$_DrawState(
-      {final List<List<Offset>> paintList = const <List<Offset>>[],
-      final List<double> thicknessList = const [],
-      final List<Color> colorList = const [],
+      {final List<ColorPath> pathLists = const [],
       this.isDrag = false,
       this.isEraser = false,
-      this.thickness = 5.5,
+      this.thickness = 6,
       this.pickColor = Colors.black})
-      : _paintList = paintList,
-        _thicknessList = thicknessList,
-        _colorList = colorList;
+      : _pathLists = pathLists;
 
-  final List<List<Offset>> _paintList;
+  final List<ColorPath> _pathLists;
   @override
   @JsonKey()
-  List<List<Offset>> get paintList {
+  List<ColorPath> get pathLists {
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_paintList);
-  }
-
-  final List<double> _thicknessList;
-  @override
-  @JsonKey()
-  List<double> get thicknessList {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_thicknessList);
-  }
-
-  final List<Color> _colorList;
-  @override
-  @JsonKey()
-  List<Color> get colorList {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_colorList);
+    return EqualUnmodifiableListView(_pathLists);
   }
 
   @override
@@ -217,7 +171,7 @@ class _$_DrawState implements _DrawState {
 
   @override
   String toString() {
-    return 'DrawState(paintList: $paintList, thicknessList: $thicknessList, colorList: $colorList, isDrag: $isDrag, isEraser: $isEraser, thickness: $thickness, pickColor: $pickColor)';
+    return 'DrawState(pathLists: $pathLists, isDrag: $isDrag, isEraser: $isEraser, thickness: $thickness, pickColor: $pickColor)';
   }
 
   @override
@@ -226,11 +180,7 @@ class _$_DrawState implements _DrawState {
         (other.runtimeType == runtimeType &&
             other is _$_DrawState &&
             const DeepCollectionEquality()
-                .equals(other._paintList, _paintList) &&
-            const DeepCollectionEquality()
-                .equals(other._thicknessList, _thicknessList) &&
-            const DeepCollectionEquality()
-                .equals(other._colorList, _colorList) &&
+                .equals(other._pathLists, _pathLists) &&
             const DeepCollectionEquality().equals(other.isDrag, isDrag) &&
             const DeepCollectionEquality().equals(other.isEraser, isEraser) &&
             const DeepCollectionEquality().equals(other.thickness, thickness) &&
@@ -240,9 +190,7 @@ class _$_DrawState implements _DrawState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_paintList),
-      const DeepCollectionEquality().hash(_thicknessList),
-      const DeepCollectionEquality().hash(_colorList),
+      const DeepCollectionEquality().hash(_pathLists),
       const DeepCollectionEquality().hash(isDrag),
       const DeepCollectionEquality().hash(isEraser),
       const DeepCollectionEquality().hash(thickness),
@@ -256,20 +204,14 @@ class _$_DrawState implements _DrawState {
 
 abstract class _DrawState implements DrawState {
   const factory _DrawState(
-      {final List<List<Offset>> paintList,
-      final List<double> thicknessList,
-      final List<Color> colorList,
+      {final List<ColorPath> pathLists,
       final bool isDrag,
       final bool isEraser,
       final double thickness,
       final Color pickColor}) = _$_DrawState;
 
   @override
-  List<List<Offset>> get paintList => throw _privateConstructorUsedError;
-  @override
-  List<double> get thicknessList => throw _privateConstructorUsedError;
-  @override
-  List<Color> get colorList => throw _privateConstructorUsedError;
+  List<ColorPath> get pathLists => throw _privateConstructorUsedError;
   @override
   bool get isDrag => throw _privateConstructorUsedError;
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zen03/screens/Paint/painter.dart';
 
+import '../../../model/color_path.dart';
 import '../../../providers/general_providers.dart';
 
 class DrawScreen extends StatelessWidget {
@@ -27,21 +28,23 @@ class DrawScreen extends StatelessWidget {
               final paintController =
                   ref.watch(drawControllerProvider.notifier);
               final state = ref.watch(drawControllerProvider);
+              ColorPath colorPath = ColorPath(state.pickColor, state.thickness);
               return GestureDetector(
                 onPanStart: (details) {
-                  paintController.addPaint(details.localPosition);
+                  colorPath.setFirstPoint(details.localPosition);
                 },
                 onPanUpdate: (details) {
-                  paintController.updatePaint(_getPosition(
+                  colorPath.updatePath(_getPosition(
                       _key.currentContext!.size, details.localPosition));
+                  paintController.addPaint(colorPath);
                 },
                 onPanEnd: (details) {
-                  paintController.endPaint();
+                  paintController.addPaint(colorPath);
                 },
                 child: CustomPaint(
                   painter: Painter(
-                    state: state,
                     context: context,
+                    state: state,
                   ),
                 ),
               );
