@@ -8,25 +8,28 @@ class Painter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    state.paintList.asMap().forEach((index, points) {
-      final painter = Paint()
-        ..strokeCap = StrokeCap.round
-        ..isAntiAlias = true
-        ..color = state.colorList[index]
-        ..strokeWidth = state.thicknessList[index]
-        ..style = PaintingStyle.stroke;
-      canvas.drawRRect(
-        RRect.fromRectAndRadius(
-          Rect.fromCenter(center: points[0], width: 5, height: 5),
-          const Radius.circular(5),
-        ),
-        painter,
-      );
+    state.paintList.asMap().forEach(
+      (index, points) {
+        final painter = Paint()
+          ..strokeCap = StrokeCap.round
+          ..isAntiAlias = true
+          ..color = state.colorList[index]
+          ..strokeWidth = state.thicknessList[index]
+          ..style = PaintingStyle.stroke;
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(
+            Rect.fromCenter(center: points[0], width: 5, height: 5),
+            const Radius.circular(5),
+          ),
+          painter,
+        );
 
-      for (var i = 0; i < points.length - 1; i++) {
-        canvas.drawLine(points[i], points[i + 1], painter);
-      }
-    });
+        for (var i = 0; i < points.length - 1; i++) {
+          canvas.drawLine(points[i], points[i + 1], painter);
+          //drawPathを使うとパフォーマンス上がるらしいぞよ
+        }
+      },
+    );
   }
 
   @override

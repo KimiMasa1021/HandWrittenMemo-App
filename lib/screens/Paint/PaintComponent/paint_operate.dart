@@ -66,8 +66,7 @@ class PaintOperation extends StatelessWidget {
               final state = ref.watch(drawControllerProvider);
               return Slider(
                 value: state.thickness,
-                onChanged: (val) =>
-                    paintController.ticknessSlider(val), /////////////////
+                onChanged: (val) => paintController.ticknessSlider(val),
                 min: 1,
                 max: 10,
                 divisions: 18,

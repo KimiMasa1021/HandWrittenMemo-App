@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'screens/separation.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized(); //アプリ起動時に処理を発火させるため？？
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(); //Firebaseの初期化(同期)
   runApp(
     const ProviderScope(
