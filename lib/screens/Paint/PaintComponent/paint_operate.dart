@@ -25,7 +25,6 @@ class PaintOperation extends StatelessWidget {
                 ),
                 funcFlg: 'delete',
               ),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: const [
@@ -68,8 +67,7 @@ class PaintOperation extends StatelessWidget {
                 value: state.thickness,
                 onChanged: (val) => paintController.ticknessSlider(val),
                 min: 1,
-                max: 10,
-                divisions: 18,
+                max: 15,
               );
             },
           ),

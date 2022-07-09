@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../common/common.dart';
 import 'PaintComponent/draw_screen.dart';
+import 'PaintComponent/paint_dialog.dart';
 import 'PaintComponent/paint_operate.dart';
 
 class PaintScreen extends StatelessWidget {
@@ -7,6 +9,9 @@ class PaintScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ステータスバーとアップバーの高さを取得
+    var appBarheight =
+        AppBar().preferredSize.height + MediaQuery.of(context).padding.top;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -25,7 +30,14 @@ class PaintScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const PaintDialog();
+                },
+              );
+            },
             icon: const Icon(
               Icons.save_alt_rounded,
               color: Colors.black,
@@ -33,11 +45,17 @@ class PaintScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Column(
-        children: [
-          DrawScreen(), //描画領域
-          const PaintOperation(), //操作領域
-        ],
+      body: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(), //スクロールを無効
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height - appBarheight,
+          child: Column(
+            children: [
+              DrawScreen(), //描画領域
+              const PaintOperation(), //操作領域
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -75,7 +75,7 @@ class HomeScreen extends HookConsumerWidget {
                             decoration: BoxDecoration(
                               image: const DecorationImage(
                                   image: NetworkImage(
-                                      "https://i.pinimg.com/474x/af/85/2a/af852a05d78571aa026ad497f79a69aa.jpg")),
+                                      "https://yt3.ggpht.com/ytc/AKedOLSYX6-HQNVCuvu-YFYppe8uoFUAEyOxX871UsVW=s176-c-k-c0x00ffffff-no-rj-mo")),
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(width: 2, color: Colors.black),
                             ),
