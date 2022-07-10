@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zen03/controller/draw_controller.dart';
 import 'package:zen03/model/user_model.dart';
@@ -15,6 +16,9 @@ final firebaseAuthProvider =
 //　FireBaseFireStoreのインスタンス
 final firebaseFireStoreProvider =
     Provider<FirebaseFirestore>((ref) => FirebaseFirestore.instance);
+
+final firebaseStoragePrvider =
+    Provider<FirebaseStorage>((ref) => FirebaseStorage.instance);
 
 final authRepositoryProvider =
     Provider<AuthRepository>((ref) => AuthRepository(ref.read));

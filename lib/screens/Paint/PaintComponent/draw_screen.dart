@@ -29,9 +29,12 @@ class DrawScreen extends StatelessWidget {
                 final paintController =
                     ref.watch(drawControllerProvider.notifier);
                 final state = ref.watch(drawControllerProvider);
+                final pictureRepository = ref.watch(pictureRepositoryProvider);
+
                 return GestureDetector(
                   onPanStart: (details) {
                     paintController.addPaint(details.localPosition);
+                    pictureRepository.getDrawKey(_imageKey);
                   },
                   onPanUpdate: (details) {
                     paintController.updatePaint(_getPosition(

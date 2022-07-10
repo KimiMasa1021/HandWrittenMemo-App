@@ -51,7 +51,7 @@ class PaintScreen extends StatelessWidget {
           child: Column(
             children: [
               DrawScreen(), //描画領域
-              PaintOperation(), //操作領域
+              const PaintOperation(), //操作領域
             ],
           ),
         ),

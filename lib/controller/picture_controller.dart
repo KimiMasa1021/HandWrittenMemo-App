@@ -15,7 +15,5 @@ class Picturecontroller extends StateNotifier<UserData?> {
     read(pictureRepositoryProvider)
         .fetchPictureStream
         .listen((userData) => state = userData);
-
-    print(state);
   }
 }

@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
@@ -12,16 +15,16 @@ import '../providers/general_providers.dart';
 abstract class BasePictureRepository {
   Stream<UserData?> get fetchPictureStream;
   Future<void> savePicture(Picture picture);
-  Future<ByteData> exportToImage(GlobalKey globalKey);
 }
 
 class PictureRepository implements BasePictureRepository {
   final Ref ref;
   final String userId;
-  CollectionReference? collectionReference;
+  CollectionReference? storeCollectionReference;
+  GlobalKey? key;
 
   PictureRepository(this.ref, this.userId) {
-    collectionReference =
+    storeCollectionReference =
         ref.read(firebaseFireStoreProvider).collection("picture");
   }
 
@@ -36,29 +39,66 @@ class PictureRepository implements BasePictureRepository {
 
   @override
   Stream<UserData?> get fetchPictureStream {
-    return collectionReference!
+    return storeCollectionReference!
         .where("user_id", isEqualTo: userId)
         .snapshots()
         .map(pictureDataFromSnapshot);
   }
 
-  @override
-  Future<void> savePicture(Picture picture) async {
-    // await exportToImage();
-    collectionReference?.add({
-      "user_id": userId,
-      "title": picture.title,
-      "thumbnailUrl":
-          "https://images.goodsmile.info/cgm/images/product/20220518/12712/98900/large/10124cb51552e4c5b2a543db986e60bf.jpg",
-    });
+  void getDrawKey(GlobalKey val) {
+    //グローバルキーの取得
+    key = val;
+    debugPrint(key.toString());
   }
 
   @override
-  Future<ByteData> exportToImage(GlobalKey globalKey) async {
+  Future<void> savePicture(Picture picture) async {
+    //firebaseに保存
+    File file = await exportToImage();
+    String url = await saveImage(file);
+    await storeCollectionReference?.add({
+      "user_id": userId,
+      "title": picture.title,
+      "thumbnailUrl": url,
+    });
+  }
+
+  Future<File> exportToImage() async {
+    //Widgetの画像化
     final boundary =
-        globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+        key!.currentContext!.findRenderObject() as RenderRepaintBoundary;
     final image = await boundary.toImage();
     final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    return byteData!;
+    //変換　bytedata → File
+    var pngBytes = byteData!.buffer.asUint8List();
+    File file = File.fromRawPath(pngBytes);
+    return file;
+  }
+
+  Future<String> saveImage(File file) async {
+    final date = DateTime.now();
+    var filename = date.toString();
+
+    try {
+      await ref
+          .watch(firebaseStoragePrvider)
+          .ref()
+          .child("todoList/$filename")
+          .putFile(file);
+    } on FirebaseException catch (e) {
+      debugPrint(e.toString());
+    }
+
+    return filename;
+  }
+
+  String generateNonce([int length = 10]) {
+    const charset =
+        '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
+    final random = Random.secure();
+    final randomStr =
+        List.generate(length, (_) => charset[random.nextInt(charset.length)])
+            .join();
+    return randomStr;
   }
 }

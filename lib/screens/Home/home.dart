@@ -1,8 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zen03/providers/general_providers.dart';
-
 import '../../controller/picture_controller.dart';
 import '../../model/picture_model.dart';
 import '../paint/paint_screen.dart';
@@ -70,7 +67,7 @@ class HomeScreen extends HookConsumerWidget {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: NetworkImage(
-                                      picture!.thumbnailUrl!,
+                                      picture?.thumbnailUrl ?? 'httpsut',
                                     )),
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
@@ -83,10 +80,10 @@ class HomeScreen extends HookConsumerWidget {
                               width: double.infinity,
                               height: 30,
                               child: Padding(
-                                padding: EdgeInsets.only(left: 10),
+                                padding: const EdgeInsets.only(left: 10),
                                 child: Text(
                                   picture!.title!,
-                                  style: TextStyle(fontSize: 20),
+                                  style: const TextStyle(fontSize: 20),
                                 ),
                               ),
                             )
@@ -96,7 +93,7 @@ class HomeScreen extends HookConsumerWidget {
                     },
                   ),
                 )
-              : Text("でーたなし"),
+              : const Text("でーたなし"),
         ),
       ),
     );
