@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../common/common.dart';
 import 'PaintComponent/draw_screen.dart';
 import 'PaintComponent/paint_dialog.dart';
 import 'PaintComponent/paint_operate.dart';
@@ -15,7 +14,7 @@ class PaintScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "あああ",
+          "お絵描きメモ",
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Colors.white,
@@ -52,7 +51,7 @@ class PaintScreen extends StatelessWidget {
           child: Column(
             children: [
               DrawScreen(), //描画領域
-              const PaintOperation(), //操作領域
+              PaintOperation(), //操作領域
             ],
           ),
         ),

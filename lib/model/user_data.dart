@@ -1,8 +1,8 @@
-import 'package:zen03/model/picture_state.dart';
+import 'package:zen03/model/picture_model.dart';
 
 class UserData {
   final String? uid;
-  List<PictureState>? data;
+  List<Picture>? data;
 
   UserData({this.uid});
 

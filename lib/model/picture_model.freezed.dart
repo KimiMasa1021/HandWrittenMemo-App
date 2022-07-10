@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'picture_state.dart';
+part of 'picture_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,44 +15,35 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$PictureState {
+mixin _$Picture {
   String? get userId => throw _privateConstructorUsedError;
   String? get uid => throw _privateConstructorUsedError;
-  DateTime? get createAt => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   String? get thumbnailUrl => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $PictureStateCopyWith<PictureState> get copyWith =>
-      throw _privateConstructorUsedError;
+  $PictureCopyWith<Picture> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $PictureStateCopyWith<$Res> {
-  factory $PictureStateCopyWith(
-          PictureState value, $Res Function(PictureState) then) =
-      _$PictureStateCopyWithImpl<$Res>;
-  $Res call(
-      {String? userId,
-      String? uid,
-      DateTime? createAt,
-      String? title,
-      String? thumbnailUrl});
+abstract class $PictureCopyWith<$Res> {
+  factory $PictureCopyWith(Picture value, $Res Function(Picture) then) =
+      _$PictureCopyWithImpl<$Res>;
+  $Res call({String? userId, String? uid, String? title, String? thumbnailUrl});
 }
 
 /// @nodoc
-class _$PictureStateCopyWithImpl<$Res> implements $PictureStateCopyWith<$Res> {
-  _$PictureStateCopyWithImpl(this._value, this._then);
+class _$PictureCopyWithImpl<$Res> implements $PictureCopyWith<$Res> {
+  _$PictureCopyWithImpl(this._value, this._then);
 
-  final PictureState _value;
+  final Picture _value;
   // ignore: unused_field
-  final $Res Function(PictureState) _then;
+  final $Res Function(Picture) _then;
 
   @override
   $Res call({
     Object? userId = freezed,
     Object? uid = freezed,
-    Object? createAt = freezed,
     Object? title = freezed,
     Object? thumbnailUrl = freezed,
   }) {
@@ -65,10 +56,6 @@ class _$PictureStateCopyWithImpl<$Res> implements $PictureStateCopyWith<$Res> {
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String?,
-      createAt: createAt == freezed
-          ? _value.createAt
-          : createAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -82,40 +69,31 @@ class _$PictureStateCopyWithImpl<$Res> implements $PictureStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_PictureStateCopyWith<$Res>
-    implements $PictureStateCopyWith<$Res> {
-  factory _$$_PictureStateCopyWith(
-          _$_PictureState value, $Res Function(_$_PictureState) then) =
-      __$$_PictureStateCopyWithImpl<$Res>;
+abstract class _$$_PictureCopyWith<$Res> implements $PictureCopyWith<$Res> {
+  factory _$$_PictureCopyWith(
+          _$_Picture value, $Res Function(_$_Picture) then) =
+      __$$_PictureCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {String? userId,
-      String? uid,
-      DateTime? createAt,
-      String? title,
-      String? thumbnailUrl});
+  $Res call({String? userId, String? uid, String? title, String? thumbnailUrl});
 }
 
 /// @nodoc
-class __$$_PictureStateCopyWithImpl<$Res>
-    extends _$PictureStateCopyWithImpl<$Res>
-    implements _$$_PictureStateCopyWith<$Res> {
-  __$$_PictureStateCopyWithImpl(
-      _$_PictureState _value, $Res Function(_$_PictureState) _then)
-      : super(_value, (v) => _then(v as _$_PictureState));
+class __$$_PictureCopyWithImpl<$Res> extends _$PictureCopyWithImpl<$Res>
+    implements _$$_PictureCopyWith<$Res> {
+  __$$_PictureCopyWithImpl(_$_Picture _value, $Res Function(_$_Picture) _then)
+      : super(_value, (v) => _then(v as _$_Picture));
 
   @override
-  _$_PictureState get _value => super._value as _$_PictureState;
+  _$_Picture get _value => super._value as _$_Picture;
 
   @override
   $Res call({
     Object? userId = freezed,
     Object? uid = freezed,
-    Object? createAt = freezed,
     Object? title = freezed,
     Object? thumbnailUrl = freezed,
   }) {
-    return _then(_$_PictureState(
+    return _then(_$_Picture(
       userId: userId == freezed
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -124,10 +102,6 @@ class __$$_PictureStateCopyWithImpl<$Res>
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String?,
-      createAt: createAt == freezed
-          ? _value.createAt
-          : createAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -142,16 +116,13 @@ class __$$_PictureStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PictureState implements _PictureState {
-  const _$_PictureState(
-      {this.userId, this.uid, this.createAt, this.title, this.thumbnailUrl});
+class _$_Picture implements _Picture {
+  const _$_Picture({this.userId, this.uid, this.title, this.thumbnailUrl});
 
   @override
   final String? userId;
   @override
   final String? uid;
-  @override
-  final DateTime? createAt;
   @override
   final String? title;
   @override
@@ -159,17 +130,16 @@ class _$_PictureState implements _PictureState {
 
   @override
   String toString() {
-    return 'PictureState(userId: $userId, uid: $uid, createAt: $createAt, title: $title, thumbnailUrl: $thumbnailUrl)';
+    return 'Picture(userId: $userId, uid: $uid, title: $title, thumbnailUrl: $thumbnailUrl)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PictureState &&
+            other is _$_Picture &&
             const DeepCollectionEquality().equals(other.userId, userId) &&
             const DeepCollectionEquality().equals(other.uid, uid) &&
-            const DeepCollectionEquality().equals(other.createAt, createAt) &&
             const DeepCollectionEquality().equals(other.title, title) &&
             const DeepCollectionEquality()
                 .equals(other.thumbnailUrl, thumbnailUrl));
@@ -180,36 +150,32 @@ class _$_PictureState implements _PictureState {
       runtimeType,
       const DeepCollectionEquality().hash(userId),
       const DeepCollectionEquality().hash(uid),
-      const DeepCollectionEquality().hash(createAt),
       const DeepCollectionEquality().hash(title),
       const DeepCollectionEquality().hash(thumbnailUrl));
 
   @JsonKey(ignore: true)
   @override
-  _$$_PictureStateCopyWith<_$_PictureState> get copyWith =>
-      __$$_PictureStateCopyWithImpl<_$_PictureState>(this, _$identity);
+  _$$_PictureCopyWith<_$_Picture> get copyWith =>
+      __$$_PictureCopyWithImpl<_$_Picture>(this, _$identity);
 }
 
-abstract class _PictureState implements PictureState {
-  const factory _PictureState(
+abstract class _Picture implements Picture {
+  const factory _Picture(
       {final String? userId,
       final String? uid,
-      final DateTime? createAt,
       final String? title,
-      final String? thumbnailUrl}) = _$_PictureState;
+      final String? thumbnailUrl}) = _$_Picture;
 
   @override
   String? get userId => throw _privateConstructorUsedError;
   @override
   String? get uid => throw _privateConstructorUsedError;
   @override
-  DateTime? get createAt => throw _privateConstructorUsedError;
-  @override
   String? get title => throw _privateConstructorUsedError;
   @override
   String? get thumbnailUrl => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$$_PictureStateCopyWith<_$_PictureState> get copyWith =>
+  _$$_PictureCopyWith<_$_Picture> get copyWith =>
       throw _privateConstructorUsedError;
 }

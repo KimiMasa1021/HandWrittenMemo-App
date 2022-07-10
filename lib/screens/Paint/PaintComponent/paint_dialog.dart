@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:zen03/model/picture_model.dart';
+import 'package:zen03/model/user_data.dart';
 
-class PaintDialog extends StatelessWidget {
+import '../../../providers/general_providers.dart';
+
+class PaintDialog extends HookConsumerWidget {
   const PaintDialog({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pictureRepository = ref.watch(pictureRepositoryProvider);
     return Stack(
       children: [
         AlertDialog(
@@ -52,7 +58,11 @@ class PaintDialog extends StatelessWidget {
                 margin: const EdgeInsets.symmetric(vertical: 30),
                 width: MediaQuery.of(context).size.width * 0.6,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    pictureRepository.savePicture(const Picture(
+                      title: "タイトル",
+                    ));
+                  },
                   style: ElevatedButton.styleFrom(
                     primary: const Color.fromARGB(199, 191, 255, 255),
                     shape: RoundedRectangleBorder(

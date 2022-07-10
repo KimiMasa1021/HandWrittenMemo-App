@@ -7,45 +7,48 @@ import '../../../providers/general_providers.dart';
 class DrawScreen extends StatelessWidget {
   DrawScreen({Key? key}) : super(key: key);
   final _key = GlobalKey();
-
+  final _imageKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(13.0),
-        child: Container(
-          key: _key,
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(width: 2),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Consumer(
-            builder: (context, ref, child) {
-              final paintController =
-                  ref.watch(drawControllerProvider.notifier);
-              final state = ref.watch(drawControllerProvider);
-              return GestureDetector(
-                onPanStart: (details) {
-                  paintController.addPaint(details.localPosition);
-                },
-                onPanUpdate: (details) {
-                  paintController.updatePaint(_getPosition(
-                      _key.currentContext!.size, details.localPosition));
-                },
-                onPanEnd: (details) {
-                  paintController.endPaint();
-                },
-                child: CustomPaint(
-                  painter: Painter(
-                    state: state,
-                    context: context,
+        child: RepaintBoundary(
+          key: _imageKey,
+          child: Container(
+            key: _key,
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(width: 2),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Consumer(
+              builder: (context, ref, child) {
+                final paintController =
+                    ref.watch(drawControllerProvider.notifier);
+                final state = ref.watch(drawControllerProvider);
+                return GestureDetector(
+                  onPanStart: (details) {
+                    paintController.addPaint(details.localPosition);
+                  },
+                  onPanUpdate: (details) {
+                    paintController.updatePaint(_getPosition(
+                        _key.currentContext!.size, details.localPosition));
+                  },
+                  onPanEnd: (details) {
+                    paintController.endPaint();
+                  },
+                  child: CustomPaint(
+                    painter: Painter(
+                      state: state,
+                      context: context,
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       ),

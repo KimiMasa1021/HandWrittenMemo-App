@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zen03/providers/general_providers.dart';
 
+import '../../controller/picture_controller.dart';
+import '../../model/picture_model.dart';
 import '../paint/paint_screen.dart';
 
 class HomeScreen extends HookConsumerWidget {
@@ -9,6 +12,8 @@ class HomeScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final userPicture = ref.watch(pictureControllerProvider);
+
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -26,17 +31,6 @@ class HomeScreen extends HookConsumerWidget {
           ),
           onPressed: () {},
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              ref.watch(authRepositoryProvider).signOut();
-            },
-            icon: const Icon(
-              Icons.logout,
-              color: Colors.black,
-            ),
-          ),
-        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -48,57 +42,61 @@ class HomeScreen extends HookConsumerWidget {
       body: SizedBox(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: GridView.count(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10.0,
-            mainAxisSpacing: 20.0,
-            childAspectRatio: 0.6,
-            children: List.generate(
-              100,
-              (index) {
-                return Container(
-                  width: size.width * 0.4,
-                  height: 10,
-                  decoration: BoxDecoration(
-                    // color: Colors.red,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(width: 2, color: Colors.black),
-                  ),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding:
-                              const EdgeInsets.only(top: 8, left: 8, right: 8),
-                          child: Container(
-                            // width: double.infinity,
-                            decoration: BoxDecoration(
-                              image: const DecorationImage(
-                                  image: NetworkImage(
-                                      "https://yt3.ggpht.com/ytc/AKedOLSYX6-HQNVCuvu-YFYppe8uoFUAEyOxX871UsVW=s176-c-k-c0x00ffffff-no-rj-mo")),
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(width: 2, color: Colors.black),
+          child: userPicture?.data?.isNotEmpty ?? false
+              ? GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10.0,
+                  mainAxisSpacing: 20.0,
+                  childAspectRatio: 0.6,
+                  children: List.generate(
+                    userPicture?.data?.length ?? 0,
+                    (index) {
+                      Picture? picture = userPicture?.data?[index];
+                      return Container(
+                        width: size.width * 0.4,
+                        height: 10,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(width: 2, color: Colors.black),
+                        ),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 8, left: 8, right: 8),
+                                child: Container(
+                                  // width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                      picture!.thumbnailUrl!,
+                                    )),
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                        width: 2, color: Colors.black),
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
+                            SizedBox(
+                              width: double.infinity,
+                              height: 30,
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  picture!.title!,
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ),
+                            )
+                          ],
                         ),
-                      ),
-                      const SizedBox(
-                        width: double.infinity,
-                        height: 30,
-                        child: Padding(
-                          padding: EdgeInsets.only(left: 10),
-                          child: Text(
-                            "タイトルかね",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ),
-                      )
-                    ],
+                      );
+                    },
                   ),
-                );
-              },
-            ),
-          ),
+                )
+              : Text("でーたなし"),
         ),
       ),
     );
