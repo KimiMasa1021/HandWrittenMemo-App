@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -72,6 +73,7 @@ class PictureRepository implements BasePictureRepository {
     //変換　bytedata → File
     var pngBytes = byteData!.buffer.asUint8List();
     File file = File.fromRawPath(pngBytes);
+
     return file;
   }
 
@@ -83,7 +85,7 @@ class PictureRepository implements BasePictureRepository {
       await ref
           .watch(firebaseStoragePrvider)
           .ref()
-          .child("todoList/$filename")
+          .child("todoList/name.png")
           .putFile(file);
     } on FirebaseException catch (e) {
       debugPrint(e.toString());
