@@ -1,15 +1,12 @@
 import 'dart:io';
-import 'dart:math';
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zen03/model/picture_model.dart';
 import 'dart:ui' as ui;
-
+import 'package:path_provider/path_provider.dart';
 import '../model/user_data.dart';
 import '../providers/general_providers.dart';
 
@@ -55,8 +52,8 @@ class PictureRepository implements BasePictureRepository {
   @override
   Future<void> savePicture(Picture picture) async {
     //firebaseに保存
-    File file = await exportToImage();
-    String url = await saveImage(file);
+    ByteData data = await exportToImage(key!);
+    String url = await saveImage(data);
     await storeCollectionReference?.add({
       "user_id": userId,
       "title": picture.title,
@@ -64,43 +61,46 @@ class PictureRepository implements BasePictureRepository {
     });
   }
 
-  Future<File> exportToImage() async {
-    //Widgetの画像化
+  Future exportToImage(GlobalKey globalKey) async {
     final boundary =
-        key!.currentContext!.findRenderObject() as RenderRepaintBoundary;
-    final image = await boundary.toImage();
-    final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    //変換　bytedata → File
-    var pngBytes = byteData!.buffer.asUint8List();
-    File file = File.fromRawPath(pngBytes);
-
-    return file;
+        globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+    final imge = await boundary.toImage(
+      pixelRatio: 3,
+    );
+    final byteData = await imge.toByteData(format: ui.ImageByteFormat.png);
+    return byteData;
   }
 
-  Future<String> saveImage(File file) async {
-    final date = DateTime.now();
-    var filename = date.toString();
+  Future<String> get getLocalPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
+  Future<File> convertByteDataToFile(ByteData data) async {
+    final path = await getLocalPath;
+    final imagePath = '$path/image.png';
+    File imageFile = File(imagePath);
+
+    final buffer = data.buffer;
+    final localFile = await imageFile.writeAsBytes(
+        buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+    return localFile;
+  }
+
+  Future<String> saveImage(ByteData pngBytes) async {
+    String filename = "testfile.png"; //DateTime.now().toString();
+    var imageFile = await convertByteDataToFile(pngBytes);
 
     try {
       await ref
           .watch(firebaseStoragePrvider)
           .ref()
-          .child("todoList/name.png")
-          .putFile(file);
+          .child("todoList/$filename")
+          .putFile(imageFile);
     } on FirebaseException catch (e) {
-      debugPrint(e.toString());
+      debugPrint("エラー${e.toString()}");
     }
 
     return filename;
-  }
-
-  String generateNonce([int length = 10]) {
-    const charset =
-        '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._';
-    final random = Random.secure();
-    final randomStr =
-        List.generate(length, (_) => charset[random.nextInt(charset.length)])
-            .join();
-    return randomStr;
   }
 }

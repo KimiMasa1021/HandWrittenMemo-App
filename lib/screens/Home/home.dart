@@ -31,8 +31,8 @@ class HomeScreen extends HookConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const PaintScreen()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => PaintScreen()));
         },
         child: const Icon(Icons.photo_size_select_actual_rounded),
       ),
