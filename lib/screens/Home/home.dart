@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../controller/picture_controller.dart';
 import '../../model/picture_model.dart';
+import '../../providers/general_providers.dart';
 import '../paint/paint_screen.dart';
 
 class HomeScreen extends HookConsumerWidget {
@@ -10,6 +11,7 @@ class HomeScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userPicture = ref.watch(pictureControllerProvider);
+    final drawControl = ref.watch(drawControllerProvider.notifier);
 
     final size = MediaQuery.of(context).size;
     return Scaffold(
@@ -31,6 +33,7 @@ class HomeScreen extends HookConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          drawControl.clear();
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => PaintScreen()));
         },
@@ -41,55 +44,21 @@ class HomeScreen extends HookConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: userPicture?.data?.isNotEmpty ?? false
               ? GridView.count(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10.0,
-                  mainAxisSpacing: 20.0,
-                  childAspectRatio: 0.6,
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 5.0,
+                  mainAxisSpacing: 5.0,
+                  childAspectRatio: 0.74,
                   children: List.generate(
                     userPicture?.data?.length ?? 0,
                     (index) {
                       Picture? picture = userPicture?.data?[index];
-                      return Container(
-                        width: size.width * 0.4,
-                        height: 10,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(width: 2, color: Colors.black),
-                        ),
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 8, left: 8, right: 8),
-                                child: Container(
-                                  // width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                      picture?.thumbnailUrl ?? 'httpsut',
-                                    )),
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                        width: 2, color: Colors.black),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: double.infinity,
-                              height: 30,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: Text(
-                                  picture!.title!,
-                                  style: const TextStyle(fontSize: 20),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      );
+                      return Card(
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0),
+                          ),
+                          child: Image(
+                              image: NetworkImage(picture!.thumbnailUrl!)));
                     },
                   ),
                 )

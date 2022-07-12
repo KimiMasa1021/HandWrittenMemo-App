@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zen03/model/picture_model.dart';
-import 'package:zen03/model/user_data.dart';
 
 import '../../../providers/general_providers.dart';
+import '../../Home/home.dart';
 
 class PaintDialog extends HookConsumerWidget {
   const PaintDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final title = useState("");
+
     final pictureRepository = ref.watch(pictureRepositoryProvider);
     return Stack(
       children: [
@@ -42,6 +45,7 @@ class PaintDialog extends HookConsumerWidget {
                 width: MediaQuery.of(context).size.width * 0.6,
                 margin: const EdgeInsets.only(top: 30, left: 30, right: 30),
                 child: TextField(
+                  onChanged: (val) => title.value = val,
                   style: const TextStyle(fontSize: 20),
                   decoration: InputDecoration(
                     hintText: "タイトル",
@@ -58,10 +62,12 @@ class PaintDialog extends HookConsumerWidget {
                 margin: const EdgeInsets.symmetric(vertical: 30),
                 width: MediaQuery.of(context).size.width * 0.6,
                 child: ElevatedButton(
-                  onPressed: () {
-                    pictureRepository.savePicture(const Picture(
-                      title: "タイトル",
+                  onPressed: () async {
+                    await pictureRepository.savePicture(Picture(
+                      title: title.value,
                     ));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomeScreen()));
                   },
                   style: ElevatedButton.styleFrom(
                     primary: const Color.fromARGB(199, 191, 255, 255),

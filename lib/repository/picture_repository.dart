@@ -26,6 +26,16 @@ class PictureRepository implements BasePictureRepository {
         ref.read(firebaseFireStoreProvider).collection("picture");
   }
 
+  //　リアルタイムに画像データを取得
+  @override
+  Stream<UserData?> get fetchPictureStream {
+    return storeCollectionReference!
+        .where("user_id", isEqualTo: userId)
+        .snapshots()
+        .map(pictureDataFromSnapshot);
+  }
+
+  // snapshot to UserData(data)
   UserData? pictureDataFromSnapshot(QuerySnapshot snapshot) {
     UserData user = UserData(uid: userId);
 
@@ -35,23 +45,15 @@ class PictureRepository implements BasePictureRepository {
     return user;
   }
 
-  @override
-  Stream<UserData?> get fetchPictureStream {
-    return storeCollectionReference!
-        .where("user_id", isEqualTo: userId)
-        .snapshots()
-        .map(pictureDataFromSnapshot);
-  }
-
+  //　画像化するWidgetのkeyを取得
   void getDrawKey(GlobalKey val) {
-    //グローバルキーの取得
     key = val;
     debugPrint(key.toString());
   }
 
+  //
   @override
   Future<void> savePicture(Picture picture) async {
-    //firebaseに保存
     ByteData data = await exportToImage(key!);
     String url = await saveImage(data);
     await storeCollectionReference?.add({
@@ -61,6 +63,7 @@ class PictureRepository implements BasePictureRepository {
     });
   }
 
+  // key to bytedata
   Future exportToImage(GlobalKey globalKey) async {
     final boundary =
         globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
@@ -88,19 +91,23 @@ class PictureRepository implements BasePictureRepository {
   }
 
   Future<String> saveImage(ByteData pngBytes) async {
-    String filename = "testfile.png"; //DateTime.now().toString();
+    String filename = '${DateTime.now()}.png';
     var imageFile = await convertByteDataToFile(pngBytes);
-
+    String? url;
     try {
       await ref
           .watch(firebaseStoragePrvider)
           .ref()
           .child("todoList/$filename")
           .putFile(imageFile);
+      url = await ref
+          .watch(firebaseStoragePrvider)
+          .ref()
+          .child("todoList/$filename")
+          .getDownloadURL();
     } on FirebaseException catch (e) {
       debugPrint("エラー${e.toString()}");
     }
-
-    return filename;
+    return url!;
   }
 }
