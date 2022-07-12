@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../controller/picture_controller.dart';
-import '../../model/picture_model.dart';
 import '../../providers/general_providers.dart';
 import '../paint/paint_screen.dart';
+import 'home_grid.dart';
+import 'home_nodata.dart';
 
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class HomeScreen extends HookConsumerWidget {
 
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      //appbar
       appBar: AppBar(
         title: const Text(
           "手書きメモ",
@@ -23,14 +25,17 @@ class HomeScreen extends HookConsumerWidget {
         backgroundColor: Colors.white,
         elevation: 1,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.menu,
-            color: Colors.black,
-          ),
-          onPressed: () {},
-        ),
       ),
+
+      // body
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: userPicture?.data?.isNotEmpty ?? false
+            ? HomeGrid(userPicture: userPicture!)
+            : const HomeNoData(),
+      ),
+
+      //floatingButton
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           drawControl.clear();
@@ -38,32 +43,6 @@ class HomeScreen extends HookConsumerWidget {
               context, MaterialPageRoute(builder: (context) => PaintScreen()));
         },
         child: const Icon(Icons.photo_size_select_actual_rounded),
-      ),
-      body: SizedBox(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: userPicture?.data?.isNotEmpty ?? false
-              ? GridView.count(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 5.0,
-                  mainAxisSpacing: 5.0,
-                  childAspectRatio: 0.74,
-                  children: List.generate(
-                    userPicture?.data?.length ?? 0,
-                    (index) {
-                      Picture? picture = userPicture?.data?[index];
-                      return Card(
-                          elevation: 5,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0),
-                          ),
-                          child: Image(
-                              image: NetworkImage(picture!.thumbnailUrl!)));
-                    },
-                  ),
-                )
-              : const Text("でーたなし"),
-        ),
       ),
     );
   }
