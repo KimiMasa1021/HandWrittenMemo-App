@@ -25,5 +25,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 //　アンドロイドのホーム画面のガジェット機能
-//　画像の　ダウンロード　共有　編集　　
+//  画像をインポートして描画

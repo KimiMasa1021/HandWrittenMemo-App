@@ -82,8 +82,9 @@ class Register extends HookConsumerWidget {
                                   width: 170,
                                   height: 60,
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(100),
-                                      border: Border.all(width: 2)),
+                                    borderRadius: BorderRadius.circular(100),
+                                    border: Border.all(width: 2),
+                                  ),
                                   child: const Center(
                                     child: Text(
                                       "登録",

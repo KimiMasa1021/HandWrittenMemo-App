@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../providers/general_providers.dart';
-import 'PaintComponent/paint_dialog.dart';
+import 'PaintComponent/paint_back_dialog.dart';
+import 'PaintComponent/paint_save_dialog.dart';
 import 'PaintComponent/paint_operate.dart';
 import 'painter.dart';
 
@@ -27,7 +28,12 @@ class PaintScreen extends StatelessWidget {
               color: Colors.black,
             ),
             onPressed: () {
-              Navigator.pop(context);
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const PaintBackDialog();
+                },
+              );
             },
           ),
           actions: [
@@ -40,7 +46,7 @@ class PaintScreen extends StatelessWidget {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return const PaintDialog();
+                        return const PaintSaveDialog();
                       },
                     );
                   },

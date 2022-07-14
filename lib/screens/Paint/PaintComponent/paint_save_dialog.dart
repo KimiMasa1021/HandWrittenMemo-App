@@ -6,8 +6,8 @@ import 'package:zen03/model/picture_model.dart';
 import '../../../providers/general_providers.dart';
 import '../../Home/home.dart';
 
-class PaintDialog extends HookConsumerWidget {
-  const PaintDialog({Key? key}) : super(key: key);
+class PaintSaveDialog extends HookConsumerWidget {
+  const PaintSaveDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,7 +19,10 @@ class PaintDialog extends HookConsumerWidget {
         AlertDialog(
           contentPadding: EdgeInsets.zero,
           shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(25.0))),
+            borderRadius: BorderRadius.all(
+              Radius.circular(25.0),
+            ),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min, //　ダイアログの高さをコンテンツに合わせる。
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,7 +39,7 @@ class PaintDialog extends HookConsumerWidget {
                 ),
                 child: const Center(
                   child: Text(
-                    "タイトルを入力しよう。",
+                    "絵に名前をつけよう。",
                     style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -48,7 +51,7 @@ class PaintDialog extends HookConsumerWidget {
                   onChanged: (val) => title.value = val,
                   style: const TextStyle(fontSize: 20),
                   decoration: InputDecoration(
-                    hintText: "タイトル",
+                    hintText: "なまえ",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                       borderSide: const BorderSide(
@@ -63,9 +66,20 @@ class PaintDialog extends HookConsumerWidget {
                 width: MediaQuery.of(context).size.width * 0.6,
                 child: ElevatedButton(
                   onPressed: () async {
-                    await pictureRepository.savePicture(Picture(
-                      title: title.value,
-                    ));
+                    showGeneralDialog(
+                      context: context,
+                      pageBuilder: (BuildContext context, Animation animetion,
+                          Animation secondaryAnimation) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                    );
+                    await pictureRepository.savePicture(
+                      Picture(
+                        title: title.value,
+                      ),
+                    );
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomeScreen()));
                   },
@@ -77,10 +91,14 @@ class PaintDialog extends HookConsumerWidget {
                     elevation: 15.0,
                   ),
                   child: const Padding(
-                    padding: EdgeInsets.all(15.0),
+                    padding: EdgeInsets.all(10.0),
                     child: Text(
-                      '登　録',
-                      style: TextStyle(fontSize: 25, color: Colors.black),
+                      '完了',
+                      style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),

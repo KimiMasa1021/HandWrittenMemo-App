@@ -17,12 +17,21 @@ var textStyleBold40 = const TextStyle(
   fontWeight: FontWeight.bold,
   color: Colors.black,
 );
-
+var textStyleBold20Gray = const TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.bold,
+  color: Color.fromARGB(255, 143, 143, 143),
+);
+var textStyleNomal20 = const TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.normal,
+  color: Colors.black,
+);
 var gradation01 = LinearGradient(
   begin: FractionalOffset.topLeft,
   end: FractionalOffset.bottomRight,
   colors: [
-    const Color.fromARGB(255, 255, 255, 255).withOpacity(0.6),
+    Color.fromARGB(255, 255, 156, 156).withOpacity(0.6),
     const Color.fromARGB(255, 162, 241, 255).withOpacity(0.6),
   ],
   stops: const [

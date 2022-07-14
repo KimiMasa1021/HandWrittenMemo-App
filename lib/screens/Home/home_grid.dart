@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zen03/screens/Home/home_details.dart';
@@ -10,7 +11,7 @@ class HomeGrid extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GridView.count(
-      crossAxisCount: 2,
+      crossAxisCount: 3,
       crossAxisSpacing: 5.0,
       mainAxisSpacing: 5.0,
       childAspectRatio: 0.74,
@@ -24,14 +25,21 @@ class HomeGrid extends HookConsumerWidget {
                 MaterialPageRoute(
                     builder: (context) => PictureDetails(data: picture!))),
             child: Card(
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0),
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(0),
+              ),
+              child: CachedNetworkImage(
+                imageUrl: picture!.thumbnailUrl!,
+                errorWidget: (context, url, dynamic err) => const Center(
+                  child: Icon(Icons.error_outline_sharp),
                 ),
-                child: Image(image: NetworkImage(picture!.thumbnailUrl!))),
+              ),
+            ),
           );
         },
       ),
     );
   }
 }
+//picture!.thumbnailUrl!

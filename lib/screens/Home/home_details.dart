@@ -24,8 +24,17 @@ class PictureDetails extends StatelessWidget {
                   width: double.infinity,
                   child: Card(
                     elevation: 10,
-                    child: Image(
-                      image: NetworkImage(data.thumbnailUrl!),
+                    child: Image.network(
+                      data.thumbnailUrl!,
+                      loadingBuilder: (_, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return const SizedBox(
+                          height: 450,
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -60,6 +69,40 @@ class PictureDetails extends StatelessWidget {
                       const Icon(Icons.download, size: 30),
                       const SizedBox(width: 10),
                       Text("ダウンロードする", style: textStyleBold20)
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Container(
+                  padding: const EdgeInsets.only(left: 30),
+                  width: double.infinity,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.brush, size: 30),
+                      const SizedBox(width: 10),
+                      Text("書き加える", style: textStyleBold20)
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Container(
+                  padding: const EdgeInsets.only(left: 30),
+                  width: double.infinity,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.delete, size: 30),
+                      const SizedBox(width: 10),
+                      Text("削除する", style: textStyleBold20)
                     ],
                   ),
                 ),
