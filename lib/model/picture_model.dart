@@ -1,16 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'picture_model.freezed.dart';
-
-@freezed
-class Picture with _$Picture {
-  const factory Picture({
-    String? userId,
-    String? uid,
-    String? title,
-    String? thumbnailUrl,
-  }) = _Picture;
+class Picture {
+  Picture({this.userId, this.uid, this.title, this.thumbnailUrl});
+  final String? userId;
+  final String? uid;
+  final String? title;
+  final String? thumbnailUrl;
 
   factory Picture.fromSnapshot(DocumentSnapshot doc, String userId) {
     return Picture(

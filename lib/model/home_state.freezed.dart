@@ -1,0 +1,193 @@
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+
+part of 'home_state.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
+/// @nodoc
+mixin _$HomeState {
+  int get gridRow => throw _privateConstructorUsedError;
+  bool get isDrag => throw _privateConstructorUsedError;
+  double get feedBackCardWidth => throw _privateConstructorUsedError;
+  bool get isTarget => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $HomeStateCopyWith<HomeState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $HomeStateCopyWith<$Res> {
+  factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
+      _$HomeStateCopyWithImpl<$Res>;
+  $Res call(
+      {int gridRow, bool isDrag, double feedBackCardWidth, bool isTarget});
+}
+
+/// @nodoc
+class _$HomeStateCopyWithImpl<$Res> implements $HomeStateCopyWith<$Res> {
+  _$HomeStateCopyWithImpl(this._value, this._then);
+
+  final HomeState _value;
+  // ignore: unused_field
+  final $Res Function(HomeState) _then;
+
+  @override
+  $Res call({
+    Object? gridRow = freezed,
+    Object? isDrag = freezed,
+    Object? feedBackCardWidth = freezed,
+    Object? isTarget = freezed,
+  }) {
+    return _then(_value.copyWith(
+      gridRow: gridRow == freezed
+          ? _value.gridRow
+          : gridRow // ignore: cast_nullable_to_non_nullable
+              as int,
+      isDrag: isDrag == freezed
+          ? _value.isDrag
+          : isDrag // ignore: cast_nullable_to_non_nullable
+              as bool,
+      feedBackCardWidth: feedBackCardWidth == freezed
+          ? _value.feedBackCardWidth
+          : feedBackCardWidth // ignore: cast_nullable_to_non_nullable
+              as double,
+      isTarget: isTarget == freezed
+          ? _value.isTarget
+          : isTarget // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_HomeStateCopyWith<$Res> implements $HomeStateCopyWith<$Res> {
+  factory _$$_HomeStateCopyWith(
+          _$_HomeState value, $Res Function(_$_HomeState) then) =
+      __$$_HomeStateCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {int gridRow, bool isDrag, double feedBackCardWidth, bool isTarget});
+}
+
+/// @nodoc
+class __$$_HomeStateCopyWithImpl<$Res> extends _$HomeStateCopyWithImpl<$Res>
+    implements _$$_HomeStateCopyWith<$Res> {
+  __$$_HomeStateCopyWithImpl(
+      _$_HomeState _value, $Res Function(_$_HomeState) _then)
+      : super(_value, (v) => _then(v as _$_HomeState));
+
+  @override
+  _$_HomeState get _value => super._value as _$_HomeState;
+
+  @override
+  $Res call({
+    Object? gridRow = freezed,
+    Object? isDrag = freezed,
+    Object? feedBackCardWidth = freezed,
+    Object? isTarget = freezed,
+  }) {
+    return _then(_$_HomeState(
+      gridRow: gridRow == freezed
+          ? _value.gridRow
+          : gridRow // ignore: cast_nullable_to_non_nullable
+              as int,
+      isDrag: isDrag == freezed
+          ? _value.isDrag
+          : isDrag // ignore: cast_nullable_to_non_nullable
+              as bool,
+      feedBackCardWidth: feedBackCardWidth == freezed
+          ? _value.feedBackCardWidth
+          : feedBackCardWidth // ignore: cast_nullable_to_non_nullable
+              as double,
+      isTarget: isTarget == freezed
+          ? _value.isTarget
+          : isTarget // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_HomeState implements _HomeState {
+  const _$_HomeState(
+      {this.gridRow = 3,
+      this.isDrag = false,
+      this.feedBackCardWidth = 100,
+      this.isTarget = false});
+
+  @override
+  @JsonKey()
+  final int gridRow;
+  @override
+  @JsonKey()
+  final bool isDrag;
+  @override
+  @JsonKey()
+  final double feedBackCardWidth;
+  @override
+  @JsonKey()
+  final bool isTarget;
+
+  @override
+  String toString() {
+    return 'HomeState(gridRow: $gridRow, isDrag: $isDrag, feedBackCardWidth: $feedBackCardWidth, isTarget: $isTarget)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_HomeState &&
+            const DeepCollectionEquality().equals(other.gridRow, gridRow) &&
+            const DeepCollectionEquality().equals(other.isDrag, isDrag) &&
+            const DeepCollectionEquality()
+                .equals(other.feedBackCardWidth, feedBackCardWidth) &&
+            const DeepCollectionEquality().equals(other.isTarget, isTarget));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(gridRow),
+      const DeepCollectionEquality().hash(isDrag),
+      const DeepCollectionEquality().hash(feedBackCardWidth),
+      const DeepCollectionEquality().hash(isTarget));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_HomeStateCopyWith<_$_HomeState> get copyWith =>
+      __$$_HomeStateCopyWithImpl<_$_HomeState>(this, _$identity);
+}
+
+abstract class _HomeState implements HomeState {
+  const factory _HomeState(
+      {final int gridRow,
+      final bool isDrag,
+      final double feedBackCardWidth,
+      final bool isTarget}) = _$_HomeState;
+
+  @override
+  int get gridRow;
+  @override
+  bool get isDrag;
+  @override
+  double get feedBackCardWidth;
+  @override
+  bool get isTarget;
+  @override
+  @JsonKey(ignore: true)
+  _$$_HomeStateCopyWith<_$_HomeState> get copyWith =>
+      throw _privateConstructorUsedError;
+}

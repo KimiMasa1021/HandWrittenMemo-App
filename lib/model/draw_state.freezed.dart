@@ -172,7 +172,7 @@ class _$_DrawState implements _DrawState {
       final List<Color> colorList = const [],
       this.isDrag = false,
       this.isEraser = false,
-      this.thickness = 5.5,
+      this.thickness = 7.5,
       this.pickColor = Colors.black})
       : _paintList = paintList,
         _thicknessList = thicknessList,
@@ -265,19 +265,19 @@ abstract class _DrawState implements DrawState {
       final Color pickColor}) = _$_DrawState;
 
   @override
-  List<List<Offset>> get paintList => throw _privateConstructorUsedError;
+  List<List<Offset>> get paintList;
   @override
-  List<double> get thicknessList => throw _privateConstructorUsedError;
+  List<double> get thicknessList;
   @override
-  List<Color> get colorList => throw _privateConstructorUsedError;
+  List<Color> get colorList;
   @override
-  bool get isDrag => throw _privateConstructorUsedError;
+  bool get isDrag;
   @override
-  bool get isEraser => throw _privateConstructorUsedError;
+  bool get isEraser;
   @override
-  double get thickness => throw _privateConstructorUsedError;
+  double get thickness;
   @override
-  Color get pickColor => throw _privateConstructorUsedError;
+  Color get pickColor;
   @override
   @JsonKey(ignore: true)
   _$$_DrawStateCopyWith<_$_DrawState> get copyWith =>
