@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,6 +15,7 @@ import '../providers/general_providers.dart';
 abstract class BasePictureRepository {
   Stream<UserData?> get fetchPictureStream;
   Future<void> savePicture(Picture picture);
+  Future<void> deletePicture(Picture uid);
 }
 
 class PictureRepository implements BasePictureRepository {
@@ -25,6 +28,8 @@ class PictureRepository implements BasePictureRepository {
     storeCollectionReference =
         ref.read(firebaseFireStoreProvider).collection("picture");
   }
+/////////////////////////////
+////////　データの取得
 
   //　リアルタイムに画像データを取得
   @override
@@ -34,6 +39,9 @@ class PictureRepository implements BasePictureRepository {
         .snapshots()
         .map(pictureDataFromSnapshot);
   }
+
+/////////////////////////////
+////////　データの保存
 
   // snapshot to UserData(data)
   UserData? pictureDataFromSnapshot(QuerySnapshot snapshot) {
@@ -51,7 +59,6 @@ class PictureRepository implements BasePictureRepository {
     debugPrint(key.toString());
   }
 
-  //
   @override
   Future<void> savePicture(Picture picture) async {
     ByteData data = await exportToImage(key!);
@@ -109,5 +116,38 @@ class PictureRepository implements BasePictureRepository {
       debugPrint("エラー${e.toString()}");
     }
     return url!;
+  }
+
+/////////////////////////////
+////////　データの削除
+
+  Future<void> deletePicture(Picture data) async {
+    try {
+      await storeCollectionReference!.doc(data.uid).delete();
+
+      final storageReference =
+          FirebaseStorage.instance.refFromURL(data.thumbnailUrl!);
+      await storageReference.delete();
+    } on FirebaseException catch (e) {
+      debugPrint("エラー${e.toString()}");
+    }
+  }
+
+/////////////////////////////
+////////　画像のダウンロード
+  Future<void> downloadFile(Picture data) async {
+    Dio dio = Dio();
+    try {
+      var dir = await getApplicationDocumentsDirectory();
+      final path = dir.path;
+      final directory = Directory('$path/picture/');
+      await directory.create(recursive: true);
+      await dio.download(
+          "https://i.ytimg.com/vi/wH-GfPUJHNQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBdy0F5QsDreEsKGJ9NhKrOGOPHgA",
+          "${dir.path}/${data.title}.png");
+      debugPrint("ダウンロード完了しました");
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }

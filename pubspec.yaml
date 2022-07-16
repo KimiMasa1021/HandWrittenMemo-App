@@ -47,6 +47,8 @@ dependencies:
   firebase_storage: ^10.3.1
   path_provider: ^2.0.11
   cached_network_image: ^3.2.1
+  dio: ^4.0.6
+  unity_ads_plugin: ^0.3.4
 
 dev_dependencies:
   flutter_test:

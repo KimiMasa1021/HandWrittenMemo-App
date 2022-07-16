@@ -17,7 +17,7 @@ class HomeController extends StateNotifier<HomeState> {
     );
   }
 
-  void changeWillAccept() {
+  void changeDeleteTaget() {
     state = state.copyWith(isTarget: !state.isTarget);
   }
 }

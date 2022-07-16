@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zen03/model/picture_model.dart';
 import '../../common/common.dart';
+import '../../providers/general_providers.dart';
+import '../Paint/paint_screen.dart';
+import 'home_details_button.dart';
 
-class PictureDetails extends StatelessWidget {
+class PictureDetails extends HookConsumerWidget {
   const PictureDetails({Key? key, required this.data}) : super(key: key);
   final Picture data;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pictureRepository = ref.watch(pictureRepositoryProvider);
+    final drawControl = ref.watch(drawControllerProvider.notifier);
+
+    final pictureRepositry = ref.watch(pictureRepositoryProvider);
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -38,73 +47,30 @@ class PictureDetails extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
-                Container(
-                  padding: const EdgeInsets.only(left: 30),
-                  width: double.infinity,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.share, size: 30),
-                      const SizedBox(width: 10),
-                      Text("シェアする", style: textStyleBold20)
-                    ],
-                  ),
+                HomeDetailsButton(
+                  text: "画像を共有する",
+                  buttonIcon: const Icon(Icons.share),
+                  function: () {},
                 ),
-                const SizedBox(height: 20),
-                Container(
-                  padding: const EdgeInsets.only(left: 30),
-                  width: double.infinity,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.download, size: 30),
-                      const SizedBox(width: 10),
-                      Text("ダウンロードする", style: textStyleBold20)
-                    ],
-                  ),
+                HomeDetailsButton(
+                  text: "書き加える",
+                  buttonIcon: const Icon(Icons.brush),
+                  function: () {
+                    drawControl.clear();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => PaintScreen(
+                                editPictureUrl: data.thumbnailUrl)));
+                  },
                 ),
-                const SizedBox(height: 20),
-                Container(
-                  padding: const EdgeInsets.only(left: 30),
-                  width: double.infinity,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.brush, size: 30),
-                      const SizedBox(width: 10),
-                      Text("書き加える", style: textStyleBold20)
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  padding: const EdgeInsets.only(left: 30),
-                  width: double.infinity,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.delete, size: 30),
-                      const SizedBox(width: 10),
-                      Text("削除する", style: textStyleBold20)
-                    ],
-                  ),
+                HomeDetailsButton(
+                  text: "削除する",
+                  buttonIcon: const Icon(Icons.delete),
+                  function: () {
+                    pictureRepository.deletePicture(data);
+                    Navigator.pop(context);
+                  },
                 ),
                 const SizedBox(height: 50)
               ],

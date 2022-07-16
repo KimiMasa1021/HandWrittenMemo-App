@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 import 'package:zen03/model/picture_model.dart';
 
 import '../../../providers/general_providers.dart';
@@ -79,6 +80,13 @@ class PaintSaveDialog extends HookConsumerWidget {
                       Picture(
                         title: title.value,
                       ),
+                    );
+                    await UnityAds.showVideoAd(
+                      placementId: 'Interstitial_Ad_Android',
+                      onComplete: (placementId) =>
+                          debugPrint('Load Complete $placementId'),
+                      onFailed: (placementId, error, message) => debugPrint(
+                          'Load Failed $placementId: $error $message'),
                     );
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomeScreen()));

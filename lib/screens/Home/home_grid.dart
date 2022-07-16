@@ -25,10 +25,10 @@ class HomeGrid extends HookConsumerWidget {
         (index) {
           Picture? picture = userPicture.data?[index];
           return LongPressDraggable(
-            data: "うんこ",
+            data: picture,
             onDragStarted: () => homeControl.deleteTagetFlg(),
             onDragEnd: (details) async {
-              await Future.delayed(const Duration(milliseconds: 500));
+              await Future.delayed(const Duration(milliseconds: 200));
               homeControl.deleteTagetFlg();
             },
             feedback: SizedBox(

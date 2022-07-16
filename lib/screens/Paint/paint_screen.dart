@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 import '../../providers/general_providers.dart';
 import 'PaintComponent/paint_back_dialog.dart';
 import 'PaintComponent/paint_save_dialog.dart';
@@ -7,16 +8,34 @@ import 'PaintComponent/paint_operate.dart';
 import 'painter.dart';
 
 class PaintScreen extends StatelessWidget {
-  PaintScreen({Key? key}) : super(key: key);
+  PaintScreen({Key? key, this.editPictureUrl}) : super(key: key) {
+    //UnityADSの初期化設定
+    UnityAds.init(
+      testMode: true,
+      gameId: '4842721',
+      onComplete: () => debugPrint('Initialization Complete'),
+      onFailed: (error, message) =>
+          debugPrint('Initialization Failed: $error $message'),
+    );
+  }
   final _key = GlobalKey();
   final _imageKey = GlobalKey();
+  String? editPictureUrl;
   @override
   Widget build(BuildContext context) {
     // ステータスバーとアップバーの高さを取得
     var appBarheight =
         AppBar().preferredSize.height + MediaQuery.of(context).padding.top;
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return const PaintBackDialog();
+          },
+        );
+        return false;
+      },
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -89,7 +108,13 @@ class PaintScreen extends StatelessWidget {
                         key: _imageKey,
                         child: Container(
                           key: _key,
-                          margin: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                              image: editPictureUrl != null
+                                  ? DecorationImage(
+                                      image: NetworkImage(editPictureUrl!),
+                                    )
+                                  : null),
+                          margin: const EdgeInsets.all(1),
                           child: Consumer(
                             builder: (context, ref, child) {
                               final paintController =
@@ -135,7 +160,7 @@ class PaintScreen extends StatelessWidget {
   Offset _getPosition(Size? length, Offset localPosition) {
     double dx;
     double dy;
-    double setd = 8;
+    double setd = 2;
     if (localPosition.dx < 0) {
       dx = 0;
     } else if (localPosition.dx > (length!.width - setd)) {
