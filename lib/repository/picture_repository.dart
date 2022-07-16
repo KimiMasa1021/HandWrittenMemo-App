@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
@@ -11,6 +10,7 @@ import 'dart:ui' as ui;
 import 'package:path_provider/path_provider.dart';
 import '../model/user_data.dart';
 import '../providers/general_providers.dart';
+import 'package:flutter_share/flutter_share.dart';
 
 abstract class BasePictureRepository {
   Stream<UserData?> get fetchPictureStream;
@@ -121,6 +121,7 @@ class PictureRepository implements BasePictureRepository {
 /////////////////////////////
 ////////　データの削除
 
+  @override
   Future<void> deletePicture(Picture data) async {
     try {
       await storeCollectionReference!.doc(data.uid).delete();
@@ -133,21 +134,35 @@ class PictureRepository implements BasePictureRepository {
     }
   }
 
-/////////////////////////////
-////////　画像のダウンロード
-  Future<void> downloadFile(Picture data) async {
-    Dio dio = Dio();
+// /////////////////////////////
+// ////////　画像のダウンロード
+//   Future<void> downloadFile(Picture data) async {
+//     Dio dio = Dio();
+//     try {
+//       var dir = await getApplicationDocumentsDirectory();
+//       final path = dir.path;
+//       final directory = Directory('$path/picture/');
+//       await directory.create(recursive: true);
+//       await dio.download(
+//           "https://i.ytimg.com/vi/wH-GfPUJHNQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBdy0F5QsDreEsKGJ9NhKrOGOPHgA",
+//           "${dir.path}/${data.title}.png");
+//       debugPrint("ダウンロード完了しました");
+//     } catch (e) {
+//       debugPrint(e.toString());
+//     }
+//   }
+// /////////////////////////////
+// ////////　画像のシェア
+  Future<void> shareImageAndText(GlobalKey globalKey) async {
     try {
-      var dir = await getApplicationDocumentsDirectory();
-      final path = dir.path;
-      final directory = Directory('$path/picture/');
-      await directory.create(recursive: true);
-      await dio.download(
-          "https://i.ytimg.com/vi/wH-GfPUJHNQ/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLBdy0F5QsDreEsKGJ9NhKrOGOPHgA",
-          "${dir.path}/${data.title}.png");
-      debugPrint("ダウンロード完了しました");
-    } catch (e) {
-      debugPrint(e.toString());
+      final ByteData bytes = await exportToImage(globalKey);
+      final File file = await convertByteDataToFile(bytes);
+      await FlutterShare.shareFile(
+        title: "シェア機能テストです",
+        filePath: file.path,
+      );
+    } catch (error) {
+      debugPrint('シェア:$error');
     }
   }
 }

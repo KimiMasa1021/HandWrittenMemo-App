@@ -41,13 +41,14 @@ class HomeScreen extends HookConsumerWidget {
             },
             child: Row(
               children: const [
-                Text(
-                  "絵を描く",
-                  style: TextStyle(color: Colors.black, fontSize: 20),
-                ),
                 Icon(
                   Icons.photo_size_select_actual_rounded,
                   color: Colors.black,
+                ),
+                SizedBox(width: 10),
+                Text(
+                  "絵を描く",
+                  style: TextStyle(color: Colors.black, fontSize: 20),
                 ),
                 SizedBox(width: 20)
               ],
@@ -93,7 +94,7 @@ class HomeScreen extends HookConsumerWidget {
                           border: Border.all(
                               width: homeState.isTarget ? 5 : 2,
                               color: homeState.isTarget
-                                  ? Colors.black
+                                  ? const Color.fromARGB(255, 159, 90, 90)
                                   : Colors.grey),
                           borderRadius: BorderRadius.circular(20),
                         ),

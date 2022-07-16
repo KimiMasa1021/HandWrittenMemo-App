@@ -16,6 +16,8 @@ class PictureDetails extends HookConsumerWidget {
 
     final pictureRepositry = ref.watch(pictureRepositoryProvider);
 
+    final _shareKey = GlobalKey();
+
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -26,31 +28,43 @@ class PictureDetails extends HookConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 15),
-                Text(data.title!, style: textStyleBold40),
-                const SizedBox(height: 15),
-                SizedBox(
-                  width: double.infinity,
-                  child: Card(
-                    elevation: 10,
-                    child: Image.network(
-                      data.thumbnailUrl!,
-                      loadingBuilder: (_, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return const SizedBox(
-                          height: 450,
-                          child: Center(
-                            child: CircularProgressIndicator(),
+                RepaintBoundary(
+                  key: _shareKey,
+                  child: SizedBox(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        Text(data.title!, style: textStyleBold40),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          width: double.infinity,
+                          child: Card(
+                            elevation: 10,
+                            child: Image.network(
+                              data.thumbnailUrl!,
+                              loadingBuilder: (_, child, loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return const SizedBox(
+                                  height: 450,
+                                  child: Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                        );
-                      },
+                        ),
+                      ],
                     ),
                   ),
                 ),
+                const SizedBox(height: 10),
                 HomeDetailsButton(
                   text: "画像を共有する",
                   buttonIcon: const Icon(Icons.share),
-                  function: () {},
+                  function: () async {
+                    await pictureRepositry.shareImageAndText(_shareKey);
+                  },
                 ),
                 HomeDetailsButton(
                   text: "書き加える",
