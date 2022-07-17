@@ -30,7 +30,8 @@ class PictureDetails extends HookConsumerWidget {
               children: [
                 RepaintBoundary(
                   key: _shareKey,
-                  child: SizedBox(
+                  child: Container(
+                    decoration: BoxDecoration(gradient: gradation02),
                     child: Column(
                       children: [
                         const SizedBox(height: 10),
