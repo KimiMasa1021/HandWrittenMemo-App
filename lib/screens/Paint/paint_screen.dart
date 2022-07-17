@@ -122,7 +122,7 @@ class PaintScreen extends StatelessWidget {
                                   ref.watch(drawControllerProvider.notifier);
                               final state = ref.watch(drawControllerProvider);
 
-                              return !state.isZoom
+                              return state.isZoom
                                   ? GestureDetector(
                                       onPanStart: (details) {
                                         paintController
@@ -145,11 +145,21 @@ class PaintScreen extends StatelessWidget {
                                       ),
                                     )
                                   : InteractiveViewer(
+                                      maxScale: 10,
                                       child: CustomPaint(
                                         painter: Painter(
                                           state: state,
                                           context: context,
                                         ),
+                                      ),
+                                      onInteractionStart: (val) => debugPrint(
+                                        val.toString(),
+                                      ),
+                                      onInteractionUpdate: (val) => debugPrint(
+                                        val.toString(),
+                                      ),
+                                      onInteractionEnd: (val) => debugPrint(
+                                        val.toString(),
                                       ),
                                     );
                             },
