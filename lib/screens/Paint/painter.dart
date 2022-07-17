@@ -16,13 +16,8 @@ class Painter extends CustomPainter {
           ..color = state.colorList[index]
           ..strokeWidth = state.thicknessList[index]
           ..style = PaintingStyle.stroke;
-        canvas.drawRRect(
-          RRect.fromRectAndRadius(
-            Rect.fromCenter(center: points[0], width: 5, height: 5),
-            const Radius.circular(5),
-          ),
-          painter,
-        );
+
+        canvas.drawCircle(Offset(points[0].dx, points[0].dy), 0.5, painter);
 
         for (var i = 0; i < points.length - 1; i++) {
           canvas.drawLine(points[i], points[i + 1], painter);
