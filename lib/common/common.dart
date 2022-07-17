@@ -39,3 +39,15 @@ var gradation01 = LinearGradient(
     1.0,
   ],
 );
+var gradation02 = LinearGradient(
+  begin: FractionalOffset.topLeft,
+  end: FractionalOffset.bottomRight,
+  colors: [
+    Color.fromARGB(255, 255, 197, 197).withOpacity(0.6),
+    const Color.fromARGB(255, 255, 255, 255).withOpacity(0.6),
+  ],
+  stops: const [
+    0.0,
+    1.0,
+  ],
+);
