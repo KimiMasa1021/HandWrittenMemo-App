@@ -10,7 +10,7 @@ import 'dart:ui' as ui;
 import 'package:path_provider/path_provider.dart';
 import '../model/user_data.dart';
 import '../providers/general_providers.dart';
-import 'package:flutter_share/flutter_share.dart';
+import 'package:share_plus/share_plus.dart';
 
 abstract class BasePictureRepository {
   Stream<UserData?> get fetchPictureStream;
@@ -157,10 +157,7 @@ class PictureRepository implements BasePictureRepository {
     try {
       final ByteData bytes = await exportToImage(globalKey);
       final File file = await convertByteDataToFile(bytes);
-      await FlutterShare.shareFile(
-        title: "シェア機能テストです",
-        filePath: file.path,
-      );
+      await Share.shareFiles([file.path]);
     } catch (error) {
       debugPrint('シェア:$error');
     }
