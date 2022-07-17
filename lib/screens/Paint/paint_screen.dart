@@ -98,6 +98,7 @@ class PaintScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(13.0),
                     child: Container(
+                      clipBehavior: Clip.hardEdge,
                       width: double.infinity,
                       height: double.infinity,
                       decoration: BoxDecoration(
