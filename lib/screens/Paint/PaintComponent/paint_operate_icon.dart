@@ -1,47 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../common/shared/my_flutter_app_icons.dart';
 import '../../../providers/general_providers.dart';
 
 class PaintOperateIcon extends HookConsumerWidget {
   const PaintOperateIcon({
     Key? key,
     required this.pickIcon,
-    required this.funcFlg,
+    required this.function,
   }) : super(key: key);
 
   final Icon pickIcon;
-  final String funcFlg;
+  final Function() function;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final paintController = ref.watch(drawControllerProvider.notifier);
     final state = ref.watch(drawControllerProvider);
     return InkWell(
-      onTap: () {
-        switch (funcFlg) {
-          case 'delete':
-            paintController.clear();
-            break;
-          case 'undo':
-            paintController.undo();
-            break;
-          case 'eraser':
-            paintController.chageEraser(Colors.white);
-            break;
-          case 'pen':
-            paintController.penMode();
-            break;
-          default:
-            break;
-        }
-      },
+      onTap: () => function(),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 7),
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: [
-            !state.isEraser && funcFlg == 'pen'
+            !state.isEraser && !state.isZoom && pickIcon.icon == Icons.brush
                 ? Container(
                     width: 40,
                     height: 40,
@@ -50,7 +34,7 @@ class PaintOperateIcon extends HookConsumerWidget {
                       shape: BoxShape.circle,
                     ),
                   )
-                : state.isEraser && funcFlg == 'eraser'
+                : state.isEraser && pickIcon.icon == MyFlutterApp.eraser
                     ? Container(
                         width: 40,
                         height: 40,
@@ -59,7 +43,16 @@ class PaintOperateIcon extends HookConsumerWidget {
                           shape: BoxShape.circle,
                         ),
                       )
-                    : const SizedBox(),
+                    : state.isZoom && pickIcon.icon == Icons.zoom_in_rounded
+                        ? Container(
+                            width: 40,
+                            height: 40,
+                            decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 172, 203, 255),
+                              shape: BoxShape.circle,
+                            ),
+                          )
+                        : const SizedBox(),
             pickIcon,
           ],
         ),

@@ -57,7 +57,10 @@ class DrawController extends StateNotifier<DrawState> {
   }
 
   void chageColor(Color pick) {
-    state = state.copyWith(pickColor: pick, isEraser: false);
+    state = state.copyWith(
+      pickColor: pick,
+      isEraser: false,
+    );
   }
 
   void chageEraser(Color pick) {
@@ -71,11 +74,23 @@ class DrawController extends StateNotifier<DrawState> {
       state = state.copyWith(
         pickColor: pick,
         isEraser: true,
+        isZoom: false,
       );
     }
   }
 
   void penMode() {
-    state = state.copyWith(isEraser: false, pickColor: Colors.black);
+    state = state.copyWith(
+      isEraser: false,
+      pickColor: Colors.black,
+      isZoom: false,
+    );
+  }
+
+  void zoomMode() {
+    state = state.copyWith(
+      isZoom: true,
+      isEraser: false,
+    );
   }
 }

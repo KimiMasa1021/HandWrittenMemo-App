@@ -5,11 +5,13 @@ import 'package:zen03/screens/Paint/PaintComponent/paint_operate_icon.dart';
 import 'package:zen03/screens/paint/PaintComponent/color_picker.dart';
 import '../../../providers/general_providers.dart';
 
-class PaintOperation extends StatelessWidget {
+class PaintOperation extends HookConsumerWidget {
   const PaintOperation({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final paintController = ref.watch(drawControllerProvider.notifier);
+    final state = ref.watch(drawControllerProvider);
     return SizedBox(
       width: double.infinity,
       height: 160,
@@ -19,42 +21,50 @@ class PaintOperation extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               //  すべて削除
-              const PaintOperateIcon(
-                pickIcon: Icon(
+              PaintOperateIcon(
+                pickIcon: const Icon(
                   Icons.delete,
                   size: 45,
                 ),
-                funcFlg: 'delete',
+                function: () => paintController.clear(),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: const [
+                children: [
                   //  ひとつ戻る
                   PaintOperateIcon(
-                    pickIcon: Icon(
+                    pickIcon: const Icon(
                       Icons.settings_backup_restore_rounded,
                       size: 45,
                     ),
-                    funcFlg: 'undo',
+                    function: () => paintController.undo(),
+                  ),
+                  //  拡大　縮小
+                  PaintOperateIcon(
+                    pickIcon: const Icon(
+                      Icons.zoom_in_rounded,
+                      size: 45,
+                    ),
+                    function: () => paintController.zoomMode(),
                   ),
                   //  消しゴム
                   PaintOperateIcon(
-                    pickIcon: Icon(
+                    pickIcon: const Icon(
                       MyFlutterApp.eraser,
                       size: 45,
                     ),
-                    funcFlg: 'eraser',
+                    function: () => paintController.chageEraser(Colors.white),
                   ),
-                  SizedBox(width: 15),
+                  const SizedBox(width: 15),
                   //  ペンモード
                   PaintOperateIcon(
-                    pickIcon: Icon(
+                    pickIcon: const Icon(
                       Icons.brush,
                       size: 45,
                     ),
-                    funcFlg: 'pen',
+                    function: () => paintController.penMode(),
                   ),
-                  SizedBox(width: 15),
+                  const SizedBox(width: 15),
                 ],
               ),
             ],

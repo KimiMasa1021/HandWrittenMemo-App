@@ -6,6 +6,7 @@ import 'PaintComponent/paint_back_dialog.dart';
 import 'PaintComponent/paint_save_dialog.dart';
 import 'PaintComponent/paint_operate.dart';
 import 'painter.dart';
+import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 class PaintScreen extends StatelessWidget {
   PaintScreen({Key? key, this.editPictureUrl}) : super(key: key) {
@@ -122,26 +123,46 @@ class PaintScreen extends StatelessWidget {
                                   ref.watch(drawControllerProvider.notifier);
                               final state = ref.watch(drawControllerProvider);
 
-                              return GestureDetector(
-                                onPanStart: (details) {
-                                  paintController
-                                      .addPaint(details.localPosition);
-                                },
-                                onPanUpdate: (details) {
-                                  paintController.updatePaint(_getPosition(
-                                      _key.currentContext!.size,
-                                      details.localPosition));
-                                },
-                                onPanEnd: (details) {
-                                  paintController.endPaint();
-                                },
-                                child: CustomPaint(
-                                  painter: Painter(
-                                    state: state,
-                                    context: context,
-                                  ),
-                                ),
-                              );
+                              return state.isZoom
+                                  ? GestureDetector(
+                                      onPanStart: (details) {
+                                        paintController
+                                            .addPaint(details.localPosition);
+                                      },
+                                      onPanUpdate: (details) {
+                                        paintController.updatePaint(
+                                            _getPosition(
+                                                _key.currentContext!.size,
+                                                details.localPosition));
+                                      },
+                                      onPanEnd: (details) {
+                                        paintController.endPaint();
+                                      },
+                                      child: CustomPaint(
+                                        painter: Painter(
+                                          state: state,
+                                          context: context,
+                                        ),
+                                      ),
+                                    )
+                                  : InteractiveViewer(
+                                      maxScale: 10,
+                                      child: CustomPaint(
+                                        painter: Painter(
+                                          state: state,
+                                          context: context,
+                                        ),
+                                      ),
+                                      onInteractionStart: (val) => debugPrint(
+                                        val.toString(),
+                                      ),
+                                      onInteractionUpdate: (val) => debugPrint(
+                                        val.toString(),
+                                      ),
+                                      onInteractionEnd: (val) => debugPrint(
+                                        val.toString(),
+                                      ),
+                                    );
                             },
                           ),
                         ),
@@ -179,3 +200,14 @@ class PaintScreen extends StatelessWidget {
     return Offset(dx, dy);
   }
 }
+
+// Transform(
+//                                       transform:
+//                                           Matrix4.translationValues(100, 1, 1),
+//                                       child: CustomPaint(
+//                                         painter: Painter(
+//                                           state: state,
+//                                           context: context,
+//                                         ),
+//                                       ),
+//                                     );

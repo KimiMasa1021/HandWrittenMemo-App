@@ -21,6 +21,7 @@ mixin _$DrawState {
   List<Color> get colorList => throw _privateConstructorUsedError;
   bool get isDrag => throw _privateConstructorUsedError;
   bool get isEraser => throw _privateConstructorUsedError;
+  bool get isZoom => throw _privateConstructorUsedError;
   double get thickness => throw _privateConstructorUsedError;
   Color get pickColor => throw _privateConstructorUsedError;
 
@@ -39,6 +40,7 @@ abstract class $DrawStateCopyWith<$Res> {
       List<Color> colorList,
       bool isDrag,
       bool isEraser,
+      bool isZoom,
       double thickness,
       Color pickColor});
 }
@@ -58,6 +60,7 @@ class _$DrawStateCopyWithImpl<$Res> implements $DrawStateCopyWith<$Res> {
     Object? colorList = freezed,
     Object? isDrag = freezed,
     Object? isEraser = freezed,
+    Object? isZoom = freezed,
     Object? thickness = freezed,
     Object? pickColor = freezed,
   }) {
@@ -81,6 +84,10 @@ class _$DrawStateCopyWithImpl<$Res> implements $DrawStateCopyWith<$Res> {
       isEraser: isEraser == freezed
           ? _value.isEraser
           : isEraser // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isZoom: isZoom == freezed
+          ? _value.isZoom
+          : isZoom // ignore: cast_nullable_to_non_nullable
               as bool,
       thickness: thickness == freezed
           ? _value.thickness
@@ -106,6 +113,7 @@ abstract class _$$_DrawStateCopyWith<$Res> implements $DrawStateCopyWith<$Res> {
       List<Color> colorList,
       bool isDrag,
       bool isEraser,
+      bool isZoom,
       double thickness,
       Color pickColor});
 }
@@ -127,6 +135,7 @@ class __$$_DrawStateCopyWithImpl<$Res> extends _$DrawStateCopyWithImpl<$Res>
     Object? colorList = freezed,
     Object? isDrag = freezed,
     Object? isEraser = freezed,
+    Object? isZoom = freezed,
     Object? thickness = freezed,
     Object? pickColor = freezed,
   }) {
@@ -151,6 +160,10 @@ class __$$_DrawStateCopyWithImpl<$Res> extends _$DrawStateCopyWithImpl<$Res>
           ? _value.isEraser
           : isEraser // ignore: cast_nullable_to_non_nullable
               as bool,
+      isZoom: isZoom == freezed
+          ? _value.isZoom
+          : isZoom // ignore: cast_nullable_to_non_nullable
+              as bool,
       thickness: thickness == freezed
           ? _value.thickness
           : thickness // ignore: cast_nullable_to_non_nullable
@@ -172,6 +185,7 @@ class _$_DrawState implements _DrawState {
       final List<Color> colorList = const [],
       this.isDrag = false,
       this.isEraser = false,
+      this.isZoom = false,
       this.thickness = 7.5,
       this.pickColor = Colors.black})
       : _paintList = paintList,
@@ -210,6 +224,9 @@ class _$_DrawState implements _DrawState {
   final bool isEraser;
   @override
   @JsonKey()
+  final bool isZoom;
+  @override
+  @JsonKey()
   final double thickness;
   @override
   @JsonKey()
@@ -217,7 +234,7 @@ class _$_DrawState implements _DrawState {
 
   @override
   String toString() {
-    return 'DrawState(paintList: $paintList, thicknessList: $thicknessList, colorList: $colorList, isDrag: $isDrag, isEraser: $isEraser, thickness: $thickness, pickColor: $pickColor)';
+    return 'DrawState(paintList: $paintList, thicknessList: $thicknessList, colorList: $colorList, isDrag: $isDrag, isEraser: $isEraser, isZoom: $isZoom, thickness: $thickness, pickColor: $pickColor)';
   }
 
   @override
@@ -233,6 +250,7 @@ class _$_DrawState implements _DrawState {
                 .equals(other._colorList, _colorList) &&
             const DeepCollectionEquality().equals(other.isDrag, isDrag) &&
             const DeepCollectionEquality().equals(other.isEraser, isEraser) &&
+            const DeepCollectionEquality().equals(other.isZoom, isZoom) &&
             const DeepCollectionEquality().equals(other.thickness, thickness) &&
             const DeepCollectionEquality().equals(other.pickColor, pickColor));
   }
@@ -245,6 +263,7 @@ class _$_DrawState implements _DrawState {
       const DeepCollectionEquality().hash(_colorList),
       const DeepCollectionEquality().hash(isDrag),
       const DeepCollectionEquality().hash(isEraser),
+      const DeepCollectionEquality().hash(isZoom),
       const DeepCollectionEquality().hash(thickness),
       const DeepCollectionEquality().hash(pickColor));
 
@@ -261,6 +280,7 @@ abstract class _DrawState implements DrawState {
       final List<Color> colorList,
       final bool isDrag,
       final bool isEraser,
+      final bool isZoom,
       final double thickness,
       final Color pickColor}) = _$_DrawState;
 
@@ -274,6 +294,8 @@ abstract class _DrawState implements DrawState {
   bool get isDrag;
   @override
   bool get isEraser;
+  @override
+  bool get isZoom;
   @override
   double get thickness;
   @override
