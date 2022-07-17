@@ -11,7 +11,6 @@ class HomeGrid extends HookConsumerWidget {
   final UserData userPicture;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final homeState = ref.watch(homeControllerProvider);
     final homeControl = ref.watch(homeControllerProvider.notifier);
     final size = MediaQuery.of(context).size;
 

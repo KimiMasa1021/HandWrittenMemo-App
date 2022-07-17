@@ -16,7 +16,7 @@ class PictureDetails extends HookConsumerWidget {
 
     final pictureRepositry = ref.watch(pictureRepositoryProvider);
 
-    final _shareKey = GlobalKey();
+    final shareKey = GlobalKey();
 
     return SafeArea(
       child: Scaffold(
@@ -29,7 +29,7 @@ class PictureDetails extends HookConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 RepaintBoundary(
-                  key: _shareKey,
+                  key: shareKey,
                   child: SizedBox(
                     child: Column(
                       children: [
@@ -63,7 +63,7 @@ class PictureDetails extends HookConsumerWidget {
                   text: "画像を共有する",
                   buttonIcon: const Icon(Icons.share),
                   function: () async {
-                    await pictureRepositry.shareImageAndText(_shareKey);
+                    await pictureRepositry.shareImageAndText(shareKey);
                   },
                 ),
                 HomeDetailsButton(
