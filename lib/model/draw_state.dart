@@ -11,6 +11,7 @@ class DrawState with _$DrawState {
     @Default([]) List<Color> colorList,
     @Default(false) bool isDrag,
     @Default(false) bool isEraser,
+    @Default(false) bool isZoom,
     @Default(7.5) double thickness,
     @Default(Colors.black) Color pickColor,
   }) = _DrawState;

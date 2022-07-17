@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../common/shared/my_flutter_app_icons.dart';
 import '../../../providers/general_providers.dart';
 
 class PaintOperateIcon extends HookConsumerWidget {
@@ -18,29 +19,13 @@ class PaintOperateIcon extends HookConsumerWidget {
     final paintController = ref.watch(drawControllerProvider.notifier);
     final state = ref.watch(drawControllerProvider);
     return InkWell(
-      onTap: () {
-        switch ("") {
-          case 'delete':
-            break;
-          case 'undo':
-            paintController.undo();
-            break;
-          case 'eraser':
-            paintController.chageEraser(Colors.white);
-            break;
-          case 'pen':
-            paintController.penMode();
-            break;
-          default:
-            break;
-        }
-      },
+      onTap: () => function(),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 7),
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: [
-            !state.isEraser && function == 'pen'
+            !state.isEraser && !state.isZoom && pickIcon.icon == Icons.brush
                 ? Container(
                     width: 40,
                     height: 40,
@@ -49,7 +34,7 @@ class PaintOperateIcon extends HookConsumerWidget {
                       shape: BoxShape.circle,
                     ),
                   )
-                : state.isEraser && function == 'eraser'
+                : state.isEraser && pickIcon.icon == MyFlutterApp.eraser
                     ? Container(
                         width: 40,
                         height: 40,
@@ -58,7 +43,16 @@ class PaintOperateIcon extends HookConsumerWidget {
                           shape: BoxShape.circle,
                         ),
                       )
-                    : const SizedBox(),
+                    : state.isZoom && pickIcon.icon == Icons.zoom_in_rounded
+                        ? Container(
+                            width: 40,
+                            height: 40,
+                            decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 172, 203, 255),
+                              shape: BoxShape.circle,
+                            ),
+                          )
+                        : const SizedBox(),
             pickIcon,
           ],
         ),

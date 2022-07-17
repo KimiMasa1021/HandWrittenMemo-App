@@ -33,38 +33,38 @@ class PaintOperation extends HookConsumerWidget {
                 children: [
                   //  ひとつ戻る
                   PaintOperateIcon(
-                    pickIcon: Icon(
+                    pickIcon: const Icon(
                       Icons.settings_backup_restore_rounded,
                       size: 45,
                     ),
-                    function: () {},
+                    function: () => paintController.undo(),
                   ),
                   //  拡大　縮小
                   PaintOperateIcon(
-                    pickIcon: Icon(
+                    pickIcon: const Icon(
                       Icons.zoom_in_rounded,
                       size: 45,
                     ),
-                    function: () {},
+                    function: () => paintController.zoomMode(),
                   ),
                   //  消しゴム
                   PaintOperateIcon(
-                    pickIcon: Icon(
+                    pickIcon: const Icon(
                       MyFlutterApp.eraser,
                       size: 45,
                     ),
-                    function: () {},
+                    function: () => paintController.chageEraser(Colors.white),
                   ),
-                  SizedBox(width: 15),
+                  const SizedBox(width: 15),
                   //  ペンモード
                   PaintOperateIcon(
-                    pickIcon: Icon(
+                    pickIcon: const Icon(
                       Icons.brush,
                       size: 45,
                     ),
-                    function: () {},
+                    function: () => paintController.penMode(),
                   ),
-                  SizedBox(width: 15),
+                  const SizedBox(width: 15),
                 ],
               ),
             ],

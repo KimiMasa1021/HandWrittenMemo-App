@@ -6,6 +6,7 @@ import 'PaintComponent/paint_back_dialog.dart';
 import 'PaintComponent/paint_save_dialog.dart';
 import 'PaintComponent/paint_operate.dart';
 import 'painter.dart';
+import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 class PaintScreen extends StatelessWidget {
   PaintScreen({Key? key, this.editPictureUrl}) : super(key: key) {
@@ -20,8 +21,6 @@ class PaintScreen extends StatelessWidget {
   }
   final _key = GlobalKey();
   final _imageKey = GlobalKey();
-
-  final bool test = false;
   String? editPictureUrl;
   @override
   Widget build(BuildContext context) {
@@ -117,15 +116,14 @@ class PaintScreen extends StatelessWidget {
                                     )
                                   : null),
                           margin: const EdgeInsets.all(1),
-                          child: test
-                              ? Consumer(
-                                  builder: (context, ref, child) {
-                                    final paintController = ref
-                                        .watch(drawControllerProvider.notifier);
-                                    final state =
-                                        ref.watch(drawControllerProvider);
+                          child: Consumer(
+                            builder: (context, ref, child) {
+                              final paintController =
+                                  ref.watch(drawControllerProvider.notifier);
+                              final state = ref.watch(drawControllerProvider);
 
-                                    return GestureDetector(
+                              return !state.isZoom
+                                  ? GestureDetector(
                                       onPanStart: (details) {
                                         paintController
                                             .addPaint(details.localPosition);
@@ -145,30 +143,8 @@ class PaintScreen extends StatelessWidget {
                                           context: context,
                                         ),
                                       ),
-                                    );
-                                  },
-                                )
-                              : Consumer(
-                                  builder: (context, ref, child) {
-                                    final paintController = ref
-                                        .watch(drawControllerProvider.notifier);
-                                    final state =
-                                        ref.watch(drawControllerProvider);
-
-                                    return GestureDetector(
-                                      onPanStart: (details) {
-                                        paintController
-                                            .addPaint(details.localPosition);
-                                      },
-                                      onPanUpdate: (details) {
-                                        paintController.updatePaint(
-                                            _getPosition(
-                                                _key.currentContext!.size,
-                                                details.localPosition));
-                                      },
-                                      onPanEnd: (details) {
-                                        paintController.endPaint();
-                                      },
+                                    )
+                                  : InteractiveViewer(
                                       child: CustomPaint(
                                         painter: Painter(
                                           state: state,
@@ -176,8 +152,8 @@ class PaintScreen extends StatelessWidget {
                                         ),
                                       ),
                                     );
-                                  },
-                                ),
+                            },
+                          ),
                         ),
                       ),
                     ),
@@ -213,3 +189,14 @@ class PaintScreen extends StatelessWidget {
     return Offset(dx, dy);
   }
 }
+
+// Transform(
+//                                       transform:
+//                                           Matrix4.translationValues(100, 1, 1),
+//                                       child: CustomPaint(
+//                                         painter: Painter(
+//                                           state: state,
+//                                           context: context,
+//                                         ),
+//                                       ),
+//                                     );
