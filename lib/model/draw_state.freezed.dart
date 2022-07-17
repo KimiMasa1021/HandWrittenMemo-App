@@ -24,6 +24,8 @@ mixin _$DrawState {
   bool get isZoom => throw _privateConstructorUsedError;
   double get thickness => throw _privateConstructorUsedError;
   Color get pickColor => throw _privateConstructorUsedError;
+  double get scaleValue => throw _privateConstructorUsedError;
+  Offset get offsetValue => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $DrawStateCopyWith<DrawState> get copyWith =>
@@ -42,7 +44,9 @@ abstract class $DrawStateCopyWith<$Res> {
       bool isEraser,
       bool isZoom,
       double thickness,
-      Color pickColor});
+      Color pickColor,
+      double scaleValue,
+      Offset offsetValue});
 }
 
 /// @nodoc
@@ -63,6 +67,8 @@ class _$DrawStateCopyWithImpl<$Res> implements $DrawStateCopyWith<$Res> {
     Object? isZoom = freezed,
     Object? thickness = freezed,
     Object? pickColor = freezed,
+    Object? scaleValue = freezed,
+    Object? offsetValue = freezed,
   }) {
     return _then(_value.copyWith(
       paintList: paintList == freezed
@@ -97,6 +103,14 @@ class _$DrawStateCopyWithImpl<$Res> implements $DrawStateCopyWith<$Res> {
           ? _value.pickColor
           : pickColor // ignore: cast_nullable_to_non_nullable
               as Color,
+      scaleValue: scaleValue == freezed
+          ? _value.scaleValue
+          : scaleValue // ignore: cast_nullable_to_non_nullable
+              as double,
+      offsetValue: offsetValue == freezed
+          ? _value.offsetValue
+          : offsetValue // ignore: cast_nullable_to_non_nullable
+              as Offset,
     ));
   }
 }
@@ -115,7 +129,9 @@ abstract class _$$_DrawStateCopyWith<$Res> implements $DrawStateCopyWith<$Res> {
       bool isEraser,
       bool isZoom,
       double thickness,
-      Color pickColor});
+      Color pickColor,
+      double scaleValue,
+      Offset offsetValue});
 }
 
 /// @nodoc
@@ -138,6 +154,8 @@ class __$$_DrawStateCopyWithImpl<$Res> extends _$DrawStateCopyWithImpl<$Res>
     Object? isZoom = freezed,
     Object? thickness = freezed,
     Object? pickColor = freezed,
+    Object? scaleValue = freezed,
+    Object? offsetValue = freezed,
   }) {
     return _then(_$_DrawState(
       paintList: paintList == freezed
@@ -172,6 +190,14 @@ class __$$_DrawStateCopyWithImpl<$Res> extends _$DrawStateCopyWithImpl<$Res>
           ? _value.pickColor
           : pickColor // ignore: cast_nullable_to_non_nullable
               as Color,
+      scaleValue: scaleValue == freezed
+          ? _value.scaleValue
+          : scaleValue // ignore: cast_nullable_to_non_nullable
+              as double,
+      offsetValue: offsetValue == freezed
+          ? _value.offsetValue
+          : offsetValue // ignore: cast_nullable_to_non_nullable
+              as Offset,
     ));
   }
 }
@@ -187,7 +213,9 @@ class _$_DrawState implements _DrawState {
       this.isEraser = false,
       this.isZoom = false,
       this.thickness = 7.5,
-      this.pickColor = Colors.black})
+      this.pickColor = Colors.black,
+      this.scaleValue = 1,
+      this.offsetValue = const Offset(0, 0)})
       : _paintList = paintList,
         _thicknessList = thicknessList,
         _colorList = colorList;
@@ -231,10 +259,16 @@ class _$_DrawState implements _DrawState {
   @override
   @JsonKey()
   final Color pickColor;
+  @override
+  @JsonKey()
+  final double scaleValue;
+  @override
+  @JsonKey()
+  final Offset offsetValue;
 
   @override
   String toString() {
-    return 'DrawState(paintList: $paintList, thicknessList: $thicknessList, colorList: $colorList, isDrag: $isDrag, isEraser: $isEraser, isZoom: $isZoom, thickness: $thickness, pickColor: $pickColor)';
+    return 'DrawState(paintList: $paintList, thicknessList: $thicknessList, colorList: $colorList, isDrag: $isDrag, isEraser: $isEraser, isZoom: $isZoom, thickness: $thickness, pickColor: $pickColor, scaleValue: $scaleValue, offsetValue: $offsetValue)';
   }
 
   @override
@@ -252,7 +286,11 @@ class _$_DrawState implements _DrawState {
             const DeepCollectionEquality().equals(other.isEraser, isEraser) &&
             const DeepCollectionEquality().equals(other.isZoom, isZoom) &&
             const DeepCollectionEquality().equals(other.thickness, thickness) &&
-            const DeepCollectionEquality().equals(other.pickColor, pickColor));
+            const DeepCollectionEquality().equals(other.pickColor, pickColor) &&
+            const DeepCollectionEquality()
+                .equals(other.scaleValue, scaleValue) &&
+            const DeepCollectionEquality()
+                .equals(other.offsetValue, offsetValue));
   }
 
   @override
@@ -265,7 +303,9 @@ class _$_DrawState implements _DrawState {
       const DeepCollectionEquality().hash(isEraser),
       const DeepCollectionEquality().hash(isZoom),
       const DeepCollectionEquality().hash(thickness),
-      const DeepCollectionEquality().hash(pickColor));
+      const DeepCollectionEquality().hash(pickColor),
+      const DeepCollectionEquality().hash(scaleValue),
+      const DeepCollectionEquality().hash(offsetValue));
 
   @JsonKey(ignore: true)
   @override
@@ -282,7 +322,9 @@ abstract class _DrawState implements DrawState {
       final bool isEraser,
       final bool isZoom,
       final double thickness,
-      final Color pickColor}) = _$_DrawState;
+      final Color pickColor,
+      final double scaleValue,
+      final Offset offsetValue}) = _$_DrawState;
 
   @override
   List<List<Offset>> get paintList;
@@ -300,6 +342,10 @@ abstract class _DrawState implements DrawState {
   double get thickness;
   @override
   Color get pickColor;
+  @override
+  double get scaleValue;
+  @override
+  Offset get offsetValue;
   @override
   @JsonKey(ignore: true)
   _$$_DrawStateCopyWith<_$_DrawState> get copyWith =>

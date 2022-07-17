@@ -93,4 +93,24 @@ class DrawController extends StateNotifier<DrawState> {
       isEraser: false,
     );
   }
+
+  void upDateScale(double scale) {
+    double sca = scale;
+
+    if (scale < 0) {
+      sca = 1;
+    } else if (scale > 10) {
+      sca = 10;
+    }
+    // debugPrint(sca.toString());
+    state = state.copyWith(
+      scaleValue: sca,
+    );
+  }
+
+  void upDateOffset(Offset offset) {
+    state = state.copyWith(
+      offsetValue: Offset(offset.dx, offset.dy),
+    );
+  }
 }

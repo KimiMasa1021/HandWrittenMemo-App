@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
+import 'package:zen03/model/draw_state.dart';
 import '../../providers/general_providers.dart';
 import 'PaintComponent/paint_back_dialog.dart';
 import 'PaintComponent/paint_save_dialog.dart';
@@ -22,6 +23,9 @@ class PaintScreen extends StatelessWidget {
   final _key = GlobalKey();
   final _imageKey = GlobalKey();
   String? editPictureUrl;
+
+  final TransformationController _transformationController =
+      TransformationController();
   @override
   Widget build(BuildContext context) {
     // ステータスバーとアップバーの高さを取得
@@ -123,7 +127,7 @@ class PaintScreen extends StatelessWidget {
                                   ref.watch(drawControllerProvider.notifier);
                               final state = ref.watch(drawControllerProvider);
 
-                              return state.isZoom
+                              return !state.isZoom
                                   ? GestureDetector(
                                       onPanStart: (details) {
                                         paintController
@@ -138,31 +142,51 @@ class PaintScreen extends StatelessWidget {
                                       onPanEnd: (details) {
                                         paintController.endPaint();
                                       },
-                                      child: CustomPaint(
-                                        painter: Painter(
-                                          state: state,
-                                          context: context,
+                                      child: Transform.translate(
+                                        offset: state.offsetValue,
+                                        child: Transform.scale(
+                                          scale: state.scaleValue,
+                                          child: CustomPaint(
+                                            painter: Painter(
+                                              state: state,
+                                              context: context,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     )
                                   : InteractiveViewer(
+                                      transformationController:
+                                          _transformationController,
                                       maxScale: 10,
+                                      minScale: 1,
                                       child: CustomPaint(
                                         painter: Painter(
                                           state: state,
                                           context: context,
                                         ),
                                       ),
-                                      onInteractionStart: (val) => debugPrint(
-                                        val.toString(),
-                                      ),
-                                      onInteractionUpdate: (val) => debugPrint(
-                                        val.toString(),
-                                      ),
-                                      onInteractionEnd: (val) => debugPrint(
-                                        val.toString(),
-                                      ),
-                                    );
+                                      onInteractionUpdate:
+                                          (ScaleUpdateDetails val) {
+                                        paintController.upDateScale(
+                                          _transformationController.value
+                                              .getMaxScaleOnAxis(),
+                                        );
+                                        paintController.upDateOffset(
+                                          Offset(
+                                              _transformationController.value
+                                                      .getTranslation()
+                                                      .x *
+                                                  -1,
+                                              _transformationController.value
+                                                  .getTranslation()
+                                                  .y),
+                                        );
+                                        debugPrint(
+                                            "x:${_transformationController.value.getTranslation().x.ceil()} y:${_transformationController.value.getTranslation().y.ceil()}");
+                                      },
+                                      onInteractionEnd:
+                                          (ScaleEndDetails val) {});
                             },
                           ),
                         ),
