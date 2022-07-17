@@ -28,7 +28,6 @@ class MyApp extends StatelessWidget {
 
 
 // 確実に実装するもの
-  //　消しゴムアイコンの修正
   //　ワンタップ描画の大きさの調整
   //　UnityADSの設定・実装
 // 追加予定の機能

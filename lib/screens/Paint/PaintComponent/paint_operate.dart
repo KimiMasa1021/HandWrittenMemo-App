@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:zen03/common/shared/my_flutter_app_icons.dart';
 import 'package:zen03/screens/Paint/PaintComponent/paint_operate_icon.dart';
 import 'package:zen03/screens/paint/PaintComponent/color_picker.dart';
 import '../../../providers/general_providers.dart';
@@ -39,7 +40,7 @@ class PaintOperation extends StatelessWidget {
                   //  消しゴム
                   PaintOperateIcon(
                     pickIcon: Icon(
-                      Icons.window_rounded,
+                      MyFlutterApp.eraser,
                       size: 45,
                     ),
                     funcFlg: 'eraser',
