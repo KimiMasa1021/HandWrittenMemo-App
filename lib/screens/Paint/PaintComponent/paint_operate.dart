@@ -5,11 +5,13 @@ import 'package:zen03/screens/Paint/PaintComponent/paint_operate_icon.dart';
 import 'package:zen03/screens/paint/PaintComponent/color_picker.dart';
 import '../../../providers/general_providers.dart';
 
-class PaintOperation extends StatelessWidget {
+class PaintOperation extends HookConsumerWidget {
   const PaintOperation({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final paintController = ref.watch(drawControllerProvider.notifier);
+    final state = ref.watch(drawControllerProvider);
     return SizedBox(
       width: double.infinity,
       height: 160,
@@ -19,23 +21,31 @@ class PaintOperation extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               //  すべて削除
-              const PaintOperateIcon(
-                pickIcon: Icon(
+              PaintOperateIcon(
+                pickIcon: const Icon(
                   Icons.delete,
                   size: 45,
                 ),
-                funcFlg: 'delete',
+                function: () => paintController.clear(),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: const [
+                children: [
                   //  ひとつ戻る
                   PaintOperateIcon(
                     pickIcon: Icon(
                       Icons.settings_backup_restore_rounded,
                       size: 45,
                     ),
-                    funcFlg: 'undo',
+                    function: () {},
+                  ),
+                  //  拡大　縮小
+                  PaintOperateIcon(
+                    pickIcon: Icon(
+                      Icons.zoom_in_rounded,
+                      size: 45,
+                    ),
+                    function: () {},
                   ),
                   //  消しゴム
                   PaintOperateIcon(
@@ -43,7 +53,7 @@ class PaintOperation extends StatelessWidget {
                       MyFlutterApp.eraser,
                       size: 45,
                     ),
-                    funcFlg: 'eraser',
+                    function: () {},
                   ),
                   SizedBox(width: 15),
                   //  ペンモード
@@ -52,7 +62,7 @@ class PaintOperation extends StatelessWidget {
                       Icons.brush,
                       size: 45,
                     ),
-                    funcFlg: 'pen',
+                    function: () {},
                   ),
                   SizedBox(width: 15),
                 ],

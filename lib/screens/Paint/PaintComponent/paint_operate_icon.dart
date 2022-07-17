@@ -7,11 +7,11 @@ class PaintOperateIcon extends HookConsumerWidget {
   const PaintOperateIcon({
     Key? key,
     required this.pickIcon,
-    required this.funcFlg,
+    required this.function,
   }) : super(key: key);
 
   final Icon pickIcon;
-  final String funcFlg;
+  final Function() function;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,9 +19,8 @@ class PaintOperateIcon extends HookConsumerWidget {
     final state = ref.watch(drawControllerProvider);
     return InkWell(
       onTap: () {
-        switch (funcFlg) {
+        switch ("") {
           case 'delete':
-            paintController.clear();
             break;
           case 'undo':
             paintController.undo();
@@ -37,11 +36,11 @@ class PaintOperateIcon extends HookConsumerWidget {
         }
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 7),
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: [
-            !state.isEraser && funcFlg == 'pen'
+            !state.isEraser && function == 'pen'
                 ? Container(
                     width: 40,
                     height: 40,
@@ -50,7 +49,7 @@ class PaintOperateIcon extends HookConsumerWidget {
                       shape: BoxShape.circle,
                     ),
                   )
-                : state.isEraser && funcFlg == 'eraser'
+                : state.isEraser && function == 'eraser'
                     ? Container(
                         width: 40,
                         height: 40,

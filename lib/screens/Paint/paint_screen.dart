@@ -20,6 +20,8 @@ class PaintScreen extends StatelessWidget {
   }
   final _key = GlobalKey();
   final _imageKey = GlobalKey();
+
+  final bool test = false;
   String? editPictureUrl;
   @override
   Widget build(BuildContext context) {
@@ -115,34 +117,67 @@ class PaintScreen extends StatelessWidget {
                                     )
                                   : null),
                           margin: const EdgeInsets.all(1),
-                          child: Consumer(
-                            builder: (context, ref, child) {
-                              final paintController =
-                                  ref.watch(drawControllerProvider.notifier);
-                              final state = ref.watch(drawControllerProvider);
+                          child: test
+                              ? Consumer(
+                                  builder: (context, ref, child) {
+                                    final paintController = ref
+                                        .watch(drawControllerProvider.notifier);
+                                    final state =
+                                        ref.watch(drawControllerProvider);
 
-                              return GestureDetector(
-                                onPanStart: (details) {
-                                  paintController
-                                      .addPaint(details.localPosition);
-                                },
-                                onPanUpdate: (details) {
-                                  paintController.updatePaint(_getPosition(
-                                      _key.currentContext!.size,
-                                      details.localPosition));
-                                },
-                                onPanEnd: (details) {
-                                  paintController.endPaint();
-                                },
-                                child: CustomPaint(
-                                  painter: Painter(
-                                    state: state,
-                                    context: context,
-                                  ),
+                                    return GestureDetector(
+                                      onPanStart: (details) {
+                                        paintController
+                                            .addPaint(details.localPosition);
+                                      },
+                                      onPanUpdate: (details) {
+                                        paintController.updatePaint(
+                                            _getPosition(
+                                                _key.currentContext!.size,
+                                                details.localPosition));
+                                      },
+                                      onPanEnd: (details) {
+                                        paintController.endPaint();
+                                      },
+                                      child: CustomPaint(
+                                        painter: Painter(
+                                          state: state,
+                                          context: context,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                )
+                              : Consumer(
+                                  builder: (context, ref, child) {
+                                    final paintController = ref
+                                        .watch(drawControllerProvider.notifier);
+                                    final state =
+                                        ref.watch(drawControllerProvider);
+
+                                    return GestureDetector(
+                                      onPanStart: (details) {
+                                        paintController
+                                            .addPaint(details.localPosition);
+                                      },
+                                      onPanUpdate: (details) {
+                                        paintController.updatePaint(
+                                            _getPosition(
+                                                _key.currentContext!.size,
+                                                details.localPosition));
+                                      },
+                                      onPanEnd: (details) {
+                                        paintController.endPaint();
+                                      },
+                                      child: CustomPaint(
+                                        painter: Painter(
+                                          state: state,
+                                          context: context,
+                                        ),
+                                      ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
-                          ),
                         ),
                       ),
                     ),
