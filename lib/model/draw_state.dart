@@ -14,7 +14,10 @@ class DrawState with _$DrawState {
     @Default(false) bool isZoom,
     @Default(7.5) double thickness,
     @Default(Colors.black) Color pickColor,
-    @Default(1) double scaleValue,
-    @Default(Offset(0, 0)) Offset offsetValue,
+    @Default(Offset.zero) Offset offset,
+    @Default(Offset.zero) Offset initialFocalPoint,
+    @Default(Offset.zero) Offset sessionOffset,
+    @Default(1.0) double scale,
+    @Default(1.0) double initialScale,
   }) = _DrawState;
 }

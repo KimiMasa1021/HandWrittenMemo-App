@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
-import 'package:zen03/model/draw_state.dart';
 import 'package:zoom_widget/zoom_widget.dart';
 import '../../providers/general_providers.dart';
 import 'PaintComponent/paint_back_dialog.dart';
 import 'PaintComponent/paint_save_dialog.dart';
 import 'PaintComponent/paint_operate.dart';
 import 'painter.dart';
-import 'package:vector_math/vector_math_64.dart' show Vector3;
 
-class PaintScreen extends StatelessWidget {
+class PaintScreen extends HookConsumerWidget {
   PaintScreen({Key? key, this.editPictureUrl}) : super(key: key) {
     //UnityADSの初期化設定
     UnityAds.init(
@@ -21,17 +20,24 @@ class PaintScreen extends StatelessWidget {
           debugPrint('Initialization Failed: $error $message'),
     );
   }
+
   final _key = GlobalKey();
   final _imageKey = GlobalKey();
   String? editPictureUrl;
 
-  final TransformationController _transformationController =
-      TransformationController();
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // ステータスバーとアップバーの高さを取得
     var appBarheight =
         AppBar().preferredSize.height + MediaQuery.of(context).padding.top;
+
+    ValueNotifier<Offset> offset = useState(Offset.zero);
+    ValueNotifier<Offset> initialForcalPOint = useState(Offset.zero);
+    ValueNotifier<Offset> sessionOffset = useState(Offset.zero);
+
+    ValueNotifier<double> scale = useState(1.0);
+    ValueNotifier<double> initialScale = useState(1.0);
+
     return WillPopScope(
       onWillPop: () async {
         showDialog(
@@ -131,38 +137,68 @@ class PaintScreen extends StatelessWidget {
                               return !state.isZoom
                                   ? GestureDetector(
                                       onPanStart: (details) {
-                                        paintController
-                                            .addPaint(details.localPosition);
+                                        paintController.addPaint(
+                                            paintController.correctionPostion1(
+                                                details.localPosition,
+                                                offset.value +
+                                                    sessionOffset.value));
                                       },
                                       onPanUpdate: (details) {
                                         paintController.updatePaint(
-                                            _getPosition(
-                                                _key.currentContext!.size,
-                                                details.localPosition));
+                                            paintController.correctionPostion2(
+                                                _getPosition(
+                                                    _key.currentContext!.size,
+                                                    details.localPosition),
+                                                offset.value +
+                                                    sessionOffset.value,
+                                                scale.value));
                                       },
                                       onPanEnd: (details) {
                                         paintController.endPaint();
                                       },
-                                      child: CustomPaint(
-                                        painter: Painter(
-                                          state: state,
-                                          context: context,
+                                      child: Transform.translate(
+                                        offset:
+                                            offset.value + sessionOffset.value,
+                                        child: Transform.scale(
+                                          scale: scale.value,
+                                          child: CustomPaint(
+                                            painter: Painter(
+                                              state: state,
+                                              context: context,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     )
-                                  : Zoom(
-                                      maxZoomWidth: 3000,
-                                      maxZoomHeight: 3000,
-                                      canvasColor: Colors.white,
-                                      backgroundColor: Colors.black,
-                                      colorScrollBars: Colors.grey,
-                                      centerOnScale: true,
-                                      zoomSensibility: 1,
-                                      initZoom: 3.0,
-                                      child: CustomPaint(
-                                        painter: Painter(
-                                          state: state,
-                                          context: context,
+                                  : GestureDetector(
+                                      onScaleStart:
+                                          (ScaleStartDetails details) {
+                                        initialForcalPOint.value =
+                                            details.focalPoint;
+                                        initialScale.value = scale.value;
+                                      },
+                                      onScaleUpdate: (details) {
+                                        sessionOffset.value =
+                                            details.focalPoint -
+                                                initialForcalPOint.value;
+                                        scale.value =
+                                            initialScale.value * details.scale;
+                                      },
+                                      onScaleEnd: (details) {
+                                        offset.value += sessionOffset.value;
+                                        sessionOffset.value = Offset.zero;
+                                      },
+                                      child: Transform.translate(
+                                        offset:
+                                            offset.value + sessionOffset.value,
+                                        child: Transform.scale(
+                                          scale: scale.value,
+                                          child: CustomPaint(
+                                            painter: Painter(
+                                              state: state,
+                                              context: context,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     );
@@ -203,14 +239,3 @@ class PaintScreen extends StatelessWidget {
     return Offset(dx, dy);
   }
 }
-
-// Transform(
-//                                       transform:
-//                                           Matrix4.translationValues(100, 1, 1),
-//                                       child: CustomPaint(
-//                                         painter: Painter(
-//                                           state: state,
-//                                           context: context,
-//                                         ),
-//                                       ),
-//                                     );

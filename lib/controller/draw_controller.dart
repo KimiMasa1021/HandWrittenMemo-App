@@ -94,23 +94,15 @@ class DrawController extends StateNotifier<DrawState> {
     );
   }
 
-  void upDateScale(double scale) {
-    double sca = scale;
-
-    if (scale < 0) {
-      sca = 1;
-    } else if (scale > 10) {
-      sca = 10;
-    }
-    // debugPrint(sca.toString());
-    state = state.copyWith(
-      scaleValue: sca,
-    );
+  Offset correctionPostion1(Offset point, Offset moveOffset) {
+    Offset resultOffset = Offset(
+        (point.dx + moveOffset.dx * -1), (point.dy + moveOffset.dy * -1));
+    return resultOffset;
   }
 
-  void upDateOffset(Offset offset) {
-    state = state.copyWith(
-      offsetValue: Offset(offset.dx, offset.dy),
-    );
+  Offset correctionPostion2(Offset point, Offset moveOffset, double nowScale) {
+    Offset resultOffset = Offset((point.dx + moveOffset.dx * -1) / nowScale,
+        (point.dy + moveOffset.dy * -1) / nowScale);
+    return resultOffset;
   }
 }
