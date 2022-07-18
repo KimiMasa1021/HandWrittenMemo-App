@@ -142,10 +142,12 @@ class PaintScreen extends StatelessWidget {
                                       onPanEnd: (details) {
                                         paintController.endPaint();
                                       },
-                                      child: Transform.translate(
-                                        offset: state.offsetValue,
-                                        child: Transform.scale(
-                                          scale: state.scaleValue,
+                                      child: Transform.scale(
+                                        scale: state.scaleValue,
+                                        child: Transform.translate(
+                                          // offset: state.offsetValue,
+                                          // offset: Offset(-50, -50),
+                                          offset: Offset(-42, -72),
                                           child: CustomPaint(
                                             painter: Painter(
                                               state: state,
@@ -179,14 +181,14 @@ class PaintScreen extends StatelessWidget {
                                                       .x *
                                                   -1,
                                               _transformationController.value
-                                                  .getTranslation()
-                                                  .y),
+                                                      .getTranslation()
+                                                      .y *
+                                                  -1),
                                         );
                                         debugPrint(
                                             "x:${_transformationController.value.getTranslation().x.ceil()} y:${_transformationController.value.getTranslation().y.ceil()}");
                                       },
-                                      onInteractionEnd:
-                                          (ScaleEndDetails val) {});
+                                    );
                             },
                           ),
                         ),
