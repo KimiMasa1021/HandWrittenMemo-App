@@ -100,9 +100,9 @@ class DrawController extends StateNotifier<DrawState> {
     return resultOffset;
   }
 
-  Offset correctionPostion2(Offset point, Offset moveOffset, double nowScale) {
-    Offset resultOffset = Offset((point.dx + moveOffset.dx * -1) / nowScale,
-        (point.dy + moveOffset.dy * -1) / nowScale);
-    return resultOffset;
-  }
+  // Offset correctionPostion2(Offset point, Offset moveOffset, double nowScale) {
+  //   Offset resultOffset = Offset((point.dx + moveOffset.dx * -1) / nowScale,
+  //       (point.dy + moveOffset.dy * -1) / nowScale);
+  //   return resultOffset;
+  // }
 }

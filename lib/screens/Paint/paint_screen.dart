@@ -122,30 +122,24 @@ class PaintScreen extends HookConsumerWidget {
                         child: RepaintBoundary(
                           key: _imageKey,
                           child: !state.isZoom
-                              ? GestureDetector(
-                                  onPanStart: (details) {
-                                    paintController.addPaint(
-                                        paintController.correctionPostion1(
-                                            details.localPosition,
-                                            offset.value +
-                                                sessionOffset.value));
-                                  },
-                                  onPanUpdate: (details) {
-                                    paintController.updatePaint(
-                                        paintController.correctionPostion2(
+                              ? Transform.translate(
+                                  offset: offset.value + sessionOffset.value,
+                                  child: Transform.scale(
+                                    scale: scale.value,
+                                    child: GestureDetector(
+                                      onPanStart: (details) {
+                                        paintController
+                                            .addPaint(details.localPosition);
+                                      },
+                                      onPanUpdate: (details) {
+                                        paintController.updatePaint(
                                             _getPosition(
                                                 _key.currentContext!.size,
-                                                details.localPosition),
-                                            offset.value + sessionOffset.value,
-                                            scale.value));
-                                  },
-                                  onPanEnd: (details) {
-                                    paintController.endPaint();
-                                  },
-                                  child: Transform.translate(
-                                    offset: offset.value + sessionOffset.value,
-                                    child: Transform.scale(
-                                      scale: scale.value,
+                                                details.localPosition));
+                                      },
+                                      onPanEnd: (details) {
+                                        paintController.endPaint();
+                                      },
                                       child: Container(
                                         key: _key,
                                         decoration: BoxDecoration(
@@ -166,26 +160,28 @@ class PaintScreen extends HookConsumerWidget {
                                     ),
                                   ),
                                 )
-                              : GestureDetector(
-                                  onScaleStart: (ScaleStartDetails details) {
-                                    initialForcalPOint.value =
-                                        details.focalPoint;
-                                    initialScale.value = scale.value;
-                                  },
-                                  onScaleUpdate: (details) {
-                                    sessionOffset.value = details.focalPoint -
-                                        initialForcalPOint.value;
-                                    scale.value =
-                                        initialScale.value * details.scale;
-                                  },
-                                  onScaleEnd: (details) {
-                                    offset.value += sessionOffset.value;
-                                    sessionOffset.value = Offset.zero;
-                                  },
-                                  child: Transform.translate(
-                                    offset: offset.value + sessionOffset.value,
-                                    child: Transform.scale(
-                                      scale: scale.value,
+                              : Transform.translate(
+                                  offset: offset.value + sessionOffset.value,
+                                  child: Transform.scale(
+                                    scale: scale.value,
+                                    child: GestureDetector(
+                                      onScaleStart:
+                                          (ScaleStartDetails details) {
+                                        initialForcalPOint.value =
+                                            details.focalPoint;
+                                        initialScale.value = scale.value;
+                                      },
+                                      onScaleUpdate: (details) {
+                                        sessionOffset.value =
+                                            details.focalPoint -
+                                                initialForcalPOint.value;
+                                        scale.value =
+                                            initialScale.value * details.scale;
+                                      },
+                                      onScaleEnd: (details) {
+                                        offset.value += sessionOffset.value;
+                                        sessionOffset.value = Offset.zero;
+                                      },
                                       child: Container(
                                         key: _key,
                                         decoration: BoxDecoration(
