@@ -235,36 +235,3 @@ class PaintScreen extends HookConsumerWidget {
     return Offset(dx, dy);
   }
 }
-// GestureDetector(
-//                                             onScaleStart:
-//                                                 (ScaleStartDetails details) {
-//                                               initialForcalPOint.value =
-//                                                   details.focalPoint;
-//                                               initialScale.value = scale.value;
-//                                             },
-//                                             onScaleUpdate: (details) {
-//                                               sessionOffset.value =
-//                                                   details.focalPoint -
-//                                                       initialForcalPOint.value;
-//                                               scale.value = initialScale.value *
-//                                                   details.scale;
-//                                             },
-//                                             onScaleEnd: (details) {
-//                                               offset.value +=
-//                                                   sessionOffset.value;
-//                                               sessionOffset.value = Offset.zero;
-//                                             },
-//                                             child: Transform.translate(
-//                                               offset: offset.value +
-//                                                   sessionOffset.value,
-//                                               child: Transform.scale(
-//                                                 scale: scale.value,
-//                                                 child: CustomPaint(
-//                                                   painter: Painter(
-//                                                     state: state,
-//                                                     context: context,
-//                                                   ),
-//                                                 ),
-//                                               ),
-//                                             ),
-//                                           );
