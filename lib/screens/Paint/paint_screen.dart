@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 import 'package:zen03/model/draw_state.dart';
+import 'package:zoom_widget/zoom_widget.dart';
 import '../../providers/general_providers.dart';
 import 'PaintComponent/paint_back_dialog.dart';
 import 'PaintComponent/paint_save_dialog.dart';
@@ -142,52 +143,28 @@ class PaintScreen extends StatelessWidget {
                                       onPanEnd: (details) {
                                         paintController.endPaint();
                                       },
-                                      child: Transform.scale(
-                                        scale: state.scaleValue,
-                                        child: Transform.translate(
-                                          // offset: state.offsetValue,
-                                          // offset: Offset(-50, -50),
-                                          offset: Offset(-42, -72),
-                                          child: CustomPaint(
-                                            painter: Painter(
-                                              state: state,
-                                              context: context,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  : InteractiveViewer(
-                                      transformationController:
-                                          _transformationController,
-                                      maxScale: 10,
-                                      minScale: 1,
                                       child: CustomPaint(
                                         painter: Painter(
                                           state: state,
                                           context: context,
                                         ),
                                       ),
-                                      onInteractionUpdate:
-                                          (ScaleUpdateDetails val) {
-                                        paintController.upDateScale(
-                                          _transformationController.value
-                                              .getMaxScaleOnAxis(),
-                                        );
-                                        paintController.upDateOffset(
-                                          Offset(
-                                              _transformationController.value
-                                                      .getTranslation()
-                                                      .x *
-                                                  -1,
-                                              _transformationController.value
-                                                      .getTranslation()
-                                                      .y *
-                                                  -1),
-                                        );
-                                        debugPrint(
-                                            "x:${_transformationController.value.getTranslation().x.ceil()} y:${_transformationController.value.getTranslation().y.ceil()}");
-                                      },
+                                    )
+                                  : Zoom(
+                                      maxZoomWidth: 3000,
+                                      maxZoomHeight: 3000,
+                                      canvasColor: Colors.white,
+                                      backgroundColor: Colors.black,
+                                      colorScrollBars: Colors.grey,
+                                      centerOnScale: true,
+                                      zoomSensibility: 1,
+                                      initZoom: 3.0,
+                                      child: CustomPaint(
+                                        painter: Painter(
+                                          state: state,
+                                          context: context,
+                                        ),
+                                      ),
                                     );
                             },
                           ),
