@@ -16,6 +16,7 @@ class PaintOperation extends HookConsumerWidget {
       width: double.infinity,
       height: 160,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,7 +43,7 @@ class PaintOperation extends HookConsumerWidget {
                   //  拡大　縮小
                   PaintOperateIcon(
                     pickIcon: const Icon(
-                      Icons.zoom_in_rounded,
+                      Icons.front_hand_outlined,
                       size: 45,
                     ),
                     function: () => paintController.zoomMode(),
@@ -82,16 +83,16 @@ class PaintOperation extends HookConsumerWidget {
               );
             },
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ColorPicker(pickColor: Colors.red),
-              ColorPicker(pickColor: Colors.blue),
-              ColorPicker(pickColor: Colors.yellow),
-              ColorPicker(pickColor: Colors.green),
-              ColorPicker(pickColor: Colors.black),
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //   children: [
+          //     ColorPicker(pickColor: Colors.red),
+          //     ColorPicker(pickColor: Colors.blue),
+          //     ColorPicker(pickColor: Colors.yellow),
+          //     ColorPicker(pickColor: Colors.green),
+          //     ColorPicker(pickColor: Colors.black),
+          //   ],
+          // ),
         ],
       ),
     );

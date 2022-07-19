@@ -43,7 +43,7 @@ class PaintOperateIcon extends HookConsumerWidget {
                           shape: BoxShape.circle,
                         ),
                       )
-                    : state.isZoom && pickIcon.icon == Icons.zoom_in_rounded
+                    : state.isZoom && pickIcon.icon == Icons.front_hand_outlined
                         ? Container(
                             width: 40,
                             height: 40,

@@ -111,44 +111,86 @@ class PaintScreen extends HookConsumerWidget {
                 Expanded(
                   child: Padding(
                       padding: const EdgeInsets.all(13.0),
-                      child: Container(
-                        clipBehavior: Clip.hardEdge,
-                        width: double.infinity,
-                        height: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(width: 1),
-                        ),
-                        child: RepaintBoundary(
-                          key: _imageKey,
-                          child: !state.isZoom
-                              ? Transform.translate(
-                                  offset: offset.value + sessionOffset.value,
-                                  child: Transform.scale(
-                                    scale: scale.value,
-                                    child: GestureDetector(
-                                      onPanStart: (details) {
-                                        paintController
-                                            .addPaint(details.localPosition);
-                                      },
-                                      onPanUpdate: (details) {
-                                        paintController.updatePaint(
-                                            _getPosition(
-                                                _key.currentContext!.size,
-                                                details.localPosition));
-                                      },
-                                      onPanEnd: (details) {
-                                        paintController.endPaint();
-                                      },
-                                      child: Container(
-                                        key: _key,
-                                        decoration: BoxDecoration(
+                      child: GestureDetector(
+                        onScaleStart: (ScaleStartDetails details) {
+                          initialForcalPOint.value = details.focalPoint;
+                          initialScale.value = scale.value;
+                        },
+                        onScaleUpdate: (details) {
+                          sessionOffset.value =
+                              details.focalPoint - initialForcalPOint.value;
+                          scale.value = initialScale.value * details.scale;
+                        },
+                        onScaleEnd: (details) {
+                          offset.value += sessionOffset.value;
+                          sessionOffset.value = Offset.zero;
+                        },
+                        child: Container(
+                          clipBehavior: Clip.hardEdge,
+                          width: double.infinity,
+                          height: double.infinity,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(192, 192, 192, 192),
+                            border: Border.all(width: 1),
+                          ),
+                          child: RepaintBoundary(
+                            key: _imageKey,
+                            child: !state.isZoom
+                                ? Transform.translate(
+                                    offset: offset.value + sessionOffset.value,
+                                    child: Transform.scale(
+                                      scale: scale.value,
+                                      child: GestureDetector(
+                                        onPanStart: (details) {
+                                          paintController
+                                              .addPaint(details.localPosition);
+                                        },
+                                        onPanUpdate: (details) {
+                                          paintController.updatePaint(
+                                              _getPosition(
+                                                  _key.currentContext!.size,
+                                                  details.localPosition));
+                                        },
+                                        onPanEnd: (details) {
+                                          paintController.endPaint();
+                                        },
+                                        child: Container(
+                                          key: _key,
+                                          decoration: BoxDecoration(
                                             image: editPictureUrl != null
                                                 ? DecorationImage(
                                                     image: NetworkImage(
                                                         editPictureUrl!),
                                                   )
-                                                : null),
+                                                : null,
+                                            color: Colors.white,
+                                          ),
+                                          margin: const EdgeInsets.all(1),
+                                          child: CustomPaint(
+                                            painter: Painter(
+                                              state: state,
+                                              context: context,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                : Transform.translate(
+                                    offset: offset.value + sessionOffset.value,
+                                    child: Transform.scale(
+                                      scale: scale.value,
+                                      child: Container(
+                                        key: _key,
+                                        decoration: BoxDecoration(
+                                          image: editPictureUrl != null
+                                              ? DecorationImage(
+                                                  image: NetworkImage(
+                                                      editPictureUrl!),
+                                                )
+                                              : null,
+                                          color: Colors.white,
+                                        ),
                                         margin: const EdgeInsets.all(1),
                                         child: CustomPaint(
                                           painter: Painter(
@@ -159,49 +201,7 @@ class PaintScreen extends HookConsumerWidget {
                                       ),
                                     ),
                                   ),
-                                )
-                              : Transform.translate(
-                                  offset: offset.value + sessionOffset.value,
-                                  child: Transform.scale(
-                                    scale: scale.value,
-                                    child: GestureDetector(
-                                      onScaleStart:
-                                          (ScaleStartDetails details) {
-                                        initialForcalPOint.value =
-                                            details.focalPoint;
-                                        initialScale.value = scale.value;
-                                      },
-                                      onScaleUpdate: (details) {
-                                        sessionOffset.value =
-                                            details.focalPoint -
-                                                initialForcalPOint.value;
-                                        scale.value =
-                                            initialScale.value * details.scale;
-                                      },
-                                      onScaleEnd: (details) {
-                                        offset.value += sessionOffset.value;
-                                        sessionOffset.value = Offset.zero;
-                                      },
-                                      child: Container(
-                                        key: _key,
-                                        decoration: BoxDecoration(
-                                            image: editPictureUrl != null
-                                                ? DecorationImage(
-                                                    image: NetworkImage(
-                                                        editPictureUrl!),
-                                                  )
-                                                : null),
-                                        margin: const EdgeInsets.all(1),
-                                        child: CustomPaint(
-                                          painter: Painter(
-                                            state: state,
-                                            context: context,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                          ),
                         ),
                       )),
                 ), //描画領域
