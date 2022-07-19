@@ -131,7 +131,7 @@ class PaintScreen extends HookConsumerWidget {
                           height: double.infinity,
                           decoration: BoxDecoration(
                             color: const Color.fromARGB(192, 192, 192, 192),
-                            border: Border.all(width: 1),
+                            border: Border.all(width: 2),
                           ),
                           child: RepaintBoundary(
                             key: _imageKey,
