@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 import 'package:zen03/model/picture_model.dart';
 import '../../common/common.dart';
 import '../../providers/general_providers.dart';
@@ -7,7 +8,16 @@ import '../Paint/paint_screen.dart';
 import 'home_details_button.dart';
 
 class PictureDetails extends HookConsumerWidget {
-  const PictureDetails({Key? key, required this.data}) : super(key: key);
+  PictureDetails({Key? key, required this.data}) : super(key: key) {
+    //UnityADSの初期化設定
+    UnityAds.init(
+      testMode: true,
+      gameId: '4842721',
+      onComplete: () => debugPrint('Initialization Complete'),
+      onFailed: (error, message) =>
+          debugPrint('Initialization Failed: $error $message'),
+    );
+  }
   final Picture data;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -28,6 +38,15 @@ class PictureDetails extends HookConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                UnityBannerAd(
+                  placementId: 'Banner_Ad_Android',
+                  onLoad: (placementId) =>
+                      debugPrint('Banner loaded: $placementId'),
+                  onClick: (placementId) =>
+                      debugPrint('Banner clicked: $placementId'),
+                  onFailed: (placementId, error, message) => debugPrint(
+                      'Banner Ad $placementId failed: $error $message'),
+                ),
                 RepaintBoundary(
                   key: _shareKey,
                   child: Container(
@@ -86,6 +105,16 @@ class PictureDetails extends HookConsumerWidget {
                     pictureRepository.deletePicture(data);
                     Navigator.pop(context);
                   },
+                ),
+                const SizedBox(height: 20),
+                UnityBannerAd(
+                  placementId: 'Banner_Ad_Android',
+                  onLoad: (placementId) =>
+                      debugPrint('Banner loaded: $placementId'),
+                  onClick: (placementId) =>
+                      debugPrint('Banner clicked: $placementId'),
+                  onFailed: (placementId, error, message) => debugPrint(
+                      'Banner Ad $placementId failed: $error $message'),
                 ),
                 const SizedBox(height: 50)
               ],

@@ -108,7 +108,7 @@ class PaintOperation extends HookConsumerWidget {
                       );
                     },
                     child: Container(
-                      margin: const EdgeInsets.only(left: 30),
+                      margin: const EdgeInsets.only(left: 20),
                       width: 60,
                       height: 40,
                       decoration: BoxDecoration(
