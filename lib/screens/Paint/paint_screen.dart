@@ -40,6 +40,9 @@ class PaintScreen extends HookConsumerWidget {
 
     final paintController = ref.watch(drawControllerProvider.notifier);
     final state = ref.watch(drawControllerProvider);
+
+    final pictureRepository = ref.watch(pictureRepositoryProvider);
+
     return WillPopScope(
       onWillPop: () async {
         showDialog(
@@ -52,57 +55,6 @@ class PaintScreen extends HookConsumerWidget {
       },
       child: SafeArea(
         child: Scaffold(
-          // appBar: AppBar(
-          //   backgroundColor: Colors.white,
-          //   elevation: 1,
-          //   centerTitle: true,
-          //   leading: IconButton(
-          //     icon: const Icon(
-          //       Icons.arrow_back,
-          //       color: Colors.black,
-          //     ),
-          //     onPressed: () {
-          //       showDialog(
-          //         context: context,
-          //         builder: (BuildContext context) {
-          //           return const PaintBackDialog();
-          //         },
-          //       );
-          //     },
-          //   ),
-          //   actions: [
-          //     Consumer(
-          //       builder: (context, ref, child) {
-          //         final pictureRepository = ref.watch(pictureRepositoryProvider);
-          //         return InkWell(
-          //           onTap: () {
-          //             pictureRepository.getDrawKey(_imageKey);
-          //             showDialog(
-          //               context: context,
-          //               builder: (BuildContext context) {
-          //                 return const PaintSaveDialog();
-          //               },
-          //             );
-          //           },
-          //           child: Row(
-          //             children: const [
-          //               Icon(
-          //                 Icons.save_alt_rounded,
-          //                 color: Colors.black,
-          //               ),
-          //               SizedBox(width: 5),
-          //               Text(
-          //                 "保存する",
-          //                 style: TextStyle(color: Colors.black, fontSize: 20),
-          //               ),
-          //               SizedBox(width: 20),
-          //             ],
-          //           ),
-          //         );
-          //       },
-          //     )
-          //   ],
-          // ),
           body: SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(), //スクロールを無効
             child: SizedBox(
@@ -119,87 +71,110 @@ class PaintScreen extends HookConsumerWidget {
                         sessionOffset.value =
                             details.focalPoint - initialForcalPOint.value;
                         scale.value = initialScale.value * details.scale;
-                  
                       },
                       onScaleEnd: (details) {
                         offset.value += sessionOffset.value;
                         sessionOffset.value = Offset.zero;
                       },
-                      child: Container(
-                        clipBehavior: Clip.hardEdge,
-                        width: double.infinity,
-                        height: double.infinity,
-                        decoration: const BoxDecoration(
-                          color: Color.fromARGB(192, 192, 192, 192),
-                        ),
-                        child: RepaintBoundary(
-                          key: _imageKey,
-                          child: !state.isZoom
-                              ? Transform.translate(
-                                  offset: offset.value + sessionOffset.value,
-                                  child: Transform.scale(
-                                    scale: scale.value,
-                                    child: GestureDetector(
-                                      onPanStart: (details) {
-                                        paintController
-                                            .addPaint(details.localPosition);
-                                      },
-                                      onPanUpdate: (details) {
-                                        paintController.updatePaint(
-                                            _getPosition(
-                                                _key.currentContext!.size,
-                                                details.localPosition));
-                                      },
-                                      onPanEnd: (details) {
-                                        paintController.endPaint();
-                                      },
-                                      child: Container(
-                                        key: _key,
-                                        clipBehavior: Clip.hardEdge,
-                                        decoration: BoxDecoration(
-                                          image: editPictureUrl != null
-                                              ? DecorationImage(
-                                                  image: NetworkImage(
-                                                      editPictureUrl!),
-                                                )
-                                              : null,
-                                          color: Colors.white,
+                      child: Stack(
+                        children: [
+                          Container(
+                            clipBehavior: Clip.hardEdge,
+                            width: double.infinity,
+                            height: double.infinity,
+                            decoration: const BoxDecoration(
+                              color: Color.fromARGB(192, 192, 192, 192),
+                            ),
+                            child: !state.isZoom
+                                ? Transform.translate(
+                                    offset: offset.value + sessionOffset.value,
+                                    child: Transform.scale(
+                                      scale: scale.value,
+                                      child: GestureDetector(
+                                        onPanStart: (details) {
+                                          paintController
+                                              .addPaint(details.localPosition);
+                                        },
+                                        onPanUpdate: (details) {
+                                          paintController.updatePaint(
+                                              _getPosition(
+                                                  _key.currentContext!.size,
+                                                  details.localPosition));
+                                        },
+                                        onPanEnd: (details) {
+                                          paintController.endPaint();
+                                        },
+                                        child: RepaintBoundary(
+                                          key: _imageKey,
+                                          child: Container(
+                                            key: _key,
+                                            clipBehavior: Clip.hardEdge,
+                                            decoration: BoxDecoration(
+                                              image: editPictureUrl != null
+                                                  ? DecorationImage(
+                                                      image: NetworkImage(
+                                                          editPictureUrl!),
+                                                    )
+                                                  : null,
+                                              color: Colors.white,
+                                            ),
+                                            child: CustomPaint(
+                                              painter: Painter(
+                                                state: state,
+                                                context: context,
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                        child: CustomPaint(
-                                          painter: Painter(
-                                            state: state,
-                                            context: context,
+                                      ),
+                                    ),
+                                  )
+                                : Transform.translate(
+                                    offset: offset.value + sessionOffset.value,
+                                    child: Transform.scale(
+                                      scale: scale.value,
+                                      child: RepaintBoundary(
+                                        key: _imageKey,
+                                        child: Container(
+                                          key: _key,
+                                          clipBehavior: Clip.hardEdge,
+                                          decoration: BoxDecoration(
+                                            image: editPictureUrl != null
+                                                ? DecorationImage(
+                                                    image: NetworkImage(
+                                                        editPictureUrl!),
+                                                  )
+                                                : null,
+                                            color: Colors.white,
+                                          ),
+                                          child: CustomPaint(
+                                            painter: Painter(
+                                              state: state,
+                                              context: context,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                )
-                              : Transform.translate(
-                                  offset: offset.value + sessionOffset.value,
-                                  child: Transform.scale(
-                                    scale: scale.value,
-                                    child: Container(
-                                      key: _key,
-                                      decoration: BoxDecoration(
-                                        image: editPictureUrl != null
-                                            ? DecorationImage(
-                                                image: NetworkImage(
-                                                    editPictureUrl!),
-                                              )
-                                            : null,
-                                        color: Colors.white,
-                                      ),
-                                      child: CustomPaint(
-                                        painter: Painter(
-                                          state: state,
-                                          context: context,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                        ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              pictureRepository.getDrawKey(_imageKey);
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return const PaintSaveDialog();
+                                },
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.save_as_outlined,
+                              color: Colors.black,
+                              size: 45,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ), //描画領域

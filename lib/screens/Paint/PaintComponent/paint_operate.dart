@@ -3,7 +3,6 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zen03/common/shared/my_flutter_app_icons.dart';
 import 'package:zen03/screens/Paint/PaintComponent/paint_operate_icon.dart';
-import '../../../common/common.dart';
 import '../../../providers/general_providers.dart';
 
 class PaintOperation extends HookConsumerWidget {
@@ -12,7 +11,6 @@ class PaintOperation extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final paintController = ref.watch(drawControllerProvider.notifier);
-    final state = ref.watch(drawControllerProvider);
     return SizedBox(
       width: double.infinity,
       height: 110,
@@ -37,14 +35,14 @@ class PaintOperation extends HookConsumerWidget {
                     ),
                     function: () => paintController.undo(),
                   ),
-                  //ひとつ戻る
-                  PaintOperateIcon(
-                    pickIcon: const Icon(
-                      Icons.refresh,
-                      size: 45,
-                    ),
-                    function: () => paintController.undo(),
-                  ),
+                  //　進
+                  // PaintOperateIcon(
+                  //   pickIcon: const Icon(
+                  //     Icons.refresh,
+                  //     size: 45,
+                  //   ),
+                  //   function: () => paintController.undo(),
+                  // ),
                 ],
               ),
               const Spacer(),
@@ -136,7 +134,6 @@ class PaintOperation extends HookConsumerWidget {
                   ),
                   Expanded(
                     child: Slider(
-                      label: "1",
                       thumbColor: Colors.black,
                       activeColor: Colors.black,
                       inactiveColor: const Color.fromARGB(255, 210, 210, 210),
@@ -150,16 +147,6 @@ class PaintOperation extends HookConsumerWidget {
               );
             },
           ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //   children: [
-          //     ColorPicker(pickColor: Colors.red),
-          //     ColorPicker(pickColor: Colors.blue),
-          //     ColorPicker(pickColor: Colors.yellow),
-          //     ColorPicker(pickColor: Colors.green),
-          //     ColorPicker(pickColor: Colors.black),
-          //   ],
-          // ),
         ],
       ),
     );
