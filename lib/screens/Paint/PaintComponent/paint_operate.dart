@@ -1,73 +1,78 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zen03/common/shared/my_flutter_app_icons.dart';
 import 'package:zen03/screens/Paint/PaintComponent/paint_operate_icon.dart';
-import 'package:zen03/screens/paint/PaintComponent/color_picker.dart';
+import '../../../common/common.dart';
 import '../../../providers/general_providers.dart';
 
 class PaintOperation extends HookConsumerWidget {
-  const PaintOperation({Key? key}) : super(key: key);
-
+  PaintOperation({Key? key}) : super(key: key);
+  void changeColor(Color color) {}
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final paintController = ref.watch(drawControllerProvider.notifier);
     final state = ref.watch(drawControllerProvider);
     return SizedBox(
       width: double.infinity,
-      height: 160,
+      height: 110,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          const Divider(
+            height: 3,
+            color: Colors.black,
+          ),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              //  すべて削除
-              PaintOperateIcon(
-                pickIcon: const Icon(
-                  Icons.delete,
-                  size: 45,
-                ),
-                function: () => paintController.clear(),
-              ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  //  ひとつ戻る
+                  //ひとつ戻る
                   PaintOperateIcon(
                     pickIcon: const Icon(
-                      Icons.settings_backup_restore_rounded,
+                      Icons.replay_outlined,
                       size: 45,
                     ),
                     function: () => paintController.undo(),
                   ),
-                  //  拡大　縮小
+                  //ひとつ戻る
                   PaintOperateIcon(
                     pickIcon: const Icon(
-                      Icons.front_hand_outlined,
+                      Icons.refresh,
                       size: 45,
                     ),
-                    function: () => paintController.zoomMode(),
+                    function: () => paintController.undo(),
                   ),
-                  //  消しゴム
-                  PaintOperateIcon(
-                    pickIcon: const Icon(
-                      MyFlutterApp.eraser,
-                      size: 45,
-                    ),
-                    function: () => paintController.chageEraser(Colors.white),
-                  ),
-                  const SizedBox(width: 15),
-                  //  ペンモード
-                  PaintOperateIcon(
-                    pickIcon: const Icon(
-                      Icons.brush,
-                      size: 45,
-                    ),
-                    function: () => paintController.penMode(),
-                  ),
-                  const SizedBox(width: 15),
                 ],
               ),
+              const Spacer(),
+              //  拡大　縮小
+              PaintOperateIcon(
+                pickIcon: const Icon(
+                  Icons.front_hand_outlined,
+                  size: 45,
+                ),
+                function: () => paintController.zoomMode(),
+              ),
+              //  消しゴム
+              PaintOperateIcon(
+                pickIcon: const Icon(
+                  MyFlutterApp.eraser,
+                  size: 45,
+                ),
+                function: () => paintController.chageEraser(Colors.white),
+              ),
+              //  ペンモード
+              PaintOperateIcon(
+                pickIcon: const Icon(
+                  Icons.brush,
+                  size: 45,
+                ),
+                function: () => paintController.penMode(),
+              ),
+              const SizedBox(width: 15),
             ],
           ),
           Consumer(
@@ -75,11 +80,73 @@ class PaintOperation extends HookConsumerWidget {
               final paintController =
                   ref.watch(drawControllerProvider.notifier);
               final state = ref.watch(drawControllerProvider);
-              return Slider(
-                value: state.thickness,
-                onChanged: (val) => paintController.ticknessSlider(val),
-                min: 1,
-                max: 15,
+              return Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            titlePadding: const EdgeInsets.all(0),
+                            contentPadding: const EdgeInsets.all(0),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(500),
+                                bottom: Radius.circular(100),
+                              ),
+                            ),
+                            content: SingleChildScrollView(
+                              child: HueRingPicker(
+                                pickerColor: state.pickColor,
+                                onColorChanged: (color) =>
+                                    paintController.chageColor(color),
+                                enableAlpha: true,
+                                displayThumbColor: true,
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(left: 30),
+                      width: 60,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        border: Border.all(),
+                        gradient: LinearGradient(
+                          begin: Alignment.topRight,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            state.pickColor,
+                            state.pickColor,
+                            Colors.white,
+                          ],
+                          stops: const [0, 0.65, 0.5],
+                        ),
+                      ),
+                      child: const Center(
+                        child: Icon(
+                          Icons.color_lens_rounded,
+                          size: 30,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Slider(
+                      label: "1",
+                      thumbColor: Colors.black,
+                      activeColor: Colors.black,
+                      inactiveColor: const Color.fromARGB(255, 210, 210, 210),
+                      value: state.thickness,
+                      onChanged: (val) => paintController.ticknessSlider(val),
+                      min: 1,
+                      max: 15,
+                    ),
+                  ),
+                ],
               );
             },
           ),

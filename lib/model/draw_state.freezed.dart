@@ -24,6 +24,7 @@ mixin _$DrawState {
   bool get isZoom => throw _privateConstructorUsedError;
   double get thickness => throw _privateConstructorUsedError;
   Color get pickColor => throw _privateConstructorUsedError;
+  Color get previousColor => throw _privateConstructorUsedError;
   Offset get offset => throw _privateConstructorUsedError;
   Offset get initialFocalPoint => throw _privateConstructorUsedError;
   Offset get sessionOffset => throw _privateConstructorUsedError;
@@ -48,6 +49,7 @@ abstract class $DrawStateCopyWith<$Res> {
       bool isZoom,
       double thickness,
       Color pickColor,
+      Color previousColor,
       Offset offset,
       Offset initialFocalPoint,
       Offset sessionOffset,
@@ -73,6 +75,7 @@ class _$DrawStateCopyWithImpl<$Res> implements $DrawStateCopyWith<$Res> {
     Object? isZoom = freezed,
     Object? thickness = freezed,
     Object? pickColor = freezed,
+    Object? previousColor = freezed,
     Object? offset = freezed,
     Object? initialFocalPoint = freezed,
     Object? sessionOffset = freezed,
@@ -111,6 +114,10 @@ class _$DrawStateCopyWithImpl<$Res> implements $DrawStateCopyWith<$Res> {
       pickColor: pickColor == freezed
           ? _value.pickColor
           : pickColor // ignore: cast_nullable_to_non_nullable
+              as Color,
+      previousColor: previousColor == freezed
+          ? _value.previousColor
+          : previousColor // ignore: cast_nullable_to_non_nullable
               as Color,
       offset: offset == freezed
           ? _value.offset
@@ -151,6 +158,7 @@ abstract class _$$_DrawStateCopyWith<$Res> implements $DrawStateCopyWith<$Res> {
       bool isZoom,
       double thickness,
       Color pickColor,
+      Color previousColor,
       Offset offset,
       Offset initialFocalPoint,
       Offset sessionOffset,
@@ -178,6 +186,7 @@ class __$$_DrawStateCopyWithImpl<$Res> extends _$DrawStateCopyWithImpl<$Res>
     Object? isZoom = freezed,
     Object? thickness = freezed,
     Object? pickColor = freezed,
+    Object? previousColor = freezed,
     Object? offset = freezed,
     Object? initialFocalPoint = freezed,
     Object? sessionOffset = freezed,
@@ -217,6 +226,10 @@ class __$$_DrawStateCopyWithImpl<$Res> extends _$DrawStateCopyWithImpl<$Res>
           ? _value.pickColor
           : pickColor // ignore: cast_nullable_to_non_nullable
               as Color,
+      previousColor: previousColor == freezed
+          ? _value.previousColor
+          : previousColor // ignore: cast_nullable_to_non_nullable
+              as Color,
       offset: offset == freezed
           ? _value.offset
           : offset // ignore: cast_nullable_to_non_nullable
@@ -253,6 +266,7 @@ class _$_DrawState implements _DrawState {
       this.isZoom = false,
       this.thickness = 7.5,
       this.pickColor = Colors.black,
+      this.previousColor = Colors.black,
       this.offset = Offset.zero,
       this.initialFocalPoint = Offset.zero,
       this.sessionOffset = Offset.zero,
@@ -303,6 +317,9 @@ class _$_DrawState implements _DrawState {
   final Color pickColor;
   @override
   @JsonKey()
+  final Color previousColor;
+  @override
+  @JsonKey()
   final Offset offset;
   @override
   @JsonKey()
@@ -319,7 +336,7 @@ class _$_DrawState implements _DrawState {
 
   @override
   String toString() {
-    return 'DrawState(paintList: $paintList, thicknessList: $thicknessList, colorList: $colorList, isDrag: $isDrag, isEraser: $isEraser, isZoom: $isZoom, thickness: $thickness, pickColor: $pickColor, offset: $offset, initialFocalPoint: $initialFocalPoint, sessionOffset: $sessionOffset, scale: $scale, initialScale: $initialScale)';
+    return 'DrawState(paintList: $paintList, thicknessList: $thicknessList, colorList: $colorList, isDrag: $isDrag, isEraser: $isEraser, isZoom: $isZoom, thickness: $thickness, pickColor: $pickColor, previousColor: $previousColor, offset: $offset, initialFocalPoint: $initialFocalPoint, sessionOffset: $sessionOffset, scale: $scale, initialScale: $initialScale)';
   }
 
   @override
@@ -338,6 +355,8 @@ class _$_DrawState implements _DrawState {
             const DeepCollectionEquality().equals(other.isZoom, isZoom) &&
             const DeepCollectionEquality().equals(other.thickness, thickness) &&
             const DeepCollectionEquality().equals(other.pickColor, pickColor) &&
+            const DeepCollectionEquality()
+                .equals(other.previousColor, previousColor) &&
             const DeepCollectionEquality().equals(other.offset, offset) &&
             const DeepCollectionEquality()
                 .equals(other.initialFocalPoint, initialFocalPoint) &&
@@ -359,6 +378,7 @@ class _$_DrawState implements _DrawState {
       const DeepCollectionEquality().hash(isZoom),
       const DeepCollectionEquality().hash(thickness),
       const DeepCollectionEquality().hash(pickColor),
+      const DeepCollectionEquality().hash(previousColor),
       const DeepCollectionEquality().hash(offset),
       const DeepCollectionEquality().hash(initialFocalPoint),
       const DeepCollectionEquality().hash(sessionOffset),
@@ -381,6 +401,7 @@ abstract class _DrawState implements DrawState {
       final bool isZoom,
       final double thickness,
       final Color pickColor,
+      final Color previousColor,
       final Offset offset,
       final Offset initialFocalPoint,
       final Offset sessionOffset,
@@ -403,6 +424,8 @@ abstract class _DrawState implements DrawState {
   double get thickness;
   @override
   Color get pickColor;
+  @override
+  Color get previousColor;
   @override
   Offset get offset;
   @override

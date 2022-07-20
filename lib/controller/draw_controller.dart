@@ -59,19 +59,20 @@ class DrawController extends StateNotifier<DrawState> {
   void chageColor(Color pick) {
     state = state.copyWith(
       pickColor: pick,
+      previousColor: pick,
       isEraser: false,
     );
   }
 
   void chageEraser(Color pick) {
-    //　消しゴム機能　オン！！！！
     if (state.isEraser) {
       state = state.copyWith(
-        pickColor: Colors.black,
+        pickColor: state.previousColor,
         isEraser: false,
       );
     } else {
       state = state.copyWith(
+        previousColor: state.pickColor,
         pickColor: pick,
         isEraser: true,
         isZoom: false,
@@ -82,7 +83,7 @@ class DrawController extends StateNotifier<DrawState> {
   void penMode() {
     state = state.copyWith(
       isEraser: false,
-      pickColor: Colors.black,
+      pickColor: state.previousColor,
       isZoom: false,
     );
   }
@@ -94,15 +95,9 @@ class DrawController extends StateNotifier<DrawState> {
     );
   }
 
-  Offset correctionPostion1(Offset point, Offset moveOffset) {
-    Offset resultOffset = Offset(
-        (point.dx + moveOffset.dx * -1), (point.dy + moveOffset.dy * -1));
-    return resultOffset;
+  void saveColor() {
+    state = state.copyWith(
+      previousColor: state.pickColor,
+    );
   }
-
-  // Offset correctionPostion2(Offset point, Offset moveOffset, double nowScale) {
-  //   Offset resultOffset = Offset((point.dx + moveOffset.dx * -1) / nowScale,
-  //       (point.dy + moveOffset.dy * -1) / nowScale);
-  //   return resultOffset;
-  // }
 }
