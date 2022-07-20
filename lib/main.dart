@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
 
 // 確実に実装するもの
   //　UnityADSの設定・実装
-  //  描画機能のUXの向上
 // 追加予定の機能
   //　paintScreenの実装の最適化
   //　描画機能の性能向上

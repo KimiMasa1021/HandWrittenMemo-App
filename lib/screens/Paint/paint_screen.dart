@@ -119,6 +119,7 @@ class PaintScreen extends HookConsumerWidget {
                         sessionOffset.value =
                             details.focalPoint - initialForcalPOint.value;
                         scale.value = initialScale.value * details.scale;
+                  
                       },
                       onScaleEnd: (details) {
                         offset.value += sessionOffset.value;
