@@ -11,6 +11,7 @@ class Loading extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text("読み込み中です...", style: textStyleBold20),
             const SpinKitFadingCircle(

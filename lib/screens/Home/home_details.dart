@@ -26,7 +26,7 @@ class PictureDetails extends HookConsumerWidget {
 
     final pictureRepositry = ref.watch(pictureRepositoryProvider);
 
-    final _shareKey = GlobalKey();
+    final shareKey = GlobalKey();
 
     return SafeArea(
       child: Scaffold(
@@ -48,7 +48,7 @@ class PictureDetails extends HookConsumerWidget {
                       'Banner Ad $placementId failed: $error $message'),
                 ),
                 RepaintBoundary(
-                  key: _shareKey,
+                  key: shareKey,
                   child: Container(
                     decoration: BoxDecoration(gradient: gradation02),
                     child: Column(
@@ -83,7 +83,7 @@ class PictureDetails extends HookConsumerWidget {
                   text: "画像を共有する",
                   buttonIcon: const Icon(Icons.share),
                   function: () async {
-                    await pictureRepositry.shareImageAndText(_shareKey);
+                    await pictureRepositry.shareImageAndText(shareKey);
                   },
                 ),
                 HomeDetailsButton(

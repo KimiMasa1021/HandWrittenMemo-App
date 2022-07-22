@@ -52,6 +52,14 @@ class Register extends HookConsumerWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                const SizedBox(
+                                  width: double.infinity,
+                                  child: Image(
+                                    width: 50,
+                                    height: 50,
+                                    image: AssetImage("assets/cat.png"),
+                                  ),
+                                ),
                                 SizedBox(
                                   width: double.infinity,
                                   child: Center(

@@ -16,7 +16,6 @@ class PaintOperateIcon extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final paintController = ref.watch(drawControllerProvider.notifier);
     final state = ref.watch(drawControllerProvider);
     return InkWell(
       onTap: () => function(),
