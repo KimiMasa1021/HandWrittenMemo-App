@@ -2,50 +2,60 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zen03/model/draw_state.dart';
 
+import '../model/data_path.dart';
+
 class DrawController extends StateNotifier<DrawState> {
   DrawController() : super(const DrawState());
-  void addPaint(Offset startPoint) {
-    if (!state.isDrag) {
-      state = state.copyWith(
-        isDrag: true,
-        paintList: List.of(state.paintList)..add([startPoint]),
-        thicknessList: List.of(state.thicknessList)..add(state.thickness),
-        colorList: List.of(state.colorList)..add(state.pickColor),
-      );
-    }
+
+  ///////////////////////
+  ///線を描く時の処理
+  void startPath(Offset offset, DataPath? path) {
+    path!.path.moveTo(offset.dx, offset.dy);
+    state = state.copyWith(
+      previousOffset: offset,
+      isDrag: true,
+      drawPath: path,
+    );
   }
 
-  void updatePaint(Offset nextPoint) {
-    if (state.isDrag) {
-      final paintList = List<List<Offset>>.of(state.paintList);
-      final offsetList = List<Offset>.of(state.paintList.last)..add(nextPoint);
-      paintList.last = offsetList;
-
-      state = state.copyWith(paintList: paintList);
-    }
+  void updatePath(Offset offset, DataPath? path) {
+    double midX = (state.previousOffset.dx + offset.dx) / 2;
+    double midY = (state.previousOffset.dy + offset.dy) / 2;
+    path!.path.quadraticBezierTo(
+      state.previousOffset.dx,
+      state.previousOffset.dy,
+      midX,
+      midY,
+    );
+    state = state.copyWith(
+      previousOffset: offset,
+      drawPath: path,
+    );
   }
 
-  void endPaint() {
-    state = state.copyWith(isDrag: false);
+  void savePath(DataPath path) {
+    state = state.copyWith(
+        isDrag: false,
+        dataPath: List.of(state.dataPath)..add(path),
+        drawPath: DataPath(
+          color: state.pickColor,
+          thickness: state.thickness,
+        ));
   }
 
   void undo() {
-    if (state.paintList.isEmpty) {
+    if (state.dataPath.isEmpty) {
       return;
     }
     state = state.copyWith(
-      paintList: List.of(state.paintList)..removeLast(),
-      thicknessList: List.of(state.thicknessList)..removeLast(),
-      colorList: List.of(state.colorList)..removeLast(),
+      dataPath: List.of(state.dataPath)..removeLast(),
     );
   }
 
   void clear() {
     if (!state.isDrag) {
       state = state.copyWith(
-        paintList: [],
-        thicknessList: [],
-        colorList: [],
+        dataPath: [],
       );
     }
   }
@@ -88,16 +98,18 @@ class DrawController extends StateNotifier<DrawState> {
     );
   }
 
+  void saveColor() {
+    state = state.copyWith(
+      previousColor: state.pickColor,
+    );
+  }
+
+  ///////////////////////
+  ///拡大縮小をするときの処理
   void zoomMode() {
     state = state.copyWith(
       isZoom: true,
       isEraser: false,
-    );
-  }
-
-  void saveColor() {
-    state = state.copyWith(
-      previousColor: state.pickColor,
     );
   }
 }

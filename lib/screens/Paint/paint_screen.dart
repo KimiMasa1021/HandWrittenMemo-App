@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
+import 'package:zen03/model/data_path.dart';
 import '../../providers/general_providers.dart';
 import 'PaintComponent/paint_back_dialog.dart';
 import 'PaintComponent/paint_save_dialog.dart';
@@ -23,6 +24,7 @@ class PaintScreen extends HookConsumerWidget {
   final _key = GlobalKey();
   final _imageKey = GlobalKey();
   String? editPictureUrl;
+  DataPath? path;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -91,17 +93,30 @@ class PaintScreen extends HookConsumerWidget {
                                       scale: scale.value,
                                       child: GestureDetector(
                                         onPanStart: (details) {
-                                          paintController
-                                              .addPaint(details.localPosition);
+                                          path = DataPath(
+                                            color: state.pickColor,
+                                            thickness: state.thickness,
+                                          );
+                                          paintController.startPath(
+                                            details.localPosition,
+                                            path!,
+                                          );
+                                          state.drawPath?.path.moveTo(
+                                            details.localPosition.dx,
+                                            details.localPosition.dx,
+                                          );
                                         },
                                         onPanUpdate: (details) {
-                                          paintController.updatePaint(
-                                              _getPosition(
-                                                  _key.currentContext!.size,
-                                                  details.localPosition));
+                                          paintController.updatePath(
+                                            _getPosition(
+                                              _key.currentContext!.size,
+                                              details.localPosition,
+                                            ),
+                                            path!,
+                                          );
                                         },
                                         onPanEnd: (details) {
-                                          paintController.endPaint();
+                                          paintController.savePath(path!);
                                         },
                                         child: RepaintBoundary(
                                           key: _imageKey,
@@ -112,7 +127,8 @@ class PaintScreen extends HookConsumerWidget {
                                               image: editPictureUrl != null
                                                   ? DecorationImage(
                                                       image: NetworkImage(
-                                                          editPictureUrl!),
+                                                        editPictureUrl!,
+                                                      ),
                                                     )
                                                   : null,
                                               color: Colors.white,
@@ -141,7 +157,8 @@ class PaintScreen extends HookConsumerWidget {
                                             image: editPictureUrl != null
                                                 ? DecorationImage(
                                                     image: NetworkImage(
-                                                        editPictureUrl!),
+                                                      editPictureUrl!,
+                                                    ),
                                                   )
                                                 : null,
                                             color: Colors.white,

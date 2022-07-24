@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:zen03/model/draw_state.dart';
+
+import '../../model/draw_state.dart';
 
 class Painter extends CustomPainter {
   Painter({required this.state, required this.context});
@@ -8,26 +9,31 @@ class Painter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    state.paintList.asMap().forEach(
+    state.dataPath.asMap().forEach(
       (index, points) {
         final painter = Paint()
           ..strokeCap = StrokeCap.round
           ..isAntiAlias = true
-          ..color = state.colorList[index]
-          ..strokeWidth = state.thicknessList[index]
+          ..color = points.color
+          ..strokeWidth = points.thickness
           ..style = PaintingStyle.stroke;
 
-        canvas.drawCircle(Offset(points[0].dx, points[0].dy), 0.5, painter);
+        // canvas.drawCircle(Offset(points[0].dx, points[0].dy), 0.5, painter);
 
-        for (var i = 0; i < points.length - 1; i++) {
-          canvas.drawLine(points[i], points[i + 1], painter);
-          //drawPathを使うとパフォーマンス上がるらしいぞよ
-        }
+        canvas.drawPath(points.path, painter);
       },
     );
+    if (state.drawPath?.path != null) {
+      final painter = Paint()
+        ..strokeCap = StrokeCap.round
+        ..isAntiAlias = true
+        ..color = state.pickColor
+        ..strokeWidth = state.thickness
+        ..style = PaintingStyle.stroke;
+      canvas.drawPath(state.drawPath!.path, painter);
+    }
   }
 
   @override
-  bool shouldRepaint(Painter oldDelegate) =>
-      oldDelegate.state.paintList != state.paintList;
+  bool shouldRepaint(Painter oldDelegate) => true;
 }
