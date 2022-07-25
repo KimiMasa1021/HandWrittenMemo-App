@@ -108,7 +108,7 @@ class PaintScreen extends HookConsumerWidget {
                                         },
                                         onPanUpdate: (details) {
                                           paintController.updatePath(
-                                            _getPosition(
+                                            paintController.getPosition(
                                               _key.currentContext!.size,
                                               details.localPosition,
                                             ),
@@ -174,20 +174,40 @@ class PaintScreen extends HookConsumerWidget {
                                     ),
                                   ),
                           ),
-                          IconButton(
-                            onPressed: () {
-                              pictureRepository.getDrawKey(_imageKey);
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return const PaintSaveDialog();
-                                },
-                              );
-                            },
-                            icon: const Icon(
-                              Icons.save_as_outlined,
-                              color: Colors.black,
-                              size: 45,
+                          SizedBox(
+                            width: double.infinity,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    pictureRepository.getDrawKey(_imageKey);
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return const PaintSaveDialog();
+                                      },
+                                    );
+                                  },
+                                  padding: const EdgeInsets.only(left: 10),
+                                  icon: const Icon(
+                                    Icons.save_as_outlined,
+                                    color: Colors.black,
+                                    size: 45,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    paintController.clear();
+                                  },
+                                  padding: const EdgeInsets.only(right: 10),
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Colors.black,
+                                    size: 45,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -202,26 +222,5 @@ class PaintScreen extends HookConsumerWidget {
         ),
       ),
     );
-  }
-
-  Offset _getPosition(Size? length, Offset localPosition) {
-    double dx;
-    double dy;
-    double setd = 2;
-    if (localPosition.dx < 0) {
-      dx = 0;
-    } else if (localPosition.dx > (length!.width - setd)) {
-      dx = length.width - setd;
-    } else {
-      dx = localPosition.dx;
-    }
-    if (localPosition.dy < 0) {
-      dy = 0;
-    } else if (localPosition.dy > (length!.height - setd)) {
-      dy = length.height - setd;
-    } else {
-      dy = localPosition.dy;
-    }
-    return Offset(dx, dy);
   }
 }

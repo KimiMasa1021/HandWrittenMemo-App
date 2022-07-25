@@ -14,13 +14,9 @@ class DrawState with _$DrawState {
     @Default(7.5) double thickness,
     DataPath? drawPath,
     @Default([]) List<DataPath> dataPath,
+    @Default([]) List<DataPath> deletedPath,
     @Default(Offset.zero) Offset previousOffset,
     @Default(Colors.black) Color pickColor,
     @Default(Colors.black) Color previousColor,
-    @Default(Offset.zero) Offset offset,
-    @Default(Offset.zero) Offset initialFocalPoint,
-    @Default(Offset.zero) Offset sessionOffset,
-    @Default(1.0) double scale,
-    @Default(1.0) double initialScale,
   }) = _DrawState;
 }

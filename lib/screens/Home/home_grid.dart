@@ -16,8 +16,8 @@ class HomeGrid extends HookConsumerWidget {
 
     return GridView.count(
       crossAxisCount: 3,
-      crossAxisSpacing: 5.0,
-      mainAxisSpacing: 5.0,
+      crossAxisSpacing: 6.0,
+      mainAxisSpacing: 7.0,
       childAspectRatio: 0.74,
       children: List.generate(
         userPicture.data?.length ?? 0,
@@ -31,7 +31,7 @@ class HomeGrid extends HookConsumerWidget {
               homeControl.deleteTagetFlg();
             },
             feedback: SizedBox(
-              width: size.width / 3.25,
+              width: size.width / 4,
               height: (size.width / 3.25) * 1.26,
               child: Card(
                 elevation: 5,
@@ -58,6 +58,7 @@ class HomeGrid extends HookConsumerWidget {
                   borderRadius: BorderRadius.circular(0),
                 ),
                 child: CachedNetworkImage(
+                  fit: BoxFit.cover,
                   imageUrl: picture.thumbnailUrl!,
                   errorWidget: (context, url, dynamic err) => const Center(
                     child: Icon(Icons.error_outline_sharp),

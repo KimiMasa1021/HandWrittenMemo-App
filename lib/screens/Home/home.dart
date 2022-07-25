@@ -90,11 +90,11 @@ class HomeScreen extends HookConsumerWidget {
                         width: MediaQuery.of(context).size.width / 2,
                         height: 120,
                         decoration: BoxDecoration(
-                          color: homeState.isTarget ? Colors.white : null,
+                          color: Colors.white,
                           border: Border.all(
-                              width: homeState.isTarget ? 5 : 2,
+                              width: 2,
                               color: homeState.isTarget
-                                  ? const Color.fromARGB(255, 159, 90, 90)
+                                  ? const Color.fromARGB(255, 255, 0, 0)
                                   : Colors.grey),
                           borderRadius: BorderRadius.circular(20),
                         ),

@@ -48,7 +48,18 @@ class DrawController extends StateNotifier<DrawState> {
       return;
     }
     state = state.copyWith(
+      deletedPath: List.of(state.deletedPath)..add(state.dataPath.last),
       dataPath: List.of(state.dataPath)..removeLast(),
+    );
+  }
+
+  void redo() {
+    if (state.deletedPath.isEmpty) {
+      return;
+    }
+    state = state.copyWith(
+      dataPath: List.of(state.dataPath)..add(state.deletedPath.last),
+      deletedPath: List.of(state.deletedPath)..removeLast(),
     );
   }
 
@@ -102,6 +113,27 @@ class DrawController extends StateNotifier<DrawState> {
     state = state.copyWith(
       previousColor: state.pickColor,
     );
+  }
+
+  Offset getPosition(Size? length, Offset offset) {
+    double dx;
+    double dy;
+    double setd = 2;
+    if (offset.dx < 0) {
+      dx = 0;
+    } else if (offset.dx > (length!.width - setd)) {
+      dx = length.width - setd;
+    } else {
+      dx = offset.dx;
+    }
+    if (offset.dy < 0) {
+      dy = 0;
+    } else if (offset.dy > (length!.height - setd)) {
+      dy = length.height - setd;
+    } else {
+      dy = offset.dy;
+    }
+    return Offset(dx, dy);
   }
 
   ///////////////////////

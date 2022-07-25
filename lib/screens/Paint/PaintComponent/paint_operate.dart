@@ -27,7 +27,7 @@ class PaintOperation extends HookConsumerWidget {
             children: [
               Row(
                 children: [
-                  //ひとつ戻る
+                  //　ひとつ戻る
                   PaintOperateIcon(
                     pickIcon: const Icon(
                       Icons.replay_outlined,
@@ -35,14 +35,14 @@ class PaintOperation extends HookConsumerWidget {
                     ),
                     function: () => paintController.undo(),
                   ),
-                  //　進
-                  // PaintOperateIcon(
-                  //   pickIcon: const Icon(
-                  //     Icons.refresh,
-                  //     size: 45,
-                  //   ),
-                  //   function: () => paintController.undo(),
-                  // ),
+                  //　ひとつ進む
+                  PaintOperateIcon(
+                    pickIcon: const Icon(
+                      Icons.refresh,
+                      size: 45,
+                    ),
+                    function: () => paintController.redo(),
+                  ),
                 ],
               ),
               const Spacer(),
