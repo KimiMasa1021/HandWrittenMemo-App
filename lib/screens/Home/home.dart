@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zen03/model/picture_model.dart';
+
 import '../../common/common.dart';
 import '../../controller/picture_controller.dart';
+import '../../model/picture_model.dart';
 import '../../providers/general_providers.dart';
-import '../Paint/paint_setUp.dart';
 import '../paint/paint_screen.dart';
 import 'home_grid.dart';
 import 'home_nodata.dart';
@@ -35,7 +35,7 @@ class HomeScreen extends HookConsumerWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => PaintSetUp(),
+                  builder: (context) => PaintScreen(),
                 ),
               );
             },
