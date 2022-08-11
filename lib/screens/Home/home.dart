@@ -27,7 +27,6 @@ class HomeScreen extends HookConsumerWidget {
         backgroundColor: Colors.white,
         elevation: 1,
         centerTitle: true,
-        // leading: const Icon(Icons.menu, color: Colors.black),
         actions: [
           InkWell(
             onTap: () {

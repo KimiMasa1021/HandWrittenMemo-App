@@ -18,13 +18,14 @@ class SignIn extends HookConsumerWidget {
     final password = useState("");
     final email = useState(""); //かっこに初期値を描く
     final loadingFlg = useState(false);
+    final err = useState("");
 
     void trySignIn() {
       loadingFlg.value = true;
       dynamic result = ref
           .read(authRepositoryProvider)
           .signInEmailAndPassword(email.value, password.value);
-      if (result == null) debugPrint("エラー");
+      err.value = "エラーが発生しました。";
       loadingFlg.value = false;
     }
 
@@ -82,6 +83,10 @@ class SignIn extends HookConsumerWidget {
                               MyTextField(
                                 pwdText: true,
                                 data: password,
+                              ),
+                              Text(
+                                err.value,
+                                style: const TextStyle(color: Colors.red),
                               ),
                               const SizedBox(height: 50),
                             ],

@@ -1,4 +1,4 @@
-package com.example.zen03
+package com.kimikimi.zen03
 
 import io.flutter.embedding.android.FlutterActivity
 

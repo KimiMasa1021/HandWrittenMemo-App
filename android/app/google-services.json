@@ -1,39 +1,31 @@
 {
   "project_info": {
-    "project_number": "1001829943388",
-    "project_id": "zen03-7e683",
-    "storage_bucket": "zen03-7e683.appspot.com"
+    "project_number": "1078042982245",
+    "project_id": "drawing-app-561c8",
+    "storage_bucket": "drawing-app-561c8.appspot.com"
   },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1001829943388:android:dd6ac6073638b380497e99",
-        "android_client_info": {
-          "package_name": "com.example.zen03"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1001829943388-6b1dd1ssjsl70n44qcfv3r51r762amkc.apps.googleusercontent.com",
+  "client": [{
+    "client_info": {
+      "mobilesdk_app_id": "1:1078042982245:android:e4e5c7b41871312cc8d38c",
+      "android_client_info": {
+        "package_name": "com.kimikimi.zen03"
+      }
+    },
+    "oauth_client": [{
+      "client_id": "1078042982245-4lgjbrmig0pbdlbhpdcerf2ai432u3lt.apps.googleusercontent.com",
+      "client_type": 3
+    }],
+    "api_key": [{
+      "current_key": "AIzaSyBWkM8M38TYqFkiwTZ4N5OjSPdhJFvKsG0"
+    }],
+    "services": {
+      "appinvite_service": {
+        "other_platform_oauth_client": [{
+          "client_id": "1078042982245-4lgjbrmig0pbdlbhpdcerf2ai432u3lt.apps.googleusercontent.com",
           "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAjODVenmOQflYaBIdcvpo-v8oZfHBHCPs"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1001829943388-6b1dd1ssjsl70n44qcfv3r51r762amkc.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
+        }]
       }
     }
-  ],
+  }],
   "configuration_version": "1"
 }
