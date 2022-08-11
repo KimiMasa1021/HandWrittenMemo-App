@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zen03/common/shared/my_flutter_app_icons.dart';
-import 'package:zen03/screens/Paint/PaintComponent/paint_operate_icon.dart';
 import '../../../providers/general_providers.dart';
+import 'paint_operate_icon.dart';
 
 class PaintOperation extends HookConsumerWidget {
   PaintOperation({Key? key}) : super(key: key);

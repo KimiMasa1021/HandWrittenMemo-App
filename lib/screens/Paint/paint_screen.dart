@@ -3,10 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 import 'package:zen03/model/data_path.dart';
+import 'package:zen03/screens/Paint/paint_back_dialog.dart';
+import 'package:zen03/screens/Paint/paint_save_dialog.dart';
 import '../../providers/general_providers.dart';
-import 'PaintComponent/paint_back_dialog.dart';
-import 'PaintComponent/paint_save_dialog.dart';
-import 'PaintComponent/paint_operate.dart';
+import 'paint_operate.dart';
 import 'painter.dart';
 
 class PaintScreen extends HookConsumerWidget {

@@ -4,6 +4,7 @@ import 'package:zen03/model/picture_model.dart';
 import '../../common/common.dart';
 import '../../controller/picture_controller.dart';
 import '../../providers/general_providers.dart';
+import '../Paint/paint_setUp.dart';
 import '../paint/paint_screen.dart';
 import 'home_grid.dart';
 import 'home_nodata.dart';
@@ -34,7 +35,7 @@ class HomeScreen extends HookConsumerWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => PaintScreen(),
+                  builder: (context) => PaintSetUp(),
                 ),
               );
             },
