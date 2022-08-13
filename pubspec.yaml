@@ -53,6 +53,8 @@ dependencies:
   zoom_widget: ^0.2.1
   flutter_colorpicker: ^1.0.3
   flutter_launcher_icons: ^0.9.3
+  gesture_x_detector: ^1.1.1
+  pinch_zoom: ^1.0.0
 
 dev_dependencies:
   flutter_test:

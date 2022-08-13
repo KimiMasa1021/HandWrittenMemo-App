@@ -46,15 +46,6 @@ class PaintOperation extends HookConsumerWidget {
                 ],
               ),
               const Spacer(),
-              //  拡大　縮小
-              PaintOperateIcon(
-                pickIcon: const Icon(
-                  Icons.front_hand_outlined,
-                  size: 45,
-                ),
-                function: () => paintController.zoomMode(),
-              ),
-              //  消しゴム
               PaintOperateIcon(
                 pickIcon: const Icon(
                   MyFlutterApp.eraser,

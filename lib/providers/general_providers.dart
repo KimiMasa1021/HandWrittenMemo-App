@@ -8,6 +8,8 @@ import 'package:zen03/model/user_model.dart';
 import 'package:zen03/repository/picture_repository.dart';
 
 import '../controller/auth_controller.dart';
+import '../controller/draw_move_controller.dart';
+import '../model/draw_move_state.dart';
 import '../model/draw_state.dart';
 import '../model/home_state.dart';
 import '../repository/auth_repository.dart';
@@ -33,7 +35,9 @@ final drawControllerProvider =
     StateNotifierProvider.autoDispose<DrawController, DrawState>(
         //autoDispose 画面遷移から戻ってきたときに値をリセットしてくれる自動で
         (ref) => DrawController());
-
+final drawMoveController =
+    StateNotifierProvider.autoDispose<DrawMoveController, DrawMoveState>(
+        (ref) => DrawMoveController());
 final homeControllerProvider =
     StateNotifierProvider<HomeController, HomeState>((ref) => HomeController());
 
