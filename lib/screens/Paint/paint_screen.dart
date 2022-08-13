@@ -36,9 +36,6 @@ class PaintScreen extends HookConsumerWidget {
     final paintController = ref.watch(drawControllerProvider.notifier);
     final state = ref.watch(drawControllerProvider);
 
-    final moveController = ref.watch(drawMoveController.notifier);
-    final moveState = ref.watch(drawMoveController);
-
     final pictureRepository = ref.watch(pictureRepositoryProvider);
     return WillPopScope(
       onWillPop: () async {
@@ -69,75 +66,60 @@ class PaintScreen extends HookConsumerWidget {
                             decoration: const BoxDecoration(
                               color: Color.fromARGB(192, 192, 192, 192),
                             ),
-                            child: Transform.translate(
-                              offset: moveController.getOffset(),
-                              child: Transform.scale(
-                                alignment: moveState.align,
-                                scale: moveState.scale,
-                                child: XGestureDetector(
-                                  onMoveStart: (details) {
-                                    path = DataPath(
-                                      color: state.pickColor,
-                                      thickness: state.thickness,
-                                    );
-                                    paintController.startPath(
+                            child: InteractiveViewer(
+                              boundaryMargin:
+                                  const EdgeInsets.all(double.infinity),
+                              panEnabled: false,
+                              maxScale: 15,
+                              minScale: 0.8,
+                              child: XGestureDetector(
+                                onMoveStart: (details) {
+                                  path = DataPath(
+                                    color: state.pickColor,
+                                    thickness: state.thickness,
+                                  );
+                                  paintController.startPath(
+                                    details.localPos,
+                                    path!,
+                                  );
+                                  state.drawPath?.path.moveTo(
+                                    details.localPos.dx,
+                                    details.localPos.dx,
+                                  );
+                                },
+                                onMoveUpdate: (details) {
+                                  paintController.updatePath(
+                                    paintController.getPosition(
+                                      _key.currentContext!.size,
                                       details.localPos,
-                                      path!,
-                                    );
-                                    state.drawPath?.path.moveTo(
-                                      details.localPos.dx,
-                                      details.localPos.dx,
-                                    );
-                                  },
-                                  onMoveUpdate: (details) {
-                                    paintController.updatePath(
-                                      paintController.getPosition(
-                                        _key.currentContext!.size,
-                                        details.localPos,
-                                      ),
-                                      path!,
-                                    );
-                                  },
-                                  onMoveEnd: (details) {
-                                    paintController.savePath(path!);
-                                  },
-                                  onScaleStart: (details) {
-                                    size = _key.currentContext!.size!;
-                                    moveController.scaleStartCalculate(
-                                      details,
-                                      size!,
-                                    );
-                                  },
-                                  onScaleUpdate: (details) {
-                                    moveController.scaleUpdateCalculate(
-                                      details,
-                                    );
-                                  },
-                                  onScaleEnd: () {
-                                    moveController.scaleEndCalculate();
-                                  },
-                                  child: RepaintBoundary(
-                                    key: _imageKey,
-                                    child: Container(
-                                      key: _key,
-                                      clipBehavior: Clip.hardEdge,
-                                      decoration: BoxDecoration(
-                                        image: editPictureUrl != null
-                                            ? DecorationImage(
-                                                image: NetworkImage(
-                                                  editPictureUrl!,
-                                                ),
-                                              )
-                                            : const DecorationImage(
-                                                image: AssetImage(
-                                                    "assets/note.jpg")),
-                                        color: Colors.white,
-                                      ),
-                                      child: CustomPaint(
-                                        painter: Painter(
-                                          state: state,
-                                          context: context,
-                                        ),
+                                    ),
+                                    path!,
+                                  );
+                                },
+                                onMoveEnd: (details) {
+                                  paintController.savePath(path!);
+                                },
+                                child: RepaintBoundary(
+                                  key: _imageKey,
+                                  child: Container(
+                                    key: _key,
+                                    clipBehavior: Clip.hardEdge,
+                                    decoration: BoxDecoration(
+                                      image: editPictureUrl != null
+                                          ? DecorationImage(
+                                              image: NetworkImage(
+                                                editPictureUrl!,
+                                              ),
+                                            )
+                                          : const DecorationImage(
+                                              image: AssetImage(
+                                                  "assets/note.jpg")),
+                                      color: Colors.white,
+                                    ),
+                                    child: CustomPaint(
+                                      painter: Painter(
+                                        state: state,
+                                        context: context,
                                       ),
                                     ),
                                   ),
@@ -195,16 +177,3 @@ class PaintScreen extends HookConsumerWidget {
     );
   }
 }
-                      // onScaleStart: (ScaleStartDetails details) {
-                      //   initialForcalPoint.value = details.focalPoint;
-                      //   initialScale.value = scale.value;
-                      // },
-                      // onScaleUpdate: (details) {
-                      //   sessionOffset.value =
-                      //       details.focalPoint - initialForcalPoint.value;
-                      //   scale.value = initialScale.value * details.scale;
-                      // },
-                      // onScaleEnd: (details) {
-                      //   offset.value += sessionOffset.value;
-                      //   sessionOffset.value = Offset.zero;
-                      // },

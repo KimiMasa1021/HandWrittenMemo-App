@@ -7,7 +7,6 @@ part 'draw_move_state.freezed.dart';
 @freezed
 class DrawMoveState with _$DrawMoveState {
   const factory DrawMoveState({
-    @Default(false) bool isDrag,
     @Default(Offset.zero) Offset offset,
     @Default(Offset.zero) Offset initialForcalPoint,
     @Default(Offset.zero) Offset sessionOffset,
@@ -17,5 +16,6 @@ class DrawMoveState with _$DrawMoveState {
     DataPath? path,
     @Default(0) double x,
     @Default(0) double y,
+    @Default(false) bool test,
   }) = _DrawMoveState;
 }

@@ -16,7 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$DrawMoveState {
-  bool get isDrag => throw _privateConstructorUsedError;
   Offset get offset => throw _privateConstructorUsedError;
   Offset get initialForcalPoint => throw _privateConstructorUsedError;
   Offset get sessionOffset => throw _privateConstructorUsedError;
@@ -26,6 +25,7 @@ mixin _$DrawMoveState {
   DataPath? get path => throw _privateConstructorUsedError;
   double get x => throw _privateConstructorUsedError;
   double get y => throw _privateConstructorUsedError;
+  bool get test => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $DrawMoveStateCopyWith<DrawMoveState> get copyWith =>
@@ -38,8 +38,7 @@ abstract class $DrawMoveStateCopyWith<$Res> {
           DrawMoveState value, $Res Function(DrawMoveState) then) =
       _$DrawMoveStateCopyWithImpl<$Res>;
   $Res call(
-      {bool isDrag,
-      Offset offset,
+      {Offset offset,
       Offset initialForcalPoint,
       Offset sessionOffset,
       double scale,
@@ -47,7 +46,8 @@ abstract class $DrawMoveStateCopyWith<$Res> {
       Alignment align,
       DataPath? path,
       double x,
-      double y});
+      double y,
+      bool test});
 }
 
 /// @nodoc
@@ -61,7 +61,6 @@ class _$DrawMoveStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? isDrag = freezed,
     Object? offset = freezed,
     Object? initialForcalPoint = freezed,
     Object? sessionOffset = freezed,
@@ -71,12 +70,9 @@ class _$DrawMoveStateCopyWithImpl<$Res>
     Object? path = freezed,
     Object? x = freezed,
     Object? y = freezed,
+    Object? test = freezed,
   }) {
     return _then(_value.copyWith(
-      isDrag: isDrag == freezed
-          ? _value.isDrag
-          : isDrag // ignore: cast_nullable_to_non_nullable
-              as bool,
       offset: offset == freezed
           ? _value.offset
           : offset // ignore: cast_nullable_to_non_nullable
@@ -113,6 +109,10 @@ class _$DrawMoveStateCopyWithImpl<$Res>
           ? _value.y
           : y // ignore: cast_nullable_to_non_nullable
               as double,
+      test: test == freezed
+          ? _value.test
+          : test // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -125,8 +125,7 @@ abstract class _$$_DrawMoveStateCopyWith<$Res>
       __$$_DrawMoveStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {bool isDrag,
-      Offset offset,
+      {Offset offset,
       Offset initialForcalPoint,
       Offset sessionOffset,
       double scale,
@@ -134,7 +133,8 @@ abstract class _$$_DrawMoveStateCopyWith<$Res>
       Alignment align,
       DataPath? path,
       double x,
-      double y});
+      double y,
+      bool test});
 }
 
 /// @nodoc
@@ -150,7 +150,6 @@ class __$$_DrawMoveStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? isDrag = freezed,
     Object? offset = freezed,
     Object? initialForcalPoint = freezed,
     Object? sessionOffset = freezed,
@@ -160,12 +159,9 @@ class __$$_DrawMoveStateCopyWithImpl<$Res>
     Object? path = freezed,
     Object? x = freezed,
     Object? y = freezed,
+    Object? test = freezed,
   }) {
     return _then(_$_DrawMoveState(
-      isDrag: isDrag == freezed
-          ? _value.isDrag
-          : isDrag // ignore: cast_nullable_to_non_nullable
-              as bool,
       offset: offset == freezed
           ? _value.offset
           : offset // ignore: cast_nullable_to_non_nullable
@@ -202,6 +198,10 @@ class __$$_DrawMoveStateCopyWithImpl<$Res>
           ? _value.y
           : y // ignore: cast_nullable_to_non_nullable
               as double,
+      test: test == freezed
+          ? _value.test
+          : test // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -210,8 +210,7 @@ class __$$_DrawMoveStateCopyWithImpl<$Res>
 
 class _$_DrawMoveState implements _DrawMoveState {
   const _$_DrawMoveState(
-      {this.isDrag = false,
-      this.offset = Offset.zero,
+      {this.offset = Offset.zero,
       this.initialForcalPoint = Offset.zero,
       this.sessionOffset = Offset.zero,
       this.scale = 1.0,
@@ -219,11 +218,9 @@ class _$_DrawMoveState implements _DrawMoveState {
       this.align = const Alignment(0, 0),
       this.path,
       this.x = 0,
-      this.y = 0});
+      this.y = 0,
+      this.test = false});
 
-  @override
-  @JsonKey()
-  final bool isDrag;
   @override
   @JsonKey()
   final Offset offset;
@@ -250,10 +247,13 @@ class _$_DrawMoveState implements _DrawMoveState {
   @override
   @JsonKey()
   final double y;
+  @override
+  @JsonKey()
+  final bool test;
 
   @override
   String toString() {
-    return 'DrawMoveState(isDrag: $isDrag, offset: $offset, initialForcalPoint: $initialForcalPoint, sessionOffset: $sessionOffset, scale: $scale, initialScale: $initialScale, align: $align, path: $path, x: $x, y: $y)';
+    return 'DrawMoveState(offset: $offset, initialForcalPoint: $initialForcalPoint, sessionOffset: $sessionOffset, scale: $scale, initialScale: $initialScale, align: $align, path: $path, x: $x, y: $y, test: $test)';
   }
 
   @override
@@ -261,7 +261,6 @@ class _$_DrawMoveState implements _DrawMoveState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DrawMoveState &&
-            const DeepCollectionEquality().equals(other.isDrag, isDrag) &&
             const DeepCollectionEquality().equals(other.offset, offset) &&
             const DeepCollectionEquality()
                 .equals(other.initialForcalPoint, initialForcalPoint) &&
@@ -273,13 +272,13 @@ class _$_DrawMoveState implements _DrawMoveState {
             const DeepCollectionEquality().equals(other.align, align) &&
             const DeepCollectionEquality().equals(other.path, path) &&
             const DeepCollectionEquality().equals(other.x, x) &&
-            const DeepCollectionEquality().equals(other.y, y));
+            const DeepCollectionEquality().equals(other.y, y) &&
+            const DeepCollectionEquality().equals(other.test, test));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(isDrag),
       const DeepCollectionEquality().hash(offset),
       const DeepCollectionEquality().hash(initialForcalPoint),
       const DeepCollectionEquality().hash(sessionOffset),
@@ -288,7 +287,8 @@ class _$_DrawMoveState implements _DrawMoveState {
       const DeepCollectionEquality().hash(align),
       const DeepCollectionEquality().hash(path),
       const DeepCollectionEquality().hash(x),
-      const DeepCollectionEquality().hash(y));
+      const DeepCollectionEquality().hash(y),
+      const DeepCollectionEquality().hash(test));
 
   @JsonKey(ignore: true)
   @override
@@ -298,8 +298,7 @@ class _$_DrawMoveState implements _DrawMoveState {
 
 abstract class _DrawMoveState implements DrawMoveState {
   const factory _DrawMoveState(
-      {final bool isDrag,
-      final Offset offset,
+      {final Offset offset,
       final Offset initialForcalPoint,
       final Offset sessionOffset,
       final double scale,
@@ -307,10 +306,9 @@ abstract class _DrawMoveState implements DrawMoveState {
       final Alignment align,
       final DataPath? path,
       final double x,
-      final double y}) = _$_DrawMoveState;
+      final double y,
+      final bool test}) = _$_DrawMoveState;
 
-  @override
-  bool get isDrag;
   @override
   Offset get offset;
   @override
@@ -329,6 +327,8 @@ abstract class _DrawMoveState implements DrawMoveState {
   double get x;
   @override
   double get y;
+  @override
+  bool get test;
   @override
   @JsonKey(ignore: true)
   _$$_DrawMoveStateCopyWith<_$_DrawMoveState> get copyWith =>
