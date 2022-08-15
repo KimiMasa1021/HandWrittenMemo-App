@@ -1,3 +1,4 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -5,7 +6,7 @@ import '../../common/common.dart';
 import '../../controller/picture_controller.dart';
 import '../../model/picture_model.dart';
 import '../../providers/general_providers.dart';
-import '../paint/paint_screen.dart';
+import '../Paint/paint_setup.dart';
 import 'home_grid.dart';
 import 'home_nodata.dart';
 
@@ -35,7 +36,8 @@ class HomeScreen extends HookConsumerWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => PaintScreen(),
+                  // builder: (context) => PaintScreen(),
+                  builder: (context) => const PaintSetUp(),
                 ),
               );
             },
@@ -86,26 +88,28 @@ class HomeScreen extends HookConsumerWidget {
                     },
                     builder: (BuildContext context, List<Object?> candidateData,
                         List<dynamic> rejectedData) {
-                      return Container(
-                        width: MediaQuery.of(context).size.width / 2,
-                        height: 120,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                              width: 2,
-                              color: homeState.isTarget
-                                  ? const Color.fromARGB(255, 255, 0, 0)
-                                  : Colors.grey),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            const Icon(Icons.delete, size: 50),
-                            const SizedBox(height: 5),
-                            Text("ドロップで削除", style: textStyleBold20),
-                            const SizedBox(height: 10),
-                          ],
+                      return DottedBorder(
+                        color: homeState.isTarget
+                            ? const Color.fromARGB(255, 255, 0, 0)
+                            : Colors.grey,
+                        dashPattern: const [15.0, 6.0],
+                        strokeWidth: 3.0,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width / 2,
+                          height: 120,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              const Icon(Icons.delete, size: 50),
+                              const SizedBox(height: 5),
+                              Text("ドロップで削除", style: textStyleBold20),
+                              const SizedBox(height: 10),
+                            ],
+                          ),
                         ),
                       );
                     },

@@ -6,7 +6,11 @@ var textInputDecoration = OutlineInputBorder(
     color: Colors.black,
   ),
 );
-
+var textStyleBold15Gray = const TextStyle(
+  fontSize: 15,
+  fontWeight: FontWeight.bold,
+  color: Color.fromARGB(255, 143, 143, 143),
+);
 var textStyleBold20 = const TextStyle(
   fontSize: 20,
   fontWeight: FontWeight.bold,

@@ -55,10 +55,13 @@ class PaintBackDialog extends StatelessWidget {
                 ),
                 const SizedBox(width: 20),
                 InkWell(
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen())),
+                  onTap: () =>
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (_) => const HomeScreen())),
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (_) => const HomeScreen()),
+                          (route) => false),
                   child: Padding(
                     padding: const EdgeInsets.all(8),
                     child: Text("OK", style: textStyleBold20),

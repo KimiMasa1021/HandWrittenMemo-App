@@ -55,6 +55,8 @@ dependencies:
   flutter_launcher_icons: ^0.9.3
   gesture_x_detector: ^1.1.1
   pinch_zoom: ^1.0.0
+  dotted_border: ^2.0.0+2
+  image_picker: ^0.8.5+3
 
 dev_dependencies:
   flutter_test:

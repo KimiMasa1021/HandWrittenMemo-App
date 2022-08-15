@@ -95,10 +95,10 @@ class PaintSaveDialog extends HookConsumerWidget {
                       onFailed: (placementId, error, message) => debugPrint(
                           'Load Failed $placementId: $error $message'),
                     );
-                    Navigator.push(
+                    await Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomeScreen()));
+                        MaterialPageRoute(builder: (_) => const HomeScreen()),
+                        (route) => false);
                   },
                   style: ElevatedButton.styleFrom(
                     primary: const Color.fromARGB(199, 191, 255, 255),
