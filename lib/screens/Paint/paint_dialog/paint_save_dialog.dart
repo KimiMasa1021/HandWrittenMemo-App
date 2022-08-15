@@ -4,8 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 import 'package:zen03/model/picture_model.dart';
 
-import '../../../providers/general_providers.dart';
-import '../Home/home.dart';
+import '../../../../providers/general_providers.dart';
+import '../../Home/home.dart';
 
 class PaintSaveDialog extends HookConsumerWidget {
   const PaintSaveDialog({Key? key}) : super(key: key);
@@ -97,7 +97,7 @@ class PaintSaveDialog extends HookConsumerWidget {
                     );
                     await Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (_) => const HomeScreen()),
+                        MaterialPageRoute(builder: (_) => HomeScreen()),
                         (route) => false);
                   },
                   style: ElevatedButton.styleFrom(

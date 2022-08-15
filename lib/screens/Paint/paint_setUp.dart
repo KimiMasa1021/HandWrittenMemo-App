@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zen03/screens/Paint/paint_screen.dart';
 
 import '../../common/common.dart';
 import '../../providers/general_providers.dart';
-import 'paint_setup_back.dart';
-import 'paint_setup_back2.dart';
+
+import 'paint_parts/paint_setup_back.dart';
+import 'paint_parts/paint_setup_back2.dart';
+import 'paint_screen.dart';
 
 class PaintSetUp extends HookConsumerWidget {
   const PaintSetUp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pictureRepository = ref.watch(pictureRepositoryProvider);
+    // final pictureRepository = ref.watch(pictureRepositoryProvider);
     final drawControl = ref.watch(drawControllerProvider.notifier);
 
-    final PaintSetUpController =
-        ref.watch(paintSetUpControllerProvider.notifier);
     final state = ref.watch(paintSetUpControllerProvider);
     return Scaffold(
       appBar: AppBar(

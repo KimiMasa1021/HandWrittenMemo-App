@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zen03/controller/paint_setup_controller.dart';
-import '../../common/common.dart';
-import '../../providers/general_providers.dart';
+import '../../../common/common.dart';
+import '../../../providers/general_providers.dart';
 
 class PaintSetUpBack extends HookConsumerWidget {
   PaintSetUpBack({
@@ -16,7 +15,7 @@ class PaintSetUpBack extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final PaintSetUpController =
+    final paintSetUpController =
         ref.watch(paintSetUpControllerProvider.notifier);
     final state = ref.watch(paintSetUpControllerProvider);
 
@@ -70,7 +69,7 @@ class PaintSetUpBack extends HookConsumerWidget {
               activeColor: Colors.blue,
               value: img ?? "",
               groupValue: state.type,
-              onChanged: PaintSetUpController.handleRadio,
+              onChanged: paintSetUpController.handleRadio,
             ),
           ),
         )

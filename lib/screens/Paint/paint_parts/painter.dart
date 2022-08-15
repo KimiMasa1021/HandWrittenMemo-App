@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../model/draw_state.dart';
+import '../../../model/draw_state.dart';
 
 class Painter extends CustomPainter {
   Painter({required this.state, required this.context});

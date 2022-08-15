@@ -22,7 +22,7 @@ class SignIn extends HookConsumerWidget {
 
     void trySignIn() {
       loadingFlg.value = true;
-      dynamic result = ref
+      ref
           .read(authRepositoryProvider)
           .signInEmailAndPassword(email.value, password.value);
       err.value = "エラーが発生しました。";

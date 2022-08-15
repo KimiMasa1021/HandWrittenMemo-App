@@ -18,7 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$DrawState {
   bool get isDrag => throw _privateConstructorUsedError;
   bool get isEraser => throw _privateConstructorUsedError;
-  bool get isZoom => throw _privateConstructorUsedError;
+  bool get isOption => throw _privateConstructorUsedError;
+  bool get isOption2 => throw _privateConstructorUsedError;
   double get thickness => throw _privateConstructorUsedError;
   DataPath? get drawPath => throw _privateConstructorUsedError;
   List<DataPath> get dataPath => throw _privateConstructorUsedError;
@@ -39,7 +40,8 @@ abstract class $DrawStateCopyWith<$Res> {
   $Res call(
       {bool isDrag,
       bool isEraser,
-      bool isZoom,
+      bool isOption,
+      bool isOption2,
       double thickness,
       DataPath? drawPath,
       List<DataPath> dataPath,
@@ -61,7 +63,8 @@ class _$DrawStateCopyWithImpl<$Res> implements $DrawStateCopyWith<$Res> {
   $Res call({
     Object? isDrag = freezed,
     Object? isEraser = freezed,
-    Object? isZoom = freezed,
+    Object? isOption = freezed,
+    Object? isOption2 = freezed,
     Object? thickness = freezed,
     Object? drawPath = freezed,
     Object? dataPath = freezed,
@@ -79,9 +82,13 @@ class _$DrawStateCopyWithImpl<$Res> implements $DrawStateCopyWith<$Res> {
           ? _value.isEraser
           : isEraser // ignore: cast_nullable_to_non_nullable
               as bool,
-      isZoom: isZoom == freezed
-          ? _value.isZoom
-          : isZoom // ignore: cast_nullable_to_non_nullable
+      isOption: isOption == freezed
+          ? _value.isOption
+          : isOption // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isOption2: isOption2 == freezed
+          ? _value.isOption2
+          : isOption2 // ignore: cast_nullable_to_non_nullable
               as bool,
       thickness: thickness == freezed
           ? _value.thickness
@@ -124,7 +131,8 @@ abstract class _$$_DrawStateCopyWith<$Res> implements $DrawStateCopyWith<$Res> {
   $Res call(
       {bool isDrag,
       bool isEraser,
-      bool isZoom,
+      bool isOption,
+      bool isOption2,
       double thickness,
       DataPath? drawPath,
       List<DataPath> dataPath,
@@ -148,7 +156,8 @@ class __$$_DrawStateCopyWithImpl<$Res> extends _$DrawStateCopyWithImpl<$Res>
   $Res call({
     Object? isDrag = freezed,
     Object? isEraser = freezed,
-    Object? isZoom = freezed,
+    Object? isOption = freezed,
+    Object? isOption2 = freezed,
     Object? thickness = freezed,
     Object? drawPath = freezed,
     Object? dataPath = freezed,
@@ -166,9 +175,13 @@ class __$$_DrawStateCopyWithImpl<$Res> extends _$DrawStateCopyWithImpl<$Res>
           ? _value.isEraser
           : isEraser // ignore: cast_nullable_to_non_nullable
               as bool,
-      isZoom: isZoom == freezed
-          ? _value.isZoom
-          : isZoom // ignore: cast_nullable_to_non_nullable
+      isOption: isOption == freezed
+          ? _value.isOption
+          : isOption // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isOption2: isOption2 == freezed
+          ? _value.isOption2
+          : isOption2 // ignore: cast_nullable_to_non_nullable
               as bool,
       thickness: thickness == freezed
           ? _value.thickness
@@ -208,7 +221,8 @@ class _$_DrawState implements _DrawState {
   const _$_DrawState(
       {this.isDrag = false,
       this.isEraser = false,
-      this.isZoom = false,
+      this.isOption = false,
+      this.isOption2 = false,
       this.thickness = 7.5,
       this.drawPath,
       final List<DataPath> dataPath = const [],
@@ -227,7 +241,10 @@ class _$_DrawState implements _DrawState {
   final bool isEraser;
   @override
   @JsonKey()
-  final bool isZoom;
+  final bool isOption;
+  @override
+  @JsonKey()
+  final bool isOption2;
   @override
   @JsonKey()
   final double thickness;
@@ -261,7 +278,7 @@ class _$_DrawState implements _DrawState {
 
   @override
   String toString() {
-    return 'DrawState(isDrag: $isDrag, isEraser: $isEraser, isZoom: $isZoom, thickness: $thickness, drawPath: $drawPath, dataPath: $dataPath, deletedPath: $deletedPath, previousOffset: $previousOffset, pickColor: $pickColor, previousColor: $previousColor)';
+    return 'DrawState(isDrag: $isDrag, isEraser: $isEraser, isOption: $isOption, isOption2: $isOption2, thickness: $thickness, drawPath: $drawPath, dataPath: $dataPath, deletedPath: $deletedPath, previousOffset: $previousOffset, pickColor: $pickColor, previousColor: $previousColor)';
   }
 
   @override
@@ -271,7 +288,8 @@ class _$_DrawState implements _DrawState {
             other is _$_DrawState &&
             const DeepCollectionEquality().equals(other.isDrag, isDrag) &&
             const DeepCollectionEquality().equals(other.isEraser, isEraser) &&
-            const DeepCollectionEquality().equals(other.isZoom, isZoom) &&
+            const DeepCollectionEquality().equals(other.isOption, isOption) &&
+            const DeepCollectionEquality().equals(other.isOption2, isOption2) &&
             const DeepCollectionEquality().equals(other.thickness, thickness) &&
             const DeepCollectionEquality().equals(other.drawPath, drawPath) &&
             const DeepCollectionEquality().equals(other._dataPath, _dataPath) &&
@@ -289,7 +307,8 @@ class _$_DrawState implements _DrawState {
       runtimeType,
       const DeepCollectionEquality().hash(isDrag),
       const DeepCollectionEquality().hash(isEraser),
-      const DeepCollectionEquality().hash(isZoom),
+      const DeepCollectionEquality().hash(isOption),
+      const DeepCollectionEquality().hash(isOption2),
       const DeepCollectionEquality().hash(thickness),
       const DeepCollectionEquality().hash(drawPath),
       const DeepCollectionEquality().hash(_dataPath),
@@ -308,7 +327,8 @@ abstract class _DrawState implements DrawState {
   const factory _DrawState(
       {final bool isDrag,
       final bool isEraser,
-      final bool isZoom,
+      final bool isOption,
+      final bool isOption2,
       final double thickness,
       final DataPath? drawPath,
       final List<DataPath> dataPath,
@@ -322,7 +342,9 @@ abstract class _DrawState implements DrawState {
   @override
   bool get isEraser;
   @override
-  bool get isZoom;
+  bool get isOption;
+  @override
+  bool get isOption2;
   @override
   double get thickness;
   @override

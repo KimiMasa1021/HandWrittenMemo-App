@@ -2,15 +2,15 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../common/common.dart';
-import '../../providers/general_providers.dart';
+import '../../../common/common.dart';
+import '../../../providers/general_providers.dart';
 
 class PaintSetUpBack2 extends HookConsumerWidget {
   const PaintSetUpBack2({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final PaintSetUpController =
+    final paintSetUpController =
         ref.watch(paintSetUpControllerProvider.notifier);
     final state = ref.watch(paintSetUpControllerProvider);
     return Row(
@@ -66,7 +66,7 @@ class PaintSetUpBack2 extends HookConsumerWidget {
                         activeColor: Colors.blue,
                         value: "fromDevice",
                         groupValue: state.type,
-                        onChanged: PaintSetUpController.handleRadio,
+                        onChanged: paintSetUpController.handleRadio,
                       ),
                     ),
                   )
@@ -89,7 +89,7 @@ class PaintSetUpBack2 extends HookConsumerWidget {
                 children: [
                   InkWell(
                     onTap: () async {
-                      await PaintSetUpController.getImageFromGallery();
+                      await paintSetUpController.getImageFromGallery();
                     },
                     child: Column(
                       children: [
@@ -114,7 +114,7 @@ class PaintSetUpBack2 extends HookConsumerWidget {
                   ),
                   InkWell(
                     onTap: () async {
-                      await PaintSetUpController.getImageFromCamera();
+                      await paintSetUpController.getImageFromCamera();
                     },
                     child: Column(
                       children: [

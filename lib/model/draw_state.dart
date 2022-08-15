@@ -10,7 +10,8 @@ class DrawState with _$DrawState {
   const factory DrawState({
     @Default(false) bool isDrag,
     @Default(false) bool isEraser,
-    @Default(false) bool isZoom,
+    @Default(false) bool isOption,
+    @Default(false) bool isOption2,
     @Default(7.5) double thickness,
     DataPath? drawPath,
     @Default([]) List<DataPath> dataPath,

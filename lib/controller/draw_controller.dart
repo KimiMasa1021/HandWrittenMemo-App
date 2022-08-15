@@ -15,6 +15,8 @@ class DrawController extends StateNotifier<DrawState> {
       previousOffset: offset,
       isDrag: true,
       drawPath: path,
+      isOption: false,
+      isOption2: false,
     );
   }
 
@@ -67,6 +69,7 @@ class DrawController extends StateNotifier<DrawState> {
     if (!state.isDrag) {
       state = state.copyWith(
         dataPath: [],
+        isOption2: false,
       );
     }
   }
@@ -80,38 +83,42 @@ class DrawController extends StateNotifier<DrawState> {
   void chageColor(Color pick) {
     state = state.copyWith(
       pickColor: pick,
-      previousColor: pick,
       isEraser: false,
+      isOption: false,
+      isOption2: false,
     );
   }
 
-  void chageEraser(Color pick) {
+  void changePen() {
     if (state.isEraser) {
       state = state.copyWith(
-        pickColor: state.previousColor,
         isEraser: false,
+        pickColor: state.previousColor,
+        isOption: false,
+        isOption2: false,
       );
     } else {
       state = state.copyWith(
-        previousColor: state.pickColor,
-        pickColor: pick,
         isEraser: true,
-        isZoom: false,
+        previousColor: state.pickColor,
+        pickColor: Colors.white,
+        isOption: false,
+        isOption2: false,
       );
     }
   }
 
-  void penMode() {
+  void showOption() {
     state = state.copyWith(
-      isEraser: false,
-      pickColor: state.previousColor,
-      isZoom: false,
+      isOption2: state.isOption2 ? false : false,
+      isOption: !state.isOption,
     );
   }
 
-  void saveColor() {
+  void showOption2() {
     state = state.copyWith(
-      previousColor: state.pickColor,
+      isOption: state.isOption ? false : false,
+      isOption2: !state.isOption2,
     );
   }
 
@@ -134,14 +141,5 @@ class DrawController extends StateNotifier<DrawState> {
       dy = offset.dy;
     }
     return Offset(dx, dy);
-  }
-
-  ///////////////////////
-  ///拡大縮小をするときの処理
-  void zoomMode() {
-    state = state.copyWith(
-      isZoom: true,
-      isEraser: false,
-    );
   }
 }
