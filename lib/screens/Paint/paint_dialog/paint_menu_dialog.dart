@@ -4,6 +4,7 @@ import '../../../providers/general_providers.dart';
 import 'dialog_parts/menu_tile.dart';
 import 'paint_back_dialog.dart';
 import 'paint_save_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PaintMenuDialog extends HookConsumerWidget {
   const PaintMenuDialog({Key? key, required this.imageKey}) : super(key: key);
@@ -20,8 +21,8 @@ class PaintMenuDialog extends HookConsumerWidget {
         ? Positioned(
             bottom: 65.0,
             left: 5.0,
-            width: MediaQuery.of(context).size.width / 1.8,
-            height: 120.0,
+            width: MediaQuery.of(context).size.width / 1.3,
+            height: MediaQuery.of(context).size.height / 3.5,
             child: Container(
               margin: const EdgeInsets.only(right: 5),
               height: 50,
@@ -32,12 +33,13 @@ class PaintMenuDialog extends HookConsumerWidget {
                 border: Border.all(),
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(height: 1),
                   MenuTile(
                     icon: Icons.delete,
-                    title: "すべて削除する",
+                    title: AppLocalizations.of(context)!.delete,
                     function: drawController.clear,
                   ),
                   const Divider(
@@ -46,7 +48,7 @@ class PaintMenuDialog extends HookConsumerWidget {
                   ),
                   MenuTile(
                     icon: Icons.home,
-                    title: "ホームに戻る",
+                    title: AppLocalizations.of(context)!.home,
                     function: () async {
                       showDialog(
                         context: context,
@@ -62,7 +64,7 @@ class PaintMenuDialog extends HookConsumerWidget {
                   ),
                   MenuTile(
                     icon: Icons.save_as_outlined,
-                    title: "保存する",
+                    title: AppLocalizations.of(context)!.save,
                     function: () {
                       pictureRepository.getDrawKey(imageKey);
                       showDialog(
@@ -73,6 +75,7 @@ class PaintMenuDialog extends HookConsumerWidget {
                       );
                     },
                   ),
+                  const SizedBox(height: 1),
                 ],
               ),
             ),

@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:zen03/screens/Home/home.dart';
 
 import '../../../../common/common.dart';
+import '../../../providers/general_providers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class PaintBackDialog extends StatelessWidget {
+class PaintBackDialog extends HookConsumerWidget {
   const PaintBackDialog({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final drawController = ref.watch(drawControllerProvider.notifier);
+
     return AlertDialog(
       contentPadding: EdgeInsets.zero,
       shape: const RoundedRectangleBorder(
@@ -29,17 +34,19 @@ class PaintBackDialog extends StatelessWidget {
                 topRight: Radius.circular(24),
               ),
             ),
-            child: const Center(
+            child: Center(
               child: Text(
-                "ホームにもどる",
-                style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                AppLocalizations.of(context)!.home,
+                style:
+                    const TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
               ),
             ),
           ),
           Container(
             width: MediaQuery.of(context).size.width * 0.8,
             margin: const EdgeInsets.only(top: 30, left: 30, right: 30),
-            child: Text("もどると絵が消えますがよろしいですか？？", style: textStyleBold20),
+            child: Text(AppLocalizations.of(context)!.indicate,
+                style: textStyleBold20),
           ),
           Container(
             margin: const EdgeInsets.only(top: 40),
@@ -51,20 +58,24 @@ class PaintBackDialog extends StatelessWidget {
                   onTap: () => Navigator.pop(context),
                   child: Padding(
                       padding: const EdgeInsets.all(8),
-                      child: Text("キャンセル", style: textStyleNomal20)),
+                      child: Text(AppLocalizations.of(context)!.cancellation,
+                          style: textStyleNomal20)),
                 ),
                 const SizedBox(width: 20),
                 InkWell(
-                  onTap: () =>
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (_) => const HomeScreen())),
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (_) => const HomeScreen()),
-                          (route) => false),
+                  onTap: () {
+                    drawController.clear();
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const HomeScreen()),
+                      (_) => false,
+                    );
+                  },
                   child: Padding(
                     padding: const EdgeInsets.all(8),
-                    child: Text("OK", style: textStyleBold20),
+                    child: Text(AppLocalizations.of(context)!.ok,
+                        style: textStyleBold20),
                   ),
                 ),
                 const SizedBox(width: 40),

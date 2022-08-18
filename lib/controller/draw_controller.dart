@@ -37,12 +37,17 @@ class DrawController extends StateNotifier<DrawState> {
 
   void savePath(DataPath path) {
     state = state.copyWith(
-        isDrag: false,
-        dataPath: List.of(state.dataPath)..add(path),
-        drawPath: DataPath(
-          color: state.pickColor,
-          thickness: state.thickness,
-        ));
+      isDrag: false,
+      dataPath: List.of(state.dataPath)..add(path),
+      drawPath: DataPath(
+        color: state.pickColor,
+        thickness: state.thickness,
+      ),
+    );
+  }
+
+  void firstPoint(Offset offset, DataPath? path) {
+    path!.firstPoint = offset;
   }
 
   void undo() {
@@ -69,6 +74,8 @@ class DrawController extends StateNotifier<DrawState> {
     if (!state.isDrag) {
       state = state.copyWith(
         dataPath: [],
+        pickColor: Colors.black,
+        deletedPath: [],
         isOption2: false,
       );
     }
@@ -141,5 +148,11 @@ class DrawController extends StateNotifier<DrawState> {
       dy = offset.dy;
     }
     return Offset(dx, dy);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    debugPrint("廃棄");
   }
 }

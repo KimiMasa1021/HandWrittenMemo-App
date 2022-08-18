@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:zen03/screens/Home/home_details.dart';
+
 import '../../model/picture_model.dart';
 import '../../model/user_data.dart';
 import '../../providers/general_providers.dart';
+import 'home_details.dart';
 
 class HomeGrid extends HookConsumerWidget {
   const HomeGrid({Key? key, required this.userPicture}) : super(key: key);
@@ -14,15 +16,24 @@ class HomeGrid extends HookConsumerWidget {
     final homeControl = ref.watch(homeControllerProvider.notifier);
     final size = MediaQuery.of(context).size;
 
-    return GridView.count(
-      crossAxisCount: 3,
-      crossAxisSpacing: 6.0,
-      mainAxisSpacing: 7.0,
-      childAspectRatio: 0.74,
-      children: List.generate(
-        userPicture.data?.length ?? 0,
-        (index) {
+    return GridView.custom(
+      gridDelegate: SliverQuiltedGridDelegate(
+        crossAxisCount: 4,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        repeatPattern: QuiltedGridRepeatPattern.inverted,
+        pattern: [
+          const QuiltedGridTile(2, 2),
+          const QuiltedGridTile(1, 2),
+          // const QuiltedGridTile(2, 1),
+          // const QuiltedGridTile(1, 1),
+        ],
+      ),
+      childrenDelegate: SliverChildBuilderDelegate(
+        childCount: userPicture.data?.length ?? 0,
+        (context, index) {
           Picture? picture = userPicture.data?[index];
+
           return LongPressDraggable(
             data: picture,
             onDragStarted: () => homeControl.deleteTagetFlg(),
@@ -52,17 +63,11 @@ class HomeGrid extends HookConsumerWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => PictureDetails(data: picture))),
-              child: Card(
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0),
-                ),
-                child: CachedNetworkImage(
-                  fit: BoxFit.cover,
-                  imageUrl: picture.thumbnailUrl!,
-                  errorWidget: (context, url, dynamic err) => const Center(
-                    child: Icon(Icons.error_outline_sharp),
-                  ),
+              child: CachedNetworkImage(
+                fit: BoxFit.cover,
+                imageUrl: picture.thumbnailUrl!,
+                errorWidget: (context, url, dynamic err) => const Center(
+                  child: Icon(Icons.error_outline_sharp),
                 ),
               ),
             ),

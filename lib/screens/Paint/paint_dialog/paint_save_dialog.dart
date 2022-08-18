@@ -6,6 +6,7 @@ import 'package:zen03/model/picture_model.dart';
 
 import '../../../../providers/general_providers.dart';
 import '../../Home/home.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PaintSaveDialog extends HookConsumerWidget {
   const PaintSaveDialog({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class PaintSaveDialog extends HookConsumerWidget {
     final title = useState("");
 
     final pictureRepository = ref.watch(pictureRepositoryProvider);
+    final drawController = ref.watch(drawControllerProvider.notifier);
     return Stack(
       children: [
         AlertDialog(
@@ -38,10 +40,11 @@ class PaintSaveDialog extends HookConsumerWidget {
                     topRight: Radius.circular(24),
                   ),
                 ),
-                child: const Center(
+                child: Center(
                   child: Text(
-                    "絵に名前をつけよう。",
-                    style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                    AppLocalizations.of(context)!.giveName,
+                    style: const TextStyle(
+                        fontSize: 23, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -52,7 +55,7 @@ class PaintSaveDialog extends HookConsumerWidget {
                   onChanged: (val) => title.value = val,
                   style: const TextStyle(fontSize: 20),
                   decoration: InputDecoration(
-                    hintText: "なまえ",
+                    hintText: AppLocalizations.of(context)!.name,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                       borderSide: const BorderSide(
@@ -95,10 +98,11 @@ class PaintSaveDialog extends HookConsumerWidget {
                       onFailed: (placementId, error, message) => debugPrint(
                           'Load Failed $placementId: $error $message'),
                     );
+                    drawController.clear();
                     await Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (_) => HomeScreen()),
-                        (route) => false);
+                        MaterialPageRoute(builder: (_) => const HomeScreen()),
+                        (_) => false);
                   },
                   style: ElevatedButton.styleFrom(
                     primary: const Color.fromARGB(199, 191, 255, 255),
@@ -107,11 +111,11 @@ class PaintSaveDialog extends HookConsumerWidget {
                     ),
                     elevation: 15.0,
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(10.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
                     child: Text(
-                      '完了',
-                      style: TextStyle(
+                      AppLocalizations.of(context)!.completion,
+                      style: const TextStyle(
                         fontSize: 25,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,

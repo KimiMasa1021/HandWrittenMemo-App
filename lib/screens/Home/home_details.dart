@@ -6,6 +6,7 @@ import '../../common/common.dart';
 import '../../providers/general_providers.dart';
 import '../Paint/paint_screen.dart';
 import 'home_details_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PictureDetails extends HookConsumerWidget {
   PictureDetails({Key? key, required this.data}) : super(key: key) {
@@ -47,59 +48,55 @@ class PictureDetails extends HookConsumerWidget {
                   onFailed: (placementId, error, message) => debugPrint(
                       'Banner Ad $placementId failed: $error $message'),
                 ),
-                RepaintBoundary(
-                  key: shareKey,
-                  child: Container(
-                    decoration: BoxDecoration(gradient: gradation02),
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 10),
-                        Text(data.title!, style: textStyleBold40),
-                        const SizedBox(height: 10),
-                        SizedBox(
-                          width: double.infinity,
-                          child: Card(
-                            elevation: 10,
-                            child: Image.network(
-                              data.thumbnailUrl!,
-                              loadingBuilder: (_, child, loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return const SizedBox(
-                                  height: 450,
-                                  child: Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                );
-                              },
+                const SizedBox(height: 10),
+                Text(data.title!, style: textStyleBold40),
+                const SizedBox(height: 10),
+                SizedBox(
+                  width: double.infinity,
+                  child: RepaintBoundary(
+                    key: shareKey,
+                    child: Card(
+                      elevation: 10,
+                      child: Image.network(
+                        data.thumbnailUrl!,
+                        loadingBuilder: (_, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return const SizedBox(
+                            height: 450,
+                            child: Center(
+                              child: CircularProgressIndicator(),
                             ),
-                          ),
-                        ),
-                      ],
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 10),
                 HomeDetailsButton(
-                  text: "画像を共有する",
+                  text: AppLocalizations.of(context)!.share,
                   buttonIcon: const Icon(Icons.share),
                   function: () async {
                     await pictureRepositry.shareImageAndText(shareKey);
                   },
                 ),
                 HomeDetailsButton(
-                  text: "書き加える",
+                  text: AppLocalizations.of(context)!.edit,
                   buttonIcon: const Icon(Icons.brush),
                   function: () {
                     drawControl.clear();
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => PaintScreen(
-                                editPictureUrl: data.thumbnailUrl)));
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => PaintScreen(
+                          editPictureUrl: data.thumbnailUrl,
+                        ),
+                      ),
+                    );
                   },
                 ),
                 HomeDetailsButton(
-                  text: "削除する",
+                  text: AppLocalizations.of(context)!.delete,
                   buttonIcon: const Icon(Icons.delete),
                   function: () {
                     pictureRepository.deletePicture(data);

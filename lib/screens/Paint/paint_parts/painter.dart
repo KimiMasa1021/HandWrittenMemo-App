@@ -9,6 +9,8 @@ class Painter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    final paint = Paint();
+
     state.dataPath.asMap().forEach(
       (index, points) {
         final painter = Paint()
@@ -17,10 +19,11 @@ class Painter extends CustomPainter {
           ..color = points.color
           ..strokeWidth = points.thickness
           ..style = PaintingStyle.stroke;
-
-        // canvas.drawCircle(Offset(points[0].dx, points[0].dy), 0.5, painter);
-
         canvas.drawPath(points.path, painter);
+        paint.color = points.color;
+
+        canvas.drawCircle(Offset(points.firstPoint!.dx, points.firstPoint!.dy),
+            points.thickness / 2, paint);
       },
     );
     if (state.drawPath?.path != null) {

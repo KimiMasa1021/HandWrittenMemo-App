@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../common/common.dart';
+
 class MenuTile extends StatelessWidget {
   const MenuTile({
     Key? key,
@@ -25,11 +27,14 @@ class MenuTile extends StatelessWidget {
           children: [
             Icon(
               icon,
-              size: 30,
+              size: 50,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 5.0),
-              child: Text(title),
+              child: Text(
+                title,
+                style: textStyleBold20,
+              ),
             ),
           ],
         ),

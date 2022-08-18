@@ -18,6 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$PaintSetUpState {
   File? get image => throw _privateConstructorUsedError;
   String get type => throw _privateConstructorUsedError;
+  double get height => throw _privateConstructorUsedError;
+  double get width => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PaintSetUpStateCopyWith<PaintSetUpState> get copyWith =>
@@ -29,7 +31,7 @@ abstract class $PaintSetUpStateCopyWith<$Res> {
   factory $PaintSetUpStateCopyWith(
           PaintSetUpState value, $Res Function(PaintSetUpState) then) =
       _$PaintSetUpStateCopyWithImpl<$Res>;
-  $Res call({File? image, String type});
+  $Res call({File? image, String type, double height, double width});
 }
 
 /// @nodoc
@@ -45,6 +47,8 @@ class _$PaintSetUpStateCopyWithImpl<$Res>
   $Res call({
     Object? image = freezed,
     Object? type = freezed,
+    Object? height = freezed,
+    Object? width = freezed,
   }) {
     return _then(_value.copyWith(
       image: image == freezed
@@ -55,6 +59,14 @@ class _$PaintSetUpStateCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
+      height: height == freezed
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as double,
+      width: width == freezed
+          ? _value.width
+          : width // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -66,7 +78,7 @@ abstract class _$$_PaintSetUpStateCopyWith<$Res>
           _$_PaintSetUpState value, $Res Function(_$_PaintSetUpState) then) =
       __$$_PaintSetUpStateCopyWithImpl<$Res>;
   @override
-  $Res call({File? image, String type});
+  $Res call({File? image, String type, double height, double width});
 }
 
 /// @nodoc
@@ -84,6 +96,8 @@ class __$$_PaintSetUpStateCopyWithImpl<$Res>
   $Res call({
     Object? image = freezed,
     Object? type = freezed,
+    Object? height = freezed,
+    Object? width = freezed,
   }) {
     return _then(_$_PaintSetUpState(
       image: image == freezed
@@ -94,6 +108,14 @@ class __$$_PaintSetUpStateCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
+      height: height == freezed
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as double,
+      width: width == freezed
+          ? _value.width
+          : width // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -101,17 +123,24 @@ class __$$_PaintSetUpStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_PaintSetUpState implements _PaintSetUpState {
-  _$_PaintSetUpState({this.image, this.type = ""});
+  _$_PaintSetUpState(
+      {this.image, this.type = "", this.height = 768, this.width = 768});
 
   @override
   final File? image;
   @override
   @JsonKey()
   final String type;
+  @override
+  @JsonKey()
+  final double height;
+  @override
+  @JsonKey()
+  final double width;
 
   @override
   String toString() {
-    return 'PaintSetUpState(image: $image, type: $type)';
+    return 'PaintSetUpState(image: $image, type: $type, height: $height, width: $width)';
   }
 
   @override
@@ -120,14 +149,18 @@ class _$_PaintSetUpState implements _PaintSetUpState {
         (other.runtimeType == runtimeType &&
             other is _$_PaintSetUpState &&
             const DeepCollectionEquality().equals(other.image, image) &&
-            const DeepCollectionEquality().equals(other.type, type));
+            const DeepCollectionEquality().equals(other.type, type) &&
+            const DeepCollectionEquality().equals(other.height, height) &&
+            const DeepCollectionEquality().equals(other.width, width));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(image),
-      const DeepCollectionEquality().hash(type));
+      const DeepCollectionEquality().hash(type),
+      const DeepCollectionEquality().hash(height),
+      const DeepCollectionEquality().hash(width));
 
   @JsonKey(ignore: true)
   @override
@@ -136,13 +169,20 @@ class _$_PaintSetUpState implements _PaintSetUpState {
 }
 
 abstract class _PaintSetUpState implements PaintSetUpState {
-  factory _PaintSetUpState({final File? image, final String type}) =
-      _$_PaintSetUpState;
+  factory _PaintSetUpState(
+      {final File? image,
+      final String type,
+      final double height,
+      final double width}) = _$_PaintSetUpState;
 
   @override
   File? get image;
   @override
   String get type;
+  @override
+  double get height;
+  @override
+  double get width;
   @override
   @JsonKey(ignore: true)
   _$$_PaintSetUpStateCopyWith<_$_PaintSetUpState> get copyWith =>

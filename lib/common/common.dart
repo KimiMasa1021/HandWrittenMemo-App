@@ -21,6 +21,11 @@ var textStyleBold40 = const TextStyle(
   fontWeight: FontWeight.bold,
   color: Colors.black,
 );
+var textStyleBold30 = const TextStyle(
+  fontSize: 30,
+  fontWeight: FontWeight.bold,
+  color: Colors.black,
+);
 var textStyleBold20Gray = const TextStyle(
   fontSize: 20,
   fontWeight: FontWeight.bold,

@@ -16,7 +16,7 @@ class PaintOperateIcon extends HookConsumerWidget {
     return InkWell(
       onTap: () => function(),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 7),
+        padding: const EdgeInsets.all(6),
         child: pickIcon,
       ),
     );

@@ -1,0 +1,40 @@
+{
+  "@@locale": "ja",
+  "newCanvas": "新しい絵をかく",
+  "share": "画像を共有する",
+  "edit": "書き加える",
+  "delete": "削除する",
+  "decision":"決定",
+  "back": "戻る",
+  "whitePaper": "白紙",
+  "note": "ノート",
+  "frame":"額縁",
+  "flower1": "お花１",
+  "flower2": "お花２",
+  "fromDevice": "本体から画像を選ぶ",
+  "takePicture": "写真を撮る",
+  "twitterHeader":"Twitterヘッダー",
+  "pcWallpaper": "PC壁紙",
+  "lineStamp": "LINEスタンプ",
+  "deleteAll": "すべて削除する",
+  "home":"ホームに戻る",
+  "save": "保存する",
+  "lineThickness": "線の太さ：{val}",
+  "@lineThickness": {
+      "description": "lineThickness value",
+      "placeholders":{
+      "val":{
+        "description" : "lineThickness",
+        "example" : "2"
+      }
+    }
+  },
+  "indicate": "もどると絵が消えますがよろしいですか？？",
+  "ok": "OK",
+  "cancellation":"キャンセル",
+  "giveName": "絵に名前を付けよう",
+  "completion":"完了",
+  "name":"なまえ",
+  "canvasBackGround":"キャンバスの背景",
+  "canvasShape":"キャンバスの形"
+}

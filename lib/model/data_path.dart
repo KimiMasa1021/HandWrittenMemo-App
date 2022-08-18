@@ -4,5 +4,10 @@ class DataPath {
   Path path = Path();
   final Color color;
   double thickness;
-  DataPath({required this.color, required this.thickness});
+  Offset? firstPoint;
+  DataPath({
+    required this.color,
+    required this.thickness,
+    this.firstPoint,
+  });
 }

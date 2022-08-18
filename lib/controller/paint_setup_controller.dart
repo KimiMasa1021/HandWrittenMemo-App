@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -10,6 +11,13 @@ class PaintSetUpController extends StateNotifier<PaintSetUpState> {
 
   void handleRadio(String? val) {
     state = state.copyWith(type: val ?? "");
+  }
+
+  void handleRadio2(double? val, double width) {
+    state = state.copyWith(
+      height: val ?? 1,
+      width: width,
+    );
   }
 
   Future getImageFromCamera() async {

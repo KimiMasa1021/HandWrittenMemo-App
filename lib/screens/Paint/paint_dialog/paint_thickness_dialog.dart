@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../common/common.dart';
 import '../../../providers/general_providers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PaintThicknessDialog extends HookConsumerWidget {
   const PaintThicknessDialog({Key? key}) : super(key: key);
@@ -35,8 +37,14 @@ class PaintThicknessDialog extends HookConsumerWidget {
                       vertical: 5,
                       horizontal: 20,
                     ),
-                    child: Text(
-                        "線の太さ：${state.thickness.toStringAsFixed(0).toString()}"),
+                    child:
+                        // Text(
+                        //     "線の太さ：${state.thickness.toStringAsFixed(0).toString()}",
+                        //     style: textStyleBold20),
+                        Text(
+                            AppLocalizations.of(context)!.lineThickness(
+                                state.thickness.toStringAsFixed(0).toString()),
+                            style: textStyleBold20),
                   ),
                   Expanded(
                     child: Slider(

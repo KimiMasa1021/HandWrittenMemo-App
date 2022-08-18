@@ -26,22 +26,13 @@ class PaintOperation extends HookConsumerWidget {
                 children: [
                   Row(
                     children: [
-                      //　ひとつ戻る
                       PaintOperateIcon(
-                        pickIcon: const Icon(
-                          Icons.menu,
+                        pickIcon: Icon(
+                          !state.isOption2 ? Icons.menu : Icons.close,
                           size: 45,
                         ),
                         function: () => paintController.showOption2(),
                       ),
-                      //　ひとつ進む
-                      // PaintOperateIcon(
-                      //   pickIcon: const Icon(
-                      //     Icons.refresh,
-                      //     size: 45,
-                      //   ),
-                      //   function: () => paintController.redo(),
-                      // ),
                     ],
                   ),
                   Row(
@@ -51,11 +42,10 @@ class PaintOperation extends HookConsumerWidget {
                               onTap: () {
                                 paintController.showOption();
                               },
-                              child: const SizedBox(
-                                width: 40,
-                                height: 40,
+                              child: const Padding(
+                                padding: EdgeInsets.all(9.0),
                                 child: Icon(
-                                  MyFlutterApp.eraser,
+                                  MyFlutterApp.eraser_1,
                                   size: 40,
                                 ),
                               ),
@@ -64,14 +54,11 @@ class PaintOperation extends HookConsumerWidget {
                               onTap: () {
                                 paintController.showOption();
                               },
-                              child: const SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: Icon(
-                                  Icons.brush,
-                                  size: 45,
-                                ),
-                              ),
+                              child: const Padding(
+                                  padding: EdgeInsets.all(6.0),
+                                  child: Image(
+                                      width: 40,
+                                      image: AssetImage("assets/pen.png"))),
                             ),
                       PaintOperateIcon(
                         pickIcon: const Icon(
@@ -89,7 +76,7 @@ class PaintOperation extends HookConsumerWidget {
           ),
         ),
         Align(
-          alignment: const Alignment(0, 0),
+          alignment: const Alignment(0, -1),
           child: InkWell(
             onTap: () {
               showDialog(

@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../common/common.dart';
 import '../../../providers/general_providers.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PaintSetUpBack2 extends HookConsumerWidget {
   const PaintSetUpBack2({Key? key}) : super(key: key);
@@ -92,6 +93,7 @@ class PaintSetUpBack2 extends HookConsumerWidget {
                       await paintSetUpController.getImageFromGallery();
                     },
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
                           width: 40,
@@ -108,7 +110,10 @@ class PaintSetUpBack2 extends HookConsumerWidget {
                             ),
                           ),
                         ),
-                        const Text("本体から画像を選ぶ"),
+                        Text(
+                          AppLocalizations.of(context)!.fromDevice,
+                          textAlign: TextAlign.center,
+                        ),
                       ],
                     ),
                   ),
@@ -133,7 +138,9 @@ class PaintSetUpBack2 extends HookConsumerWidget {
                             ),
                           ),
                         ),
-                        const Text("写真を撮る"),
+                        Text(
+                          AppLocalizations.of(context)!.takePicture,
+                        ),
                       ],
                     ),
                   ),

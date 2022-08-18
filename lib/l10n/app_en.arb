@@ -1,0 +1,40 @@
+{
+  "@@locale":"en",
+  "newCanvas": "draw a new picture!!",
+  "share": "share images",
+  "edit": "edit picture",
+  "delete": "delete",
+  "decision":"decision",
+  "back": "back",
+  "whitePaper": "white",
+  "note": "notebook",
+  "frame":"frame",
+  "flower1": "flower1",
+  "flower2": "flower2",
+  "fromDevice": "Select an image from your device",
+  "takePicture": "take a picture",
+  "twitterHeader":"Twitter header",
+  "pcWallpaper": "computer wallpaper",
+  "lineStamp": "line stamp",
+  "deleteAll": "delete all",
+  "home":"return to home",
+  "save": "save",
+  "lineThickness": "Line thickness:{val}",
+  "@lineThickness": {
+      "description": "lineThickness value",
+      "placeholders":{
+      "val":{
+        "description" : "lineThickness",
+        "example" : "2"
+      }
+    }
+  },
+  "indicate": "The picture disappears when you go back, but is it okay??",
+  "ok": "OK",
+  "cancellation":"cancel",
+  "giveName": "name the picture!!",
+  "completion":"completion",
+  "name":"name",
+  "canvasBackGround":"canvas background",
+  "canvasShape":"canvas shape"
+}
