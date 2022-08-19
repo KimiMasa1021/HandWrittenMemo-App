@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:unity_ads_plugin/unity_ads_plugin.dart';
@@ -28,6 +29,12 @@ class PictureDetails extends HookConsumerWidget {
     final pictureRepositry = ref.watch(pictureRepositoryProvider);
 
     final shareKey = GlobalKey();
+    final editKey = GlobalKey();
+    Size? size;
+
+    WidgetsBinding.instance.addPostFrameCallback((cb) {
+      size = editKey.currentContext!.size;
+    });
 
     return SafeArea(
       child: Scaffold(
@@ -39,15 +46,15 @@ class PictureDetails extends HookConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                UnityBannerAd(
-                  placementId: 'Banner_Ad_Android',
-                  onLoad: (placementId) =>
-                      debugPrint('Banner loaded: $placementId'),
-                  onClick: (placementId) =>
-                      debugPrint('Banner clicked: $placementId'),
-                  onFailed: (placementId, error, message) => debugPrint(
-                      'Banner Ad $placementId failed: $error $message'),
-                ),
+                // UnityBannerAd(
+                //   placementId: 'Banner_Ad_Android',
+                //   onLoad: (placementId) =>
+                //       debugPrint('Banner loaded: $placementId'),
+                //   onClick: (placementId) =>
+                //       debugPrint('Banner clicked: $placementId'),
+                //   onFailed: (placementId, error, message) => debugPrint(
+                //       'Banner Ad $placementId failed: $error $message'),
+                // ),
                 const SizedBox(height: 10),
                 Text(data.title!, style: textStyleBold40),
                 const SizedBox(height: 10),
@@ -57,17 +64,26 @@ class PictureDetails extends HookConsumerWidget {
                     key: shareKey,
                     child: Card(
                       elevation: 10,
-                      child: Image.network(
-                        data.thumbnailUrl!,
-                        loadingBuilder: (_, child, loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return const SizedBox(
-                            height: 450,
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          );
-                        },
+                      child:
+                          // Image.network(
+                          //   data.thumbnailUrl!,
+                          //   loadingBuilder: (_, child, loadingProgress) {
+                          //     if (loadingProgress == null) return child;
+                          //     return const SizedBox(
+                          //       height: 450,
+                          //       child: Center(
+                          //         child: CircularProgressIndicator(),
+                          //       ),
+                          //     );
+                          //   },
+                          // ),
+                          CachedNetworkImage(
+                        key: editKey,
+                        imageUrl: data.thumbnailUrl!,
+                        errorWidget: (context, url, dynamic err) =>
+                            const Center(
+                          child: Icon(Icons.error_outline_sharp),
+                        ),
                       ),
                     ),
                   ),
@@ -84,12 +100,14 @@ class PictureDetails extends HookConsumerWidget {
                   text: AppLocalizations.of(context)!.edit,
                   buttonIcon: const Icon(Icons.brush),
                   function: () {
+                    if (editKey.currentContext!.size == null) return;
                     drawControl.clear();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) => PaintScreen(
                           editPictureUrl: data.thumbnailUrl,
+                          canvasSize: size,
                         ),
                       ),
                     );
@@ -104,15 +122,15 @@ class PictureDetails extends HookConsumerWidget {
                   },
                 ),
                 const SizedBox(height: 20),
-                UnityBannerAd(
-                  placementId: 'Banner_Ad_Android',
-                  onLoad: (placementId) =>
-                      debugPrint('Banner loaded: $placementId'),
-                  onClick: (placementId) =>
-                      debugPrint('Banner clicked: $placementId'),
-                  onFailed: (placementId, error, message) => debugPrint(
-                      'Banner Ad $placementId failed: $error $message'),
-                ),
+                // UnityBannerAd(
+                //   placementId: 'Banner_Ad_Android',
+                //   onLoad: (placementId) =>
+                //       debugPrint('Banner loaded: $placementId'),
+                //   onClick: (placementId) =>
+                //       debugPrint('Banner clicked: $placementId'),
+                //   onFailed: (placementId, error, message) => debugPrint(
+                //       'Banner Ad $placementId failed: $error $message'),
+                // ),
                 const SizedBox(height: 50)
               ],
             ),

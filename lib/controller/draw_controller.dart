@@ -153,6 +153,5 @@ class DrawController extends StateNotifier<DrawState> {
   @override
   void dispose() {
     super.dispose();
-    debugPrint("廃棄");
   }
 }

@@ -36,5 +36,6 @@
   "completion":"完了",
   "name":"なまえ",
   "canvasBackGround":"キャンバスの背景",
-  "canvasShape":"キャンバスの形"
+  "canvasShape":"キャンバスの形",
+  "drop":"ドロップで削除"
 }

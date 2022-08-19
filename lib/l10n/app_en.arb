@@ -36,5 +36,7 @@
   "completion":"completion",
   "name":"name",
   "canvasBackGround":"canvas background",
-  "canvasShape":"canvas shape"
+  "canvasShape":"canvas shape",
+  "drop":"delete by drop"
+
 }

@@ -18,6 +18,7 @@ class PaintScreen extends HookConsumerWidget {
     this.editPictureUrl,
     this.assetsUrl,
     this.file,
+    this.canvasSize,
   }) : super(key: key) {
     //UnityADSの初期化設定
     UnityAds.init(
@@ -33,6 +34,7 @@ class PaintScreen extends HookConsumerWidget {
   final _imageKey = GlobalKey();
   String? editPictureUrl;
   String? assetsUrl;
+  Size? canvasSize;
   File? file;
   DataPath? path;
   Size? size;
@@ -120,7 +122,6 @@ class PaintScreen extends HookConsumerWidget {
                                       );
                                     },
                                     onMoveUpdate: (details) {
-                                      debugPrint(details.pointer.toString());
                                       paintController.updatePath(
                                         paintController.getPosition(
                                           _key.currentContext!.size,
@@ -136,8 +137,10 @@ class PaintScreen extends HookConsumerWidget {
                                     child: RepaintBoundary(
                                       key: _imageKey,
                                       child: Container(
-                                        width: setUpState.width,
-                                        height: setUpState.height,
+                                        width: canvasSize?.width ??
+                                            setUpState.width,
+                                        height: canvasSize?.height ??
+                                            setUpState.height,
                                         key: _key,
                                         clipBehavior: Clip.hardEdge,
                                         decoration: BoxDecoration(

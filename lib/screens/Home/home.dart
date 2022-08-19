@@ -138,7 +138,8 @@ class HomeScreen extends HookConsumerWidget {
                             children: [
                               const Icon(Icons.delete, size: 50),
                               const SizedBox(height: 5),
-                              Text("ドロップで削除", style: textStyleBold20),
+                              Text(AppLocalizations.of(context)!.drop,
+                                  style: textStyleBold20),
                               const SizedBox(height: 10),
                             ],
                           ),
