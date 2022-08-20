@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:gesture_x_detector/gesture_x_detector.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:unity_ads_plugin/unity_ads_plugin.dart';
+// import 'package:unity_ads_plugin/unity_ads_plugin.dart';
 import 'package:zen03/model/data_path.dart';
 import 'package:zen03/screens/Paint/paint_dialog/paint_back_dialog.dart';
 import '../../providers/general_providers.dart';
@@ -20,14 +20,14 @@ class PaintScreen extends HookConsumerWidget {
     this.file,
     this.canvasSize,
   }) : super(key: key) {
-    //UnityADSの初期化設定
-    UnityAds.init(
-      testMode: true,
-      gameId: '4842721',
-      onComplete: () => debugPrint('Initialization Complete'),
-      onFailed: (error, message) =>
-          debugPrint('Initialization Failed: $error $message'),
-    );
+    // //UnityADSの初期化設定
+    // UnityAds.init(
+    //   testMode: true,
+    //   gameId: '4842721',
+    //   onComplete: () => debugPrint('Initialization Complete'),
+    //   onFailed: (error, message) =>
+    //       debugPrint('Initialization Failed: $error $message'),
+    // );
   }
 
   final _key = GlobalKey();

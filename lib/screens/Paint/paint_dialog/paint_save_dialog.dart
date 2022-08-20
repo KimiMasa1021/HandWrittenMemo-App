@@ -84,22 +84,22 @@ class PaintSaveDialog extends HookConsumerWidget {
                         title: title.value,
                       ),
                     );
-                    await UnityAds.load(
-                      placementId: 'Interstitial_Ad_Android',
-                      onComplete: (placementId) =>
-                          debugPrint('Load Complete $placementId'),
-                      onFailed: (placementId, error, message) => debugPrint(
-                          'Load Failed $placementId: $error $message'),
-                    );
-                    await UnityAds.showVideoAd(
-                      placementId: 'Interstitial_Ad_Android',
-                      onComplete: (placementId) =>
-                          debugPrint('Load Complete $placementId'),
-                      onFailed: (placementId, error, message) => debugPrint(
-                          'Load Failed $placementId: $error $message'),
-                    );
+                    // await UnityAds.load(
+                    //   placementId: 'Interstitial_Ad_Android',
+                    //   onComplete: (placementId) =>
+                    //       debugPrint('Load Complete $placementId'),
+                    //   onFailed: (placementId, error, message) => debugPrint(
+                    //       'Load Failed $placementId: $error $message'),
+                    // );
+                    // await UnityAds.showVideoAd(
+                    //   placementId: 'Interstitial_Ad_Android',
+                    //   onComplete: (placementId) =>
+                    //       debugPrint('Load Complete $placementId'),
+                    //   onFailed: (placementId, error, message) => debugPrint(
+                    //       'Load Failed $placementId: $error $message'),
+                    // );
                     drawController.clear();
-                    await Navigator.pushAndRemoveUntil(
+                    Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (_) => const HomeScreen()),
                         (_) => false);

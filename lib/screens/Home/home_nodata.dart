@@ -9,8 +9,8 @@ class HomeNoData extends StatelessWidget {
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,
-        child: Image(
-          image: AssetImage("assets/tutorial.png"),
+        child: Center(
+          child: Text("No images..."),
         ),
       ),
     );
